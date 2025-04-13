@@ -78,6 +78,19 @@ const teamMembers = [
     },
   },
   {
+    name: "Zohaib khan",
+    role: "Data analyst",
+    img: "/zohaib.png",
+    description:
+      "Expert in Data Analysis, specializing in data visualization, statistical analysis, data cleaning, predictive modeling, and deriving actionable insights to support informed business decisions..",
+    links: {
+      facebook: "#",
+      insta: "https://www.instagram.com/zuhaibkhan662?igsh=ODdzdjlwOXEyY2o2",
+      linkedin: "https://www.linkedin.com/in/zuhaib-khan-183840275",
+      whatsapp: "https://wa.me/92348 1970268",
+    },
+  },
+  {
     name: "Ahmad Ali",
     role: "Cybersecurity Expert",
     img: "/ahmad.png",
