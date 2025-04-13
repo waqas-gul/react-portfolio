@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@import '@fontsource/inter';
+@import '@fontsource/fira-code';
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+
+
+@keyframes fire {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.fire-underline {
+    background: linear-gradient(90deg,
+            #ff9a00,
+            #ff5e00,
+            #ff9a00,
+            #ff5e00,
+            #ff9a00);
+    background-size: 200% 200%;
+    animation: fire 2s linear infinite;
+}
