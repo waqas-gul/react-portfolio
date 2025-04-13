@@ -59,12 +59,12 @@ export default function ResumeCard() {
           <p className="text-gray-600 dark:text-gray-400 text-sm font-mono">
             MERN Stack Developer / Modern Web Application Developer
           </p>
-          <div className="flex gap-4 mt-4">
+          <div className="flex lg:flex-row flex-col gap-4 mt-4">
             <motion.a
               whileHover={{ scale: 1.05 }}
               href="/CV_waqasi.pdf"
               download="Waqas_Gul_Resume.pdf"
-              className="flex cursor-pointer hover:shadow-yellow-500 items-center gap-2 lg:px-6 px-3 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 active:scale-95 font-mono bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold shadow-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-12"
+              className="flex items-center justify-center cursor-pointer hover:shadow-yellow-500 gap-2 lg:px-6 px-3 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 active:scale-95 font-mono bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold shadow-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-12"
             >
               <FaDownload className="font-sans text-gray-700 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
               Resume

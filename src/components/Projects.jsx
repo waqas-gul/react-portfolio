@@ -144,7 +144,7 @@ export default function Projects() {
                   {project.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="flex font-mono items-center gap-2 px-3 py-1 bg-gray-300 dark:bg-gray-600 text-white rounded-full text-xs font-semibold shadow-md  shadow-gray-400"
+                      className="flex font-mono items-center gap-2 px-3 py-1 my-0.5 bg-gray-300 dark:bg-gray-600 text-white rounded-full text-xs font-semibold shadow-md  shadow-gray-400"
                     >
                       {tech.icon} {tech.name}
                     </span>
@@ -155,21 +155,21 @@ export default function Projects() {
                     href={project.Glink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center lg:px-4 px-2   cursor-pointer  gap-2  py-2 bg-yellow-400  rounded-lg relative overflow-hidden  ease-in-out 
+                    className="mt-4 inline-flex lg:text-base text-[.6rem] items-center lg:px-4 px-2   cursor-pointer  gap-2  py-2 bg-yellow-400  rounded-lg relative overflow-hidden  ease-in-out 
          hover:bg-yellow-500  font-mono shadow-lg hover:shadow-amber-500  active:scale-95  bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold    hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-6"
                   >
-                    <FaGithubSquare className="font-bold text-2xl text-gray-800 " />
+                    <FaGithubSquare className="font-bold lg:text-2xl text-xl text-gray-800 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1 " />
                     Go to Github
                   </a>
                   <a
                     href={project.Wlink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center px-4 py-2 bg-transparent hover:bg-gray-700  shadow-md shadow-orange-400 border  cursor-pointer  border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out 
+                    className="mt-4 lg:text-base text-[.6rem] inline-flex items-center lg:px-4 px-2 py-2 bg-transparent hover:bg-gray-700  shadow-md shadow-orange-400 border  cursor-pointer  border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out 
   hover:bg-gradient-to-r from-yellow-500 font-sans to-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(255,215,0,0.8)] hover:scale-105 hover:rotate-6"
                   >
                     Go to {project.name}{" "}
-                    <FaLocationArrow className="ml-2 text-xl text-gray-400  animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
+                    <FaLocationArrow className="lg:ml-2 ml-1 text-xl text-gray-400  animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
                   </a>
                 </div>
               </div>

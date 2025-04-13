@@ -56,11 +56,11 @@ export default function Experience() {
             className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-yellow-500  shadow-gray-500"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="lg:text-xl  text-sm   font-sans lg:px-3 mr-2 px-2 py-1 rounded-full  font-bold dark:bg-gray-700 bg-gray-200  text-yellow-400 flex items-center ">
+              <h3 className="lg:text-xl  text-[0.6rem]   font-sans lg:px-3 mr-2 px-2 py-1 rounded-full  font-bold dark:bg-gray-700 bg-gray-200  text-yellow-400 flex items-center ">
                 <BsBuildingsFill className="mr-2 text-orange-400 " />{" "}
                 {exp.company}
               </h3>
-              <span className="text-sm flex items-center text-gray-600 dark:text-gray-300  font-sans px-3 py-1 rounded-full  font-bold dark:bg-gray-700 bg-gray-200  ">
+              <span className="lg:text-sm text-[0.6rem] flex items-center text-gray-600 dark:text-gray-300  font-sans px-3 py-1 rounded-full  font-bold dark:bg-gray-700 bg-gray-200  ">
                 <FaCalendarCheck className="mr-2 text-orange-400" />{" "}
                 {exp.duration}
               </span>

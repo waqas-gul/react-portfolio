@@ -95,7 +95,7 @@ export default function AboutMe() {
             <h3 className="text-2xl font-bold mb-4 text-center text-gray-700 dark:text-gray-300 font-sans">
               I Love
             </h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid lg:grid-cols-2 gap-4">
               {interests.map((item, index) => (
                 <motion.div
                   key={index}
