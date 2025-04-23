@@ -3,6 +3,7 @@ import { FaDownload } from "react-icons/fa";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer"; // For detecting when elements are in view
 import { IoDiamond } from "react-icons/io5";
+import waqas from "../../public/waqas.png";
 import {
   SiNextdotjs,
   SiReact,
@@ -88,57 +89,56 @@ const Hero = () => {
 
   return (
     <section className="flex flex-col lg:h-[80vh] md:h-[50vh] sm:flex-row items-center py-16  justify-between px-10 lg:px-20 lg:py-16 bg-white dark:bg-gray-900 text-gray-900 dark:text-white ">
-      {/* Left Side - Content */}
+      {/* Left Section */}
       <motion.div
         ref={refLeft}
-        initial={{ x: -400, opacity: 0 }} // Start off-screen to the left
-        animate={controlsLeft} // Animate when in view
-        className="w-full md:w-1/2 text-left space-y-4 py-8"
+        initial={{ x: -100, opacity: 0 }}
+        animate={controlsLeft}
+        className="w-full  my-8 md:w-1/2 text-left space-y-4 mb-6 md:mb-0"
       >
-        <h1 className="text-4xl font-bold font-sans text-left">
+        <h1 className="text-3xl sm:text-4xl font-bold">
           ✌️ Hello! I'm{" "}
-          <span className="bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent filter drop-shadow-lg">
+          <span className="bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
             Engr Waqas Gul
           </span>
         </h1>
 
-        {/* Typing Animation */}
         <motion.h2
-          className="text-2xl font-semibold font-mono text-gray-700 dark:text-gray-300"
+          className="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
           {text}
-          <span className="animate-blink font-mono">|</span>{" "}
-          {/* Blinking Cursor */}
+          <span className="animate-blink">|</span>
         </motion.h2>
 
-        <p className="text-lg font-mono">
+        <p className="text-base sm:text-lg font-mono">
           With{" "}
-          <span className="bg-gray-200 text-yellow-400 font-bold shadow-lg dark:bg-gray-800 px-2 py-1 rounded">
+          <span className="bg-gray-200 text-yellow-400 font-bold dark:bg-gray-800 px-2 py-1 rounded">
             3+ Years
           </span>{" "}
           of Experience
         </p>
-        <div className="flex gap-4 font-mono py-2">
+
+        <div className="flex flex-wrap gap-4">
           <a
             href="/CV_waqasi.pdf"
             download="Waqas_Gul_Resume.pdf"
-            className="flex cursor-pointer hover:shadow-yellow-500 items-center gap-2 px-6 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out shadow-yellow-500 hover:bg-yellow-500 active:scale-95 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold shadow-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-12"
+            className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold rounded-lg hover:scale-105 shadow-md"
           >
-            <FaDownload className="font-sans animate-bounce text-gray-700 transition-all duration-300 ease-in-out group-hover:translate-y-1" />
+            <FaDownload className="inline mr-2" />
             Resume
           </a>
 
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20project%20with%20you."
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 shadow-md shadow-orange-400 px-6 py-2 border cursor-pointer border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out hover:bg-gradient-to-r from-yellow-500 font-sans to-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(255,215,0,0.8)] hover:scale-105 hover:rotate-12"
+            className="px-6 py-2 border border-yellow-400 text-yellow-400 font-bold rounded-lg hover:bg-yellow-500 hover:text-white hover:scale-105"
           >
             Hire Me
-            <IoDiamond className="font-sans animate-bounce dark:text-white text-gray-800 transition-all duration-300 ease-in-out group-hover:translate-y-1" />
+            <IoDiamond className="inline ml-2" />
           </a>
         </div>
       </motion.div>

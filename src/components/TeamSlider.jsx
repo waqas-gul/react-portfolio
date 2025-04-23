@@ -263,7 +263,7 @@ export default function TeamSlider() {
       </div>
 
       {/* Navigation Buttons */}
-      <div className="mt-6 flex space-x-4">
+      <div className="mt-8  flex space-x-4">
         <button
           onClick={prevMember}
           className="p-3 bg-orange-500 hover:text-orange-500 rounded-full border border-orange-500 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-center transition-all duration-300 ease-in-out"
