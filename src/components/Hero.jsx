@@ -121,13 +121,13 @@ const Hero = () => {
           of Experience
         </p>
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex  gap-4 mt-8 mb-4 ">
           <a
             href="/CV_waqasi.pdf"
             download="Waqas_Gul_Resume.pdf"
-            className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold rounded-lg hover:scale-105 shadow-md"
+            className="flex items-center justify-center px-4 lg:px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold rounded-lg hover:scale-105 shadow-md"
           >
-            <FaDownload className="inline mr-2" />
+            <FaDownload className="inline mr-2 animate-bounce font-mono transition-all duration-300 ease-in-out group-hover:translate-y-1" />
             Resume
           </a>
 
@@ -135,10 +135,10 @@ const Hero = () => {
             href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20project%20with%20you."
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-2 border border-yellow-400 text-yellow-400 font-bold rounded-lg hover:bg-yellow-500 hover:text-white hover:scale-105"
+            className="flex items-center justify-center px-6 py-2 border border-yellow-400 text-yellow-400 font-bold rounded-lg hover:bg-yellow-500 hover:text-white hover:scale-105"
           >
             Hire Me
-            <IoDiamond className="inline ml-2" />
+            <IoDiamond className="inline ml-2 animate-bounce font-mono transition-all duration-300 ease-in-out group-hover:translate-y-1" />
           </a>
         </div>
       </motion.div>
