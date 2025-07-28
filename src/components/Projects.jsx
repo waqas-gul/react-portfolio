@@ -14,9 +14,11 @@ import { SiMongodb } from "react-icons/si";
 import { RiTailwindCssFill } from "react-icons/ri";
 import { FaHtml5 } from "react-icons/fa";
 import { SiCloudinary } from "react-icons/si";
+import { BiLogoPostgresql } from "react-icons/bi";
+
 const projects = [
   {
-    name: "ITSoleraa ",
+    name: "ITSolera (Sofyware Company.)",
     image: "/itsolera.png",
     Glink: "https://github.com/waqas-gul/itsolera",
     Wlink: "https://itsolera.com/",
@@ -25,8 +27,58 @@ const projects = [
       { icon: <FaReact className="text-blue-500" />, name: "React.js" },
       { icon: <SiExpress className="text-yellow-400" />, name: "Express.js" },
       { icon: <IoLogoNodejs className="text-green-500" />, name: "Node.js" },
-      { icon: <SiMongodb className="text-green-700" />, name: "React.js" },
+      { icon: <SiMongodb className="text-green-700" />, name: "MongoDB" },
+      { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
+      {
+        icon: <GiMaterialsScience className="text-blue-500" />,
+        name: "Material UI",
+      },
+      {
+        icon: <RiTailwindCssFill className="text-blue-500" />,
+        name: "Tailwindcss",
+      },
+      {
+        icon: <SiJavascript className="text-yellow-500" />,
+        name: "JavaScript",
+      },
+    ],
+  },
 
+  {
+    name: "foodlakay (Cleaning Company)",
+    image: "/lidialakay.png",
+    Glink: "https://github.com/waqas-gul/foodlakay",
+    Wlink: "https://lidialakay.fr/fr",
+    technologies: [
+      { icon: <IoLogoFigma className="text-pink-500" />, name: "Figma" },
+      { icon: <SiNextdotjs className="text-gray-900" />, name: "Next Js" },
+      {
+        icon: <BiLogoPostgresql className="text-green-400" />,
+        name: "Postgresql",
+      },
+      { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
+      {
+        icon: <RiTailwindCssFill className="text-blue-600" />,
+        name: "TailwindCss",
+      },
+
+      {
+        icon: <SiJavascript className="text-yellow-500" />,
+        name: "JavaScript",
+      },
+    ],
+  },
+  {
+    name: "Zaroori Zameen (real estate property listing and searching platform)",
+    image: "/real.png",
+    Glink: "https://github.com/waqas-gul/foodlakay",
+    Wlink: "https://lidialakay.fr/fr",
+    technologies: [
+      { icon: <IoLogoFigma className="text-pink-500" />, name: "Figma" },
+      { icon: <FaReact className="text-blue-500" />, name: "React.js" },
+      { icon: <SiExpress className="text-yellow-400" />, name: "Express.js" },
+      { icon: <IoLogoNodejs className="text-green-500" />, name: "Node.js" },
+      { icon: <SiMongodb className="text-green-700" />, name: "MongoDB" },
       { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
       {
         icon: <GiMaterialsScience className="text-blue-500" />,
@@ -43,7 +95,7 @@ const projects = [
     ],
   },
   {
-    name: "Shadesco ",
+    name: "Shadesco",
     image: "/shadesco.ae_.png",
     Glink: "https://github.com/waqas-gul/cleaning-company-website",
     Wlink: "https://shadesco.ae/",
@@ -57,23 +109,22 @@ const projects = [
       },
     ],
   },
+
   {
     name: "SportsBuzz",
     image: "/lms.png",
-    link: "https://sportsbuzz.com",
+    Wlink: "https://sportsbuzz.com",
     technologies: [
       { icon: <IoLogoFigma className="text-pink-500" />, name: "Figma" },
       { icon: <FaReact className="text-blue-500" />, name: "React.js" },
       { icon: <SiExpress className="text-yellow-400" />, name: "Express.js" },
       { icon: <IoLogoNodejs className="text-green-500" />, name: "Node.js" },
-      { icon: <SiMongodb className="text-green-700" />, name: "React.js" },
-
+      { icon: <SiMongodb className="text-green-700" />, name: "MongoDB" },
       { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
       {
         icon: <SiCloudinary className="text-blue-500" />,
         name: "Cloudinary",
       },
-
       {
         icon: <RiTailwindCssFill className="text-blue-500" />,
         name: "Tailwindcss",
@@ -84,34 +135,29 @@ const projects = [
       },
     ],
   },
-  {
-    name: "SportsBuzz",
-    image: "/project.png",
-    Wlink: "https://sportsbuzz.com",
-    technologies: [
-      { icon: <SiNextdotjs className="text-gray-900" />, name: "Next.js" },
-      { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
-      {
-        icon: <GiMaterialsScience className="text-blue-500" />,
-        name: "Material UI",
-      },
-      { icon: <SiSass className="text-pink-500" />, name: "SCSS" },
-      {
-        icon: <SiJavascript className="text-yellow-500" />,
-        name: "JavaScript",
-      },
-    ],
-  },
 ];
 
 export default function Projects() {
   const [page, setPage] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const itemsPerPage = 3;
   const startIndex = page * itemsPerPage;
   const displayedProjects = projects.slice(
     startIndex,
     startIndex + itemsPerPage
   );
+
+  const handlePageChange = (newPage, e) => {
+    e.preventDefault();
+    if (isAnimating || newPage === page) return;
+
+    setIsAnimating(true);
+    setPage(newPage);
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 300);
+  };
 
   return (
     <div className="min-h-screen dark:bg-gray-900 bg-gray-200 py-16 px-10 text-center">
@@ -120,11 +166,13 @@ export default function Projects() {
         Projects
       </h2>
 
-      <div className="space-y-8 max-w-4xl mx-auto">
+      <div className="space-y-8 max-w-4xl mx-auto relative min-h-[600px]">
         {displayedProjects.map((project, index) => (
           <div
-            key={index}
-            className=" text-white w-full bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col gap-4 hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-yellow-500 shadow-gray-500 "
+            key={`${page}-${index}`}
+            className={`text-white w-full bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col gap-4 transition-all duration-300 ease-in-out ${
+              isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+            } hover:scale-105 hover:shadow-yellow-500 shadow-gray-500`}
           >
             <div className="flex flex-col md:flex-row items-center w-full">
               <img
@@ -144,7 +192,7 @@ export default function Projects() {
                   {project.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="flex font-mono items-center gap-2 px-3 py-1 my-0.5 bg-gray-300 dark:bg-gray-600 text-white rounded-full text-xs font-semibold shadow-md  shadow-gray-400"
+                      className="flex font-mono items-center gap-2 px-3 py-1 my-0.5 bg-gray-300 dark:bg-gray-600 text-white rounded-full text-xs font-semibold shadow-md shadow-gray-400"
                     >
                       {tech.icon} {tech.name}
                     </span>
@@ -155,21 +203,20 @@ export default function Projects() {
                     href={project.Glink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex lg:text-base text-[.6rem] items-center lg:px-4 px-2   cursor-pointer  gap-2  py-2 bg-yellow-400  rounded-lg relative overflow-hidden  ease-in-out 
-         hover:bg-yellow-500  font-mono shadow-lg hover:shadow-amber-500  active:scale-95  bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold    hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-6"
+                    className="mt-4 inline-flex lg:text-base text-[.6rem] items-center lg:px-4 px-2 cursor-pointer gap-2 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 font-mono shadow-lg hover:shadow-amber-500 active:scale-95 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-6"
                   >
-                    <FaGithubSquare className="font-bold lg:text-2xl text-xl text-gray-800 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1 " />
+                    <FaGithubSquare className="font-bold lg:text-2xl text-xl text-gray-800 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
                     Go to Github
                   </a>
                   <a
                     href={project.Wlink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 lg:text-base text-[.6rem] inline-flex items-center lg:px-4 px-2 py-2 bg-transparent hover:bg-gray-700  shadow-md shadow-orange-400 border  cursor-pointer  border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out 
-  hover:bg-gradient-to-r from-yellow-500 font-sans to-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(255,215,0,0.8)] hover:scale-105 hover:rotate-6"
+                    className="mt-4 lg:text-base text-[.6rem] inline-flex items-center lg:px-4 px-2 py-2 bg-transparent hover:bg-gray-700 shadow-md shadow-orange-400 border cursor-pointer border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out hover:bg-gradient-to-r from-yellow-500 font-sans to-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(255,215,0,0.8)] hover:scale-105 hover:rotate-6"
                   >
-                    Go to {project.name}{" "}
-                    <FaLocationArrow className="lg:ml-2 ml-1 text-xl text-gray-400  animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
+                    Go to {project.name.split(" ").slice(0, 4).join(" ")}
+                    {project.name.split(" ").length > 4 ? "..." : ""}
+                    <FaLocationArrow className="lg:ml-2 ml-1 text-xl text-gray-400 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
                   </a>
                 </div>
               </div>
@@ -179,18 +226,19 @@ export default function Projects() {
       </div>
 
       {/* Pagination */}
-      <div className=" mt-10  flex justify-center space-x-3">
+      <div className="mt-10 flex justify-center space-x-3">
         {Array.from(
           { length: Math.ceil(projects.length / itemsPerPage) },
           (_, index) => (
             <button
               key={index}
-              onClick={() => setPage(index)}
-              className={`px-4 py-2 rounded-full ${
+              onClick={(e) => handlePageChange(index, e)}
+              className={`px-4 py-2 rounded-full transition-all duration-300 ${
                 page === index
-                  ? "bg-gradient-to-t from-yellow-500 to-orange-500   text-black"
-                  : "dark:bg-gray-600 bg-gray-400 text-white"
-              } hover:bg-gradient-to-t from-yellow-500 to-orange-500 transition`}
+                  ? "bg-gradient-to-t from-yellow-500 to-orange-500 text-black transform scale-110"
+                  : "dark:bg-gray-600 bg-gray-400 text-white hover:scale-105"
+              }`}
+              disabled={isAnimating}
             >
               {index + 1}
             </button>

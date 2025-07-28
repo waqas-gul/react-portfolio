@@ -41,9 +41,9 @@ function App() {
                 <section id="ResumeCard">
                   <ResumeCard />
                 </section>
-                <section id="Certificates">
-                  <Certificates /> {/* Add the Certificates component here */}
-                </section>
+                {/* <section id="Certificates">
+                  <Certificates /> 
+                </section> */}
                 <section id="Skills">
                   <Skills />
                 </section>
