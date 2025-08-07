@@ -1,6 +1,6 @@
 # 🌐 Modern Developer Portfolio
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_DEPLOY_ID/deploy-status)](https://app.netlify.com/sites/wgdeveloper/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6b8f8b9a-1b9a-4b1a-8b0a-5b0a9b0a8b0a/deploy-status)](https://app.netlify.com/sites/wgdeveloper/deploys)
 [![React](https://img.shields.io/badge/React-18.2-%2361DAFB)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-%2306B6D4)](https://tailwindcss.com/)
 
