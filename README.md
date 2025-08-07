@@ -1,27 +1,50 @@
-# 🌐 Personal Portfolio Website
+# 🌐 Modern Developer Portfolio
 
-A modern, fully responsive personal portfolio website built with **React.js** and **Tailwind CSS**. This website showcases my projects, skills, experience, and provides ways to connect with me.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/YOUR_DEPLOY_ID/deploy-status)](https://app.netlify.com/sites/YOUR_SITE_NAME/deploys)
+[![React](https://img.shields.io/badge/React-18.2-%2361DAFB)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-%2306B6D4)](https://tailwindcss.com/)
 
-## 🚀 Features
+A high-performance portfolio website built with React.js and Tailwind CSS, featuring modern design principles and optimal user experience.
 
-- ⚡ Fast and responsive design
-- 🎨 Tailwind CSS for modern and clean UI
-- 🧠 Built with React.js for dynamic routing and components
-- 💼 Projects section to showcase your work
-- 📞 Contact section with form and social links
-- 🌙 Light/Dark mode support (optional if implemented)
+## 🎥 Live Demo
 
-## 📸 Demo
+[![Portfolio Screenshot](/screenshot.png)](https://wgdeveloper.netlify.app/)
 
-Live demo: [Click here](https://wgdevloper.netlify.app/)
+[![Visit Portfolio](https://img.shields.io/badge/VISIT_PORTFOLIO-Netlify-success)](https://wgdeveloper.netlify.app/)
 
-## 🛠️ Tech Stack
+## ✨ Key Features
 
-- **React.js**
-- **Tailwind CSS**
-- **JavaScript**
-- **HTML5**
-- **CSS3**
+- **Lightning Fast Performance** (90+ Lighthouse score)
+- **Fully Responsive Design** (Mobile-first approach)
+- **Modern UI/UX** with Tailwind CSS
+- **Interactive Project Showcase**
+- **Contact Form** with email integration
+- **Dark/Light Mode Toggle** (System preference aware)
+- **SEO Optimized** (React Helmet)
+- **Smooth Animations** (Framer Motion)
 
-## 📁 Folder Structure
+## 🚀 Technologies Used
 
+### Frontend
+- React.js (Functional Components + Hooks)
+- Tailwind CSS (Utility-first styling)
+- React Router (Navigation)
+- Framer Motion (Animations)
+- React Icons (SVG icons)
+- React Helmet (SEO management)
+
+### Backend (Optional)
+- FormSubmit/Netlify Forms (Contact form handling)
+
+### Development Tools
+- Vite (Build tool)
+- ESLint + Prettier (Code quality)
+- Git (Version control)
+- Netlify (Hosting & CI/CD)
+
+## 📦 Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/waqas-gul/react-portfolio
+   cd portfolio
