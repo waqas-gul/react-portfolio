@@ -18,6 +18,7 @@ import {
 const titles = [
   "I am MERN Stack Developer",
   "I am Frontend Specialist",
+  "I am WordPress Developer",
   "I am Web Designer",
 ];
 
