@@ -15,7 +15,7 @@ import { RiTailwindCssFill } from "react-icons/ri";
 import { FaHtml5 } from "react-icons/fa";
 import { SiCloudinary } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
-
+import { SiTypescript } from "react-icons/si";
 const projects = [
   {
     name: "ITSolera (Sofyware Company.)",
@@ -91,6 +91,29 @@ const projects = [
       {
         icon: <SiJavascript className="text-yellow-500" />,
         name: "JavaScript",
+      },
+    ],
+  },
+   {
+    name: "FlowAdmin React - Free Tailwind Admin Dashboard",
+    image: "/dashboard.png",
+    Glink: "https://github.com/waqas-gul/react-tailwind-admin-dashboard-main",
+    Wlink: "https://68b5af81d6dac40637705bfe--flowadmin1.netlify.app/",
+    technologies: [
+      { icon: <IoLogoFigma className="text-pink-500" />, name: "Figma" },
+      { icon: <FaReact className="text-blue-500" />, name: "React.js" },
+      { icon: <SiRedux className="text-purple-600" />, name: "Redux" },
+      {
+        icon: <GiMaterialsScience className="text-blue-500" />,
+        name: "Material UI",
+      },
+      {
+        icon: <RiTailwindCssFill className="text-blue-500" />,
+        name: "Tailwindcss",
+      },
+      {
+        icon: <SiTypescript  className="text-blue-500" />,
+        name: "typeScript",
       },
     ],
   },
