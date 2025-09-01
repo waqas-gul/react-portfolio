@@ -16,7 +16,7 @@ import {
 } from "react-icons/si";
 
 const titles = [
-  "I am MERN Stack Developer",
+  "I am Full Stack Developer",
   "I am Frontend Specialist",
   "I am WordPress Developer",
   "I am Web Designer",
