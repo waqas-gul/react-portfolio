@@ -178,7 +178,7 @@ export default function TeamSlider() {
               key={i}
               initial={{ opacity: 0, scale: 0.8, x: xOffset }}
               animate={{ opacity, scale, x: xOffset }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
                 zIndex:
                   position === 0
@@ -187,7 +187,7 @@ export default function TeamSlider() {
                     ? 5
                     : 1,
               }}
-              className={`absolute w-72 h-96 dark:bg-gray-900 bg-gray-400 rounded-xl shadow-lg shadow-gray-500 overflow-hidden cursor-pointer transition-all duration-200 ${blur} hover:shadow-yellow-500`}
+              className={`absolute w-72 h-96 dark:bg-gray-900 bg-gray-400 rounded-xl shadow-lg shadow-gray-500 overflow-hidden cursor-pointer transition-all duration-500 ${blur} hover:shadow-yellow-500`}
             >
               <div
                 className={`relative w-full h-full ${
