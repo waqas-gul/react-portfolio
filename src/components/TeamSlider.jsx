@@ -13,10 +13,10 @@ import {
 const teamMembers = [
   {
     name: "Waqas Gul",
-    role: "MERN Stack Developer",
+    role: "Full Stack developer",
     img: "/waqas.png",
     description:
-      "Expert in MERN Stack Development, specializing in React.js, MongoDB, Express.js, and Node.js, with a focus on building scalable and high-performance web applications.",
+      "Expert in full Stack software Development, specializing in React.js,Next.js,MongoDB,PostgresSql, Express.js, Node.js,Fastapi,Flask and electron  with a focus on building scalable and high-performance web, mobile and desktop applications.",
     links: {
       facebook: "https://www.facebook.com/WAQASI.369/",
       insta: "https://www.instagram.com/w_a_q_a_s_i/",
@@ -115,7 +115,7 @@ export default function TeamSlider() {
 
   const prevMember = () => {
     setIndex(
-      (prevIndex) => (prevIndex - 1 + teamMembers.length) % teamMembers.length
+      (prevIndex) => (prevIndex - 1 + teamMembers.length) % teamMembers.length,
     );
   };
 
@@ -178,16 +178,16 @@ export default function TeamSlider() {
               key={i}
               initial={{ opacity: 0, scale: 0.8, x: xOffset }}
               animate={{ opacity, scale, x: xOffset }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
+              transition={{ duration: 0.7 }}
               style={{
                 zIndex:
                   position === 0
                     ? 10
                     : position === 1 || position === teamMembers.length - 1
-                    ? 5
-                    : 1,
+                      ? 5
+                      : 1,
               }}
-              className={`absolute w-72 h-96 dark:bg-gray-900 bg-gray-400 rounded-xl shadow-lg shadow-gray-500 overflow-hidden cursor-pointer transition-all duration-500 ${blur} hover:shadow-yellow-500`}
+              className={`absolute w-72 h-96 dark:bg-gray-900 bg-gray-400 rounded-xl shadow-lg shadow-gray-500 overflow-hidden cursor-pointer transition-all duration-200 ${blur} hover:shadow-yellow-500`}
             >
               <div
                 className={`relative w-full h-full ${

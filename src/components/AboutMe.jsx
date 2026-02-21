@@ -107,10 +107,10 @@ export default function AboutMe() {
                       index === 0
                         ? "text-orange-500"
                         : index === 1
-                        ? "text-blue-500"
-                        : index === 2
-                        ? "text-green-500"
-                        : "text-stone-500"
+                          ? "text-blue-500"
+                          : index === 2
+                            ? "text-green-500"
+                            : "text-stone-500"
                     }`}
                   >
                     {item.icon}
@@ -120,10 +120,10 @@ export default function AboutMe() {
                       index === 0
                         ? "text-orange-500"
                         : index === 1
-                        ? "text-blue-500"
-                        : index === 2
-                        ? "text-green-500"
-                        : "text-stone-500"
+                          ? "text-blue-500"
+                          : index === 2
+                            ? "text-green-500"
+                            : "text-stone-500"
                     }`}
                   >
                     {item.label}
@@ -143,30 +143,24 @@ export default function AboutMe() {
           className="bg-gray-200 dark:bg-gray-900 p-8 shadow-gray-500 rounded-xl shadow-lg font-sans hover:scale-105 transition-transform duration-350 ease-in-out hover:shadow-yellow-500"
         >
           <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            A passionate <strong>Software Engineer</strong> with over 3.9 years
-            of experience in developing high-performance, scalable web
-            applications. My expertise lies in leveraging modern technologies
-            such as{" "}
+            A passionate <strong>Full Stack Software Engineer</strong>{" "}
+            specializing in building scalable mobile, web, and desktop
+            applications. I work with{" "}
             <strong>
-              React.js, Next.js, Node.js, Express.js, MongoDB, RTK Query, React
-              Query, and JavaScript
-            </strong>
-            , along with state management solutions like <strong>Redux</strong>.
-            I specialize in crafting seamless user experiences with responsive
-            and optimized designs.
-            <br />
-            <br />I have extensive experience working with UI frameworks
-            including{" "}
-            <strong>Tailwind CSS, Bootstrap, Material UI, and Chakra UI</strong>
-            , ensuring visually appealing and user-friendly interfaces adaptable
-            to any device.
+              React, React Native, TypeScript, Node.js, FastAPI, and PostgreSQL
+            </strong>{" "}
+            to develop high-performance systems deployed on AWS.
             <br />
             <br />
-            With a strong background in API development, integration, and clean,
-            maintainable code, I have contributed to well-known platforms like{" "}
-            <strong>CricTracker, SportsBuzz, and Epiko Market</strong>. My
-            commitment to software engineering drives me to deliver efficient
-            and scalable digital solutions.
+            Currently developing EEG-based wellness platforms, I build
+            applications that connect with BLE devices, process raw brain signal
+            data, and generate real-time focus and stress insights. I also
+            design clean APIs, manage database migrations, and handle
+            infrastructure using <strong>Docker and Terraform</strong>.
+            <br />
+            <br />I focus on clean architecture, responsive UI using{" "}
+            <strong>Tailwind CSS</strong>, and delivering reliable,
+            production-ready software solutions.
           </p>
         </motion.div>
 
