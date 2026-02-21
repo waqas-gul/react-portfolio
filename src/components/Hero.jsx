@@ -15,7 +15,9 @@ import {
 } from "react-icons/si";
 
 const titles = [
+  "I am Full Stack software Engineer",
   "I am Full Stack Developer",
+  "I am full stack mobile app developer",
   "I am Frontend Specialist",
   "I am WordPress Developer",
   "I am Web Designer",
@@ -262,19 +264,19 @@ const Hero = () => {
         {/* Right Side - Profile Image & Floating Icons */}
         <motion.div
           ref={refRight}
-          initial={{ x: 400, opacity: 0 }}
+          initial={{ x: 0, opacity: 1 }}
           animate={controlsRight}
           className="w-full md:w-1/2 flex flex-col items-center font-mono relative mt-4 lg:mt-10 md:mt-0"
         >
           <img
-            src="waqas.png"
+            src="/waqas.png"
             alt="Waqas Gul"
-            className="w-64 bg-gray-200 h-64 dark:bg-gray-900 rounded-full border-2 cursor-pointer border-yellow-400 object-cover transition-transform duration-300 hover:scale-110 shadow-[0_0_70px_rgba(255,215,0,0.6)] relative z-10"
+            className="w-40 h-40 sm:w-64 sm:h-64 bg-gray-200 dark:bg-gray-900 rounded-full border-2 cursor-pointer border-yellow-400 object-cover transition-transform duration-300 hover:scale-110 shadow-[0_0_70px_rgba(255,215,0,0.6)] mt-4 sm:mt-0 relative z-10"
           />
 
           {/* Floating Tech Icons */}
           <motion.div
-            className="absolute top-0 lg:left-10 -left-3 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute top-0 lg:left-10 -left-3 sm:left-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -282,7 +284,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute top-16 lg:left-0 -left-10 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute top-16 lg:left-0 -left-10 sm:left-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.2 }}
           >
@@ -290,7 +292,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-16 lg:left-0 -left-5 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute bottom-16 lg:left-0 -left-5 sm:left-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.4 }}
           >
@@ -298,7 +300,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-0 lg:left-10 -left-2 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute bottom-0 lg:left-10 -left-2 sm:left-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.6 }}
           >
@@ -307,7 +309,7 @@ const Hero = () => {
 
           {/* Other Technologies */}
           <motion.div
-            className="absolute top-0 lg:right-10 -right-5 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute top-0 lg:right-10 -right-5 sm:right-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -315,7 +317,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute top-16 lg:right-0 -right-6 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute top-16 lg:right-0 -right-6 sm:right-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.2 }}
           >
@@ -323,7 +325,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-16 lg:right-0 -right-8 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute bottom-16 lg:right-0 -right-8 sm:right-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.4 }}
           >
@@ -331,7 +333,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-0 lg:right-10 -right-5 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
+            className="absolute bottom-0 lg:right-10 -right-5 sm:right-0 shadow-gray-500 bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg hover:shadow-amber-500 hover:scale-105 ease-in-out z-10"
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 2, delay: 0.6 }}
           >
