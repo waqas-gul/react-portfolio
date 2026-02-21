@@ -94,7 +94,7 @@ const projects = [
       },
     ],
   },
-   {
+  {
     name: "FlowAdmin React - Free Tailwind Admin Dashboard",
     image: "/dashboard.png",
     Glink: "https://github.com/waqas-gul/react-tailwind-admin-dashboard-main",
@@ -112,7 +112,7 @@ const projects = [
         name: "Tailwindcss",
       },
       {
-        icon: <SiTypescript  className="text-blue-500" />,
+        icon: <SiTypescript className="text-blue-500" />,
         name: "typeScript",
       },
     ],
@@ -166,7 +166,7 @@ export default function Projects() {
   const startIndex = page * itemsPerPage;
   const displayedProjects = projects.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + itemsPerPage,
   );
   const totalPages = Math.ceil(projects.length / itemsPerPage);
 
@@ -186,7 +186,8 @@ export default function Projects() {
           </h2>
         </div>
         <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
-          Showcase of my recent projects built with modern technologies and best practices
+          Showcase of my recent projects built with modern technologies and best
+          practices
         </p>
       </motion.div>
 
@@ -323,7 +324,11 @@ export default function Projects() {
 
       {/* Page Info */}
       <div className="text-center mt-8 text-gray-600 dark:text-gray-400">
-        <p>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, projects.length)} of {projects.length} projects</p>
+        <p>
+          Showing {startIndex + 1} to{" "}
+          {Math.min(startIndex + itemsPerPage, projects.length)} of{" "}
+          {projects.length} projects
+        </p>
       </div>
     </div>
   );
