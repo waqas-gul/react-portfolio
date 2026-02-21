@@ -206,7 +206,7 @@ const Hero = () => {
       />
 
       {/* Content with higher z-index */}
-      <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between">
+      <div className="relative z-10 w-full lg:h-[250px] h-[570px] flex flex-col sm:flex-row items-center justify-between">
         {/* Left Section */}
         <motion.div
           ref={refLeft}
@@ -266,7 +266,7 @@ const Hero = () => {
           ref={refRight}
           initial={{ x: 0, opacity: 1 }}
           animate={controlsRight}
-          className="w-full md:w-1/2 flex flex-col items-center font-mono relative mt-4 lg:mt-10 md:mt-0"
+          className="w-full h-full md:w-1/2 flex flex-col items-center font-mono relative mt-4 lg:mt-10 md:mt-0"
         >
           <img
             src="/waqas.png"
