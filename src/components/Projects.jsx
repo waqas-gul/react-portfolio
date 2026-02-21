@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FaInfoCircle } from "react-icons/fa";
 import { GrSystem } from "react-icons/gr";
 import { GiMaterialsScience } from "react-icons/gi";
 import { SiNextdotjs, SiRedux, SiSass, SiJavascript } from "react-icons/si";
@@ -16,6 +15,7 @@ import { FaHtml5 } from "react-icons/fa";
 import { SiCloudinary } from "react-icons/si";
 import { BiLogoPostgresql } from "react-icons/bi";
 import { SiTypescript } from "react-icons/si";
+import { motion } from "framer-motion";
 const projects = [
   {
     name: "ITSolera (Sofyware Company.)",
@@ -162,111 +162,168 @@ const projects = [
 
 export default function Projects() {
   const [page, setPage] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const itemsPerPage = 3;
   const startIndex = page * itemsPerPage;
   const displayedProjects = projects.slice(
     startIndex,
     startIndex + itemsPerPage
   );
-
-  const handlePageChange = (newPage, e) => {
-    e.preventDefault();
-    if (isAnimating || newPage === page) return;
-
-    setIsAnimating(true);
-    setPage(newPage);
-
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 300);
-  };
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
 
   return (
-    <div className="min-h-screen dark:bg-gray-900 bg-gray-200 py-16 px-10 text-center">
-      <h2 className="text-4xl flex items-center justify-center gap-3 font-extrabold font-sans mb-8 text-center bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-        <GrSystem className="text-orange-500 font-extrabold text-4xl font-mono animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Projects
-      </h2>
+    <div className="min-h-screen dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 bg-gradient-to-b from-gray-100 to-gray-50 py-20 px-4 sm:px-10">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-16"
+      >
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <GrSystem className="text-orange-500 text-4xl animate-pulse" />
+          <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent">
+            Projects
+          </h2>
+        </div>
+        <p className="text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
+          Showcase of my recent projects built with modern technologies and best practices
+        </p>
+      </motion.div>
 
-      <div className="space-y-8 max-w-4xl mx-auto relative min-h-[600px]">
+      {/* Projects Grid */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
         {displayedProjects.map((project, index) => (
-          <div
+          <motion.div
             key={`${page}-${index}`}
-            className={`text-white w-full bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col gap-4 transition-all duration-300 ease-in-out ${
-              isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
-            } hover:scale-105 hover:shadow-yellow-500 shadow-gray-500`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group h-full"
           >
-            <div className="flex flex-col md:flex-row items-center w-full">
-              <img
-                src={project.image}
-                alt={project.name}
-                className="w-full md:w-1/3 rounded-lg shadow-md object-cover max-h-64"
-              />
-              <div className="md:ml-6 mt-4 md:mt-0 text-left w-full">
-                <div className="flex justify-between items-center w-full">
-                  <h3 className="text-2xl font-bold text-yellow-500 font-sans">
-                    {project.name}
-                  </h3>
-                  <FaInfoCircle className="text-xl cursor-pointer text-gray-400 dark:text-gray-200 hover:text-yellow-400" />
-                </div>
-                <p className="mt-2 text-sm opacity-80 font-mono">Website</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.technologies.map((tech, idx) => (
-                    <span
+            <div className="relative h-full bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+              {/* Image Container */}
+              <div className="relative h-56 overflow-hidden bg-gray-200 dark:bg-gray-700">
+                <img
+                  src={project.image}
+                  alt={project.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-yellow-400 group-hover:to-orange-500 group-hover:bg-clip-text transition-all duration-300">
+                  {project.name}
+                </h3>
+
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.technologies.slice(0, 4).map((tech, idx) => (
+                    <motion.div
                       key={idx}
-                      className="flex font-mono items-center gap-2 px-3 py-1 my-0.5 bg-gray-300 dark:bg-gray-600 text-white rounded-full text-xs font-semibold shadow-md shadow-gray-400"
+                      whileHover={{ scale: 1.1 }}
+                      className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-200 hover:shadow-md transition-shadow"
                     >
-                      {tech.icon} {tech.name}
-                    </span>
+                      {tech.icon}
+                      <span>{tech.name}</span>
+                    </motion.div>
                   ))}
+                  {project.technologies.length > 4 && (
+                    <div className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-200">
+                      +{project.technologies.length - 4}
+                    </div>
+                  )}
                 </div>
+
+                {/* Buttons */}
                 <div className="flex gap-3">
-                  <a
-                    href={project.Glink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex lg:text-base text-[.6rem] items-center lg:px-4 px-2 cursor-pointer gap-2 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 font-mono shadow-lg hover:shadow-amber-500 active:scale-95 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-6"
-                  >
-                    <FaGithubSquare className="font-bold lg:text-2xl text-xl text-gray-800 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-                    Go to Github
-                  </a>
-                  <a
-                    href={project.Wlink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 lg:text-base text-[.6rem] inline-flex items-center lg:px-4 px-2 py-2 bg-transparent hover:bg-gray-700 shadow-md shadow-orange-400 border cursor-pointer border-yellow-400 text-yellow-400 font-bold rounded-lg relative overflow-hidden transition-all duration-300 ease-in-out hover:bg-gradient-to-r from-yellow-500 font-sans to-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(255,215,0,0.8)] hover:scale-105 hover:rotate-6"
-                  >
-                    Go to {project.name.split(" ").slice(0, 4).join(" ")}
-                    {project.name.split(" ").length > 4 ? "..." : ""}
-                    <FaLocationArrow className="lg:ml-2 ml-1 text-xl text-gray-400 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-                  </a>
+                  {project.Glink && (
+                    <motion.a
+                      href={project.Glink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-700 dark:to-gray-900 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all duration-300"
+                    >
+                      <FaGithubSquare className="text-lg" />
+                      <span className="hidden sm:inline">Github</span>
+                    </motion.a>
+                  )}
+                  {project.Wlink && (
+                    <motion.a
+                      href={project.Wlink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-lg font-semibold text-sm hover:shadow-lg hover:from-yellow-500 hover:to-orange-600 transition-all duration-300"
+                    >
+                      <FaLocationArrow className="text-lg" />
+                      <span className="hidden sm:inline">Visit</span>
+                    </motion.a>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Pagination */}
-      <div className="mt-10 flex justify-center space-x-3">
-        {Array.from(
-          { length: Math.ceil(projects.length / itemsPerPage) },
-          (_, index) => (
-            <button
-              key={index}
-              onClick={(e) => handlePageChange(index, e)}
-              className={`px-4 py-2 rounded-full transition-all duration-300 ${
-                page === index
-                  ? "bg-gradient-to-t from-yellow-500 to-orange-500 text-black transform scale-110"
-                  : "dark:bg-gray-600 bg-gray-400 text-white hover:scale-105"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center justify-center gap-4 flex-wrap"
+      >
+        {/* Previous Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setPage(Math.max(0, page - 1))}
+          disabled={page === 0}
+          className="px-6 py-2 rounded-lg font-semibold bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+        >
+          ← Previous
+        </motion.button>
+
+        {/* Page Numbers */}
+        <div className="flex gap-2 flex-wrap">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <motion.button
+              key={i}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setPage(i)}
+              className={`w-10 h-10 rounded-lg font-semibold transition-all duration-300 ${
+                page === i
+                  ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-lg"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
-              disabled={isAnimating}
             >
-              {index + 1}
-            </button>
-          )
-        )}
+              {i + 1}
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
+          disabled={page === totalPages - 1}
+          className="px-6 py-2 rounded-lg font-semibold bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300"
+        >
+          Next →
+        </motion.button>
+      </motion.div>
+
+      {/* Page Info */}
+      <div className="text-center mt-8 text-gray-600 dark:text-gray-400">
+        <p>Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, projects.length)} of {projects.length} projects</p>
       </div>
     </div>
   );
