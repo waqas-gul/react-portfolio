@@ -2016,6 +2016,373 @@ html.dark #contact [class*="bg-gray-700"] {
     .exp-card { transition: none; }
 }
 
+/* ============================================================
+   Resume CTA panel — premium horizontal liquid-glass panel
+   Cyan/blue/purple identity, matches hero/about/education/exp
+   ============================================================ */
+
+.resume-section {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.resume-ambient {
+    background:
+        radial-gradient(50% 40% at 12% 20%, color-mix(in srgb, var(--hero-accent, #2563EB) 16%, transparent), transparent 65%),
+        radial-gradient(50% 40% at 88% 80%, color-mix(in srgb, var(--hero-accent-2, #7C3AED) 14%, transparent), transparent 65%);
+    opacity: 0.6;
+}
+
+.dark .resume-ambient { opacity: 0.85; }
+
+/* Main glass panel — split into left + right on md+ */
+.resume-panel {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px;
+    border-radius: 24px;
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.08), transparent 55%),
+        radial-gradient(120% 80% at 100% 100%, rgba(167, 139, 250, 0.08), transparent 55%),
+        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 20px 70px rgba(15, 23, 42, 0.12);
+    transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .resume-panel {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.10), transparent 55%),
+        radial-gradient(120% 80% at 100% 100%, rgba(167, 139, 250, 0.10), transparent 55%),
+        rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(125, 211, 252, 0.15);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 20px 70px rgba(0, 0, 0, 0.30);
+}
+
+.resume-panel:hover {
+    border-color: rgba(56, 189, 248, 0.30);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 24px 80px rgba(15, 23, 42, 0.14);
+}
+
+.dark .resume-panel:hover {
+    border-color: rgba(56, 189, 248, 0.30);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 24px 80px rgba(0, 0, 0, 0.4),
+        0 0 60px -10px rgba(56, 189, 248, 0.14);
+}
+
+/* Top inner highlight line (pseudo) */
+.resume-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 32px;
+    right: 32px;
+    height: 1px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.7), rgba(167, 139, 250, 0.7), transparent);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@media (min-width: 768px) {
+    .resume-panel {
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 36px;
+        padding: 40px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .resume-panel { padding: 48px; gap: 48px; }
+}
+
+/* Sit children above the gradient layers */
+.resume-panel > * { position: relative; z-index: 1; }
+
+/* LEFT side */
+.resume-panel-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.resume-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+}
+
+.dark .resume-eyebrow {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.resume-title {
+    font-size: clamp(26px, 3.6vw, 38px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+}
+
+.dark .resume-title { color: #F8FAFC; }
+
+/* Small gradient accent line under heading */
+.resume-accent-line {
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin-top: 14px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #38BDF8, #818CF8);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+
+.resume-subtitle {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #64748B;
+}
+
+.dark .resume-subtitle { color: #94A3B8; }
+
+@media (min-width: 640px) {
+    .resume-subtitle { font-size: 16px; }
+}
+
+/* Action buttons */
+.resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.resume-btn-primary,
+.resume-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    height: 46px;
+    padding: 0 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    outline: none;
+    cursor: pointer;
+    transition:
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Primary — cyan/blue gradient */
+.resume-btn-primary {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    border: 1px solid transparent;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 12px 28px -10px rgba(37, 99, 235, 0.55);
+}
+
+.resume-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 18px 38px -12px rgba(37, 99, 235, 0.7);
+}
+
+.dark .resume-btn-primary {
+    background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 12px 28px -10px rgba(56, 189, 248, 0.45);
+}
+
+.dark .resume-btn-primary:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 18px 38px -12px rgba(56, 189, 248, 0.65);
+}
+
+/* Secondary — glass outline with cyan border */
+.resume-btn-ghost {
+    color: var(--hero-accent, #2563EB);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 40%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.resume-btn-ghost:hover {
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, rgba(255,255,255,0.6));
+    border-color: color-mix(in srgb, var(--hero-accent-2, #7C3AED) 55%, transparent);
+    box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--hero-accent, #2563EB) 50%, transparent);
+}
+
+.dark .resume-btn-ghost {
+    color: #E2E8F0;
+    background: rgba(17, 24, 39, 0.55);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.dark .resume-btn-ghost:hover {
+    color: #F8FAFC;
+    background: rgba(56, 189, 248, 0.10);
+    border-color: rgba(167, 139, 250, 0.55);
+    box-shadow: 0 14px 30px -12px rgba(56, 189, 248, 0.45);
+}
+
+.resume-btn-primary:focus-visible,
+.resume-btn-ghost:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--hero-accent, #2563EB),
+        0 0 0 4px color-mix(in srgb, var(--hero-accent, #2563EB) 35%, transparent);
+}
+
+/* RIGHT side — profile + chips */
+.resume-panel-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .resume-panel-right {
+        border-left: 1px solid rgba(15, 23, 42, 0.06);
+        padding-left: 32px;
+    }
+    .dark .resume-panel-right {
+        border-left: 1px solid rgba(148, 163, 184, 0.10);
+    }
+}
+
+/* Avatar with circular gradient ring + soft glow */
+.resume-avatar-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+}
+
+.resume-avatar-glow {
+    position: absolute;
+    inset: -16px;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.30) 0%, rgba(167, 139, 250, 0.18) 50%, transparent 75%);
+    filter: blur(18px);
+    z-index: 0;
+}
+
+.dark .resume-avatar-glow {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(167, 139, 250, 0.22) 50%, transparent 75%);
+}
+
+.resume-avatar-ring {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    padding: 2px;
+    background: linear-gradient(135deg, #38BDF8, #A78BFA);
+    box-shadow:
+        0 14px 36px -12px rgba(56, 189, 248, 0.45),
+        0 0 0 1px rgba(167, 139, 250, 0.20);
+}
+
+.resume-avatar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+    object-position: center top;
+    background: #0B1120;
+}
+
+.resume-name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #0F172A;
+}
+
+.dark .resume-name { color: #F8FAFC; }
+
+.resume-role {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #64748B;
+    max-width: 280px;
+}
+
+.dark .resume-role { color: #94A3B8; }
+
+/* Credibility chips */
+.resume-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 320px;
+}
+
+.resume-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 11px;
+    border-radius: 9999px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: #475569;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.dark .resume-chip {
+    color: #CBD5E1;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .resume-panel,
+    .resume-btn-primary,
+    .resume-btn-ghost { transition: none; }
+}
+
 /* Floating skill badge — liquid glass pill */
 .hero-badge {
     color: var(--hero-ink);
