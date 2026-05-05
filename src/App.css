@@ -1141,6 +1141,586 @@ html.dark #contact [class*="bg-gray-700"] {
     .hero-stat-divider { height: 22px; }
 }
 
+/* ============================================================
+   About Me — premium liquid-glass system, mirrors hero identity
+   (cyan/purple in dark, blue/purple in light)
+   ============================================================ */
+
+.about-section {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.about-ambient {
+    background:
+        radial-gradient(45% 35% at 12% 18%, color-mix(in srgb, var(--hero-accent, #2563EB) 14%, transparent), transparent 65%),
+        radial-gradient(45% 35% at 88% 82%, color-mix(in srgb, var(--hero-accent-2, #7C3AED) 12%, transparent), transparent 65%);
+    opacity: 0.6;
+}
+
+.dark .about-ambient { opacity: 0.85; }
+
+/* Eyebrow pill above the title (matches hero pattern) */
+.about-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+}
+
+.dark .about-eyebrow {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.about-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+}
+
+.dark .about-title { color: #F8FAFC; }
+
+.about-subtitle {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #64748B;
+}
+
+.dark .about-subtitle { color: #94A3B8; }
+
+@media (min-width: 640px) {
+    .about-subtitle { font-size: 16px; }
+}
+
+/* Liquid-glass card — used everywhere in About */
+.about-card {
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    border-radius: 18px;
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.06), transparent 55%),
+        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 18px 50px rgba(15, 23, 42, 0.10);
+    transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .about-card {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.10), transparent 55%),
+        rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 18px 50px rgba(0, 0, 0, 0.25);
+}
+
+.about-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--hero-accent, #2563EB) 40%, transparent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 28px 64px rgba(15, 23, 42, 0.14);
+}
+
+.dark .about-card:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 28px 64px rgba(56, 189, 248, 0.14),
+        0 0 60px -20px rgba(249, 115, 22, 0.16);
+}
+
+@media (min-width: 640px) {
+    .about-card { padding: 28px; }
+}
+
+/* Top accent rail (cyan→purple→orange hairline on hover) */
+.about-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 1px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--hero-accent, #2563EB), var(--hero-accent-2, #7C3AED), #F97316, transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+
+.about-card:hover::before { opacity: 0.85; }
+
+/* Diagonal shine sweep on hover */
+.about-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.10) 48%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.10) 52%,
+        transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dark .about-card::after {
+    background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(125, 211, 252, 0.06) 48%,
+        rgba(125, 211, 252, 0.12) 50%,
+        rgba(125, 211, 252, 0.06) 52%,
+        transparent 70%
+    );
+}
+
+.about-card:hover::after {
+    transform: translateX(120%);
+    opacity: 1;
+}
+
+.about-card > * { position: relative; z-index: 2; }
+
+/* Section / card titles */
+.about-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--hero-accent, #2563EB);
+    margin-bottom: 14px;
+}
+
+.dark .about-card-title { color: #38BDF8; }
+
+.about-card-body {
+    color: #334155;
+}
+
+.dark .about-card-body { color: #CBD5E1; }
+
+.about-card-body strong {
+    color: #0F172A;
+    font-weight: 600;
+}
+
+.dark .about-card-body strong { color: #F8FAFC; }
+
+/* Stat card — Years / Projects */
+.about-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    min-height: 180px;
+}
+
+.about-stat-value {
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.about-stat-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748B;
+    letter-spacing: 0.01em;
+}
+
+.dark .about-stat-label { color: #CBD5E1; }
+
+/* I Love card — interest items inside */
+.about-love-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #1E293B;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dark .about-love-item {
+    color: #E2E8F0;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.about-love-item:hover {
+    transform: translateX(2px);
+    border-color: color-mix(in srgb, var(--hero-accent, #2563EB) 40%, transparent);
+}
+
+.dark .about-love-item:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(15, 23, 42, 0.6);
+}
+
+/* Contact CTA — cyan/blue gradient (matches hero primary button) */
+.about-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 50px;
+    padding: 0 26px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    border: 1px solid transparent;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 14px 32px -10px rgba(37, 99, 235, 0.55);
+    transition:
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+}
+
+.about-cta:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 22px 50px -12px rgba(37, 99, 235, 0.70);
+}
+
+.dark .about-cta {
+    background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 14px 32px -10px rgba(56, 189, 248, 0.45);
+}
+
+.dark .about-cta:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 22px 50px -12px rgba(56, 189, 248, 0.65);
+}
+
+.about-cta:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--hero-accent, #2563EB),
+        0 0 0 4px color-mix(in srgb, var(--hero-accent, #2563EB) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-card,
+    .about-cta,
+    .about-love-item { transition: none; }
+}
+
+/* ============================================================
+   Education — premium liquid-glass cards, hero/about consistent
+   Title keeps the orange identity; cards use cyan-tinted glass
+   with an orange accent on hover.
+   ============================================================ */
+
+.education-section {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.education-ambient {
+    background:
+        radial-gradient(45% 35% at 12% 20%, color-mix(in srgb, var(--hero-accent, #2563EB) 14%, transparent), transparent 65%),
+        radial-gradient(45% 35% at 88% 80%, color-mix(in srgb, var(--hero-accent-2, #7C3AED) 12%, transparent), transparent 65%);
+    opacity: 0.6;
+}
+
+.dark .education-ambient { opacity: 0.85; }
+
+/* Eyebrow pill — cyan/blue glass (matches About/Hero) */
+.education-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+}
+
+.dark .education-eyebrow {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.education-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+}
+
+.dark .education-title { color: #F8FAFC; }
+
+.education-subtitle {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #64748B;
+}
+
+.dark .education-subtitle { color: #94A3B8; }
+
+@media (min-width: 640px) {
+    .education-subtitle { font-size: 16px; }
+}
+
+/* Education card — liquid glass with subtle accent line */
+.edu-card {
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.06), transparent 55%),
+        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 18px 50px rgba(15, 23, 42, 0.10);
+    transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .edu-card {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.10), transparent 55%),
+        rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(125, 211, 252, 0.15);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+.edu-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 28px 64px rgba(15, 23, 42, 0.14);
+}
+
+.dark .edu-card:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 28px 64px rgba(0, 0, 0, 0.4),
+        0 0 60px -20px rgba(129, 140, 248, 0.22);
+}
+
+@media (min-width: 640px) {
+    .edu-card { padding: 28px; }
+}
+
+/* Left accent line — cyan → indigo gradient (matches hero/about) */
+.edu-card::before {
+    content: "";
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 0;
+    width: 3px;
+    border-radius: 0 4px 4px 0;
+    background: linear-gradient(180deg, #38BDF8, #818CF8);
+    opacity: 0.65;
+    transition: opacity 0.4s ease, box-shadow 0.4s ease;
+}
+
+.edu-card:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.55);
+}
+
+/* Top shine sweep on hover */
+.edu-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.10) 48%,
+        rgba(255, 255, 255, 0.18) 50%,
+        rgba(255, 255, 255, 0.10) 52%,
+        transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dark .edu-card::after {
+    background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(125, 211, 252, 0.06) 48%,
+        rgba(125, 211, 252, 0.12) 50%,
+        rgba(125, 211, 252, 0.06) 52%,
+        transparent 70%
+    );
+}
+
+.edu-card:hover::after {
+    transform: translateX(120%);
+    opacity: 1;
+}
+
+.edu-card > * { position: relative; z-index: 2; }
+
+/* Date pill (cyan/blue) */
+.edu-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+}
+
+.dark .edu-date {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+/* Level/status pill (indigo/purple — secondary accent) */
+.edu-level {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #6366F1;
+    background: rgba(129, 140, 248, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.28);
+}
+
+.dark .edu-level {
+    color: #A5B4FC;
+    background: rgba(129, 140, 248, 0.12);
+    border: 1px solid rgba(129, 140, 248, 0.28);
+}
+
+/* Degree title */
+.edu-degree {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #0F172A;
+    margin-top: 4px;
+}
+
+.dark .edu-degree { color: #F8FAFC; }
+
+@media (min-width: 640px) {
+    .edu-degree { font-size: 24px; }
+}
+
+/* Details list */
+.edu-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.edu-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #475569;
+}
+
+.dark .edu-detail { color: #CBD5E1; }
+
+.edu-detail-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    font-size: 14px;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 22%, transparent);
+}
+
+.dark .edu-detail-icon {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .edu-card { transition: none; }
+}
+
 /* Floating skill badge — liquid glass pill */
 .hero-badge {
     color: var(--hero-ink);

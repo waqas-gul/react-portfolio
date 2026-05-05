@@ -1,117 +1,131 @@
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { FaGraduationCap } from "react-icons/fa";
 import { BsFillCalendarFill } from "react-icons/bs";
-import { MdLocationOn } from "react-icons/md";
-import { MdOutlineGrade } from "react-icons/md";
-import { MdCastForEducation } from "react-icons/md";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { MdLocationOn, MdOutlineGrade, MdCastForEducation } from "react-icons/md";
+
+// Education entries — content unchanged, just structured as data
+const educationData = [
+  {
+    period: "2019 - 2021",
+    level: "FSc",
+    degree: "Free Engineering",
+    institution: "Govt Degree College GulAbad",
+    location: "Gullabad, Dir Lower, KPK, Pakistan",
+    grade: "Secured 908 out of 1100 marks.",
+  },
+  {
+    period: "2021 - 2025",
+    level: "Graduation",
+    degree: "Bachelor of Software Engineering",
+    institution: "University Malakand",
+    location: "Chakdara, Dir Lower, KPK, Pakistan",
+    grade: "Earned a GPA of 3.74 out of 4.00",
+  },
+];
+
+// Stagger variants
+const containerVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+};
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function Education() {
-  // Animation controls for the title and cards
-  const controlsTitle = useAnimation();
-  const controlsCards = useAnimation();
-
-  // Detect when the title and cards are in view
-  const [refTitle, inViewTitle] = useInView({ triggerOnce: true });
-  const [refCards, inViewCards] = useInView({ triggerOnce: true });
-
-  // Trigger animations when elements are in view
-  useEffect(() => {
-    if (inViewTitle) {
-      controlsTitle.start({ opacity: 1, y: 0 });
-    }
-    if (inViewCards) {
-      controlsCards.start({ opacity: 1, y: 0 });
-    }
-  }, [controlsTitle, controlsCards, inViewTitle, inViewCards]);
-
   return (
-    <div className="mp-10 flex flex-col items-center justify-center py-4 bg-white dark:bg-gray-900 transition-all duration-300">
-      {/* Title */}
-      <motion.h1
-        ref={refTitle}
-        initial={{ opacity: 0, y: -60 }}
-        animate={controlsTitle}
-        transition={{ duration: 0.8 }}
-        className="text-4xl bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent my-10 font-bold font-sans text-center flex items-center justify-center gap-3"
-      >
-        <MdCastForEducation className="text-orange-500 animate-bounce font-mono transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Education
-      </motion.h1>
+    <div className="education-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+      {/* Subtle ambient gradient wash */}
+      <div aria-hidden="true" className="education-ambient pointer-events-none absolute inset-0" />
 
-      {/* Cards */}
-      <motion.div
-        ref={refCards}
-        initial={{ opacity: 0, y: 150 }}
-        animate={controlsCards}
-        transition={{ duration: 0.8 }}
-        className="grid md:grid-cols-2 gap-6 w-11/12 max-w-5xl mb-10"
-      >
-        {/* Bachelor's Degree Card */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
+        {/* Header */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-gray-200 dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col gap-4 hover:scale-100 transition-transform duration-300 ease-in-out hover:shadow-yellow-500 shadow-gray-500"
+          initial={{ opacity: 0, y: -22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-2xl text-center"
         >
-          <div className="flex items-center gap-3">
-            <div className="flex gap-3 items-center font-mono text-yellow-500 justify-center px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700">
-              <BsFillCalendarFill className="text-lg" />
-              <span className="font-semibold text-orange-400">2019 - 2021</span>
-            </div>
-            <span className="ml-auto font-sans px-3 py-1 text-sm rounded-full bg-gray-100 font-bold dark:bg-gray-700 dark:text-white">
-              🎓 FSc
+          <span className="education-eyebrow">
+            <MdCastForEducation className="text-[14px]" aria-hidden="true" />
+            Education
+          </span>
+          <h2 className="education-title mt-4 flex items-center justify-center gap-3">
+            <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#818CF8] bg-clip-text text-transparent">
+              Education
             </span>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white font-sans">
-            Free Engineering
           </h2>
-          <p className="flex items-center gap-2 text-gray-700 font-mono dark:text-gray-300">
-            <FaGraduationCap className="text-yellow-500 font-extrabold text-3xl" />
-            Govt Degree College GulAbad
-          </p>
-          <p className="flex items-center gap-2 text-gray-700 font-mono dark:text-gray-300">
-            <MdLocationOn className="text-yellow-500 font-extrabold text-3xl" />
-            Gullabad, Dir Lower, KPK, Pakistan
-          </p>
-          <p className="flex items-center gap-2 text-gray-700 font-mono dark:text-gray-300">
-            <MdOutlineGrade className="text-yellow-500 font-extrabold text-3xl" />
-            Secured 908 out of 1100 marks.
+          <p className="education-subtitle mx-auto mt-4 max-w-xl">
+            Academic foundation and continuous learning behind my engineering
+            journey.
           </p>
         </motion.div>
 
-        {/* Master's Degree Card */}
+        {/* Cards grid */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-gray-200 dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col gap-4 hover:scale-100 transition-transform duration-300 ease-in-out hover:shadow-yellow-500 shadow-gray-500"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2"
         >
-          <div className="flex items-center gap-3">
-            <div className="flex gap-3 items-center text-yellow-500 justify-center px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700">
-              <BsFillCalendarFill className="text-lg" />
-              <span className="font-semibold text-orange-400 font-mono">
-                2021 - 2025
-              </span>
-            </div>
-            <span className="ml-auto px-3 py-1 text-sm rounded-full font-sans font-bold bg-gray-100 dark:bg-gray-700 dark:text-white">
-              🎓 Graduation
-            </span>
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-white font-sans">
-            Bachelor of Software Engineering
-          </h2>
-          <p className="flex items-center gap-2 text-gray-600 font-mono dark:text-gray-300">
-            <FaGraduationCap className="text-yellow-500 font-extrabold text-3xl" />
-            University Malakand
-          </p>
-          <p className="flex items-center gap-2 text-gray-600 font-mono dark:text-gray-300">
-            <MdLocationOn className="text-yellow-500 font-extrabold text-3xl" />
-            Chakdara, Dir Lower, KPK, Pakistan
-          </p>
-          <p className="flex items-center gap-2 text-gray-700 font-mono dark:text-gray-300">
-            <MdOutlineGrade className="text-yellow-500 font-extrabold text-3xl" />
-            Earned a GPA of 3.74 out of 4.00
-          </p>
+          {educationData.map((entry) => (
+            <motion.article
+              key={entry.degree}
+              variants={cardVariants}
+              className="edu-card"
+            >
+              {/* Top row: date pill + level pill */}
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="edu-date">
+                  <BsFillCalendarFill className="text-[12px]" aria-hidden="true" />
+                  {entry.period}
+                </span>
+                <span className="edu-level">
+                  <FaGraduationCap className="text-[12px]" aria-hidden="true" />
+                  {entry.level}
+                </span>
+              </div>
+
+              {/* Degree title */}
+              <h3 className="edu-degree">{entry.degree}</h3>
+
+              {/* Details */}
+              <ul className="edu-details">
+                <li className="edu-detail">
+                  <span className="edu-detail-icon">
+                    <FaGraduationCap aria-hidden="true" />
+                  </span>
+                  <span>{entry.institution}</span>
+                </li>
+                <li className="edu-detail">
+                  <span className="edu-detail-icon">
+                    <MdLocationOn aria-hidden="true" />
+                  </span>
+                  <span>{entry.location}</span>
+                </li>
+                <li className="edu-detail">
+                  <span className="edu-detail-icon">
+                    <MdOutlineGrade aria-hidden="true" />
+                  </span>
+                  <span>{entry.grade}</span>
+                </li>
+              </ul>
+            </motion.article>
+          ))}
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
