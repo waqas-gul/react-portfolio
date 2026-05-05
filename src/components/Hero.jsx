@@ -217,7 +217,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-between overflow-hidden bg-[#F8FAFC] px-10 py-16 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:flex-row md:h-[50vh] lg:h-[95vh] lg:px-20 lg:py-16"
+      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] px-10 pt-28 pb-16 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:flex-row lg:px-20"
     >
       {/* Network / particle background */}
       <canvas
