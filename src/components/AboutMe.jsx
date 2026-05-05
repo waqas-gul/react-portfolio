@@ -1,17 +1,21 @@
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
-import { SiSpotify, SiCashapp, SiGooglestreetview } from "react-icons/si";
-import { FaMountain } from "react-icons/fa";
-import { HiOutlineUserCircle } from "react-icons/hi2";
-import { FiArrowRight } from "react-icons/fi";
+import {
+  HiOutlineUserCircle,
+  HiOutlineMusicalNote,
+  HiOutlineGlobeAlt,
+  HiOutlineBanknotes,
+  HiOutlineArrowLongRight,
+} from "react-icons/hi2";
+import { Mountain } from "lucide-react";
 
-// Interests (content unchanged)
+// Interests (content unchanged) — clean outline icons
 const interests = [
-  { label: "Listening to Music", icon: <SiSpotify />,          tone: "text-emerald-400" },
-  { label: "Travelling",         icon: <SiGooglestreetview />, tone: "text-sky-400"     },
-  { label: "Mountains",          icon: <FaMountain />,         tone: "text-violet-400"  },
-  { label: "Money",              icon: <SiCashapp />,          tone: "text-emerald-300" },
+  { label: "Listening to Music", icon: <HiOutlineMusicalNote />, tone: "text-cyan-400"    },
+  { label: "Travelling",         icon: <HiOutlineGlobeAlt />,    tone: "text-sky-400"     },
+  { label: "Mountains",          icon: <Mountain strokeWidth={2} />, tone: "text-violet-400" },
+  { label: "Money",              icon: <HiOutlineBanknotes />,   tone: "text-emerald-400" },
 ];
 
 const containerVariants = {
@@ -53,7 +57,7 @@ export default function AboutMe() {
           className="mx-auto max-w-2xl text-center"
         >
           <span className="about-eyebrow">
-            <IoMdInformationCircle className="text-[14px]" aria-hidden="true" />
+            <HiOutlineUserCircle className="text-[15px]" aria-hidden="true" />
             About Me
           </span>
           <h2 className="about-title mt-4">
@@ -176,8 +180,8 @@ export default function AboutMe() {
             className="about-cta group"
           >
             <span>Contact Me</span>
-            <FiArrowRight
-              className="transition-transform duration-300 group-hover:translate-x-1"
+            <HiOutlineArrowLongRight
+              className="text-[20px] transition-transform duration-300 group-hover:translate-x-1.5"
               aria-hidden="true"
             />
           </a>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  FaDownload,
   FaGithub,
   FaLinkedin,
   FaInstagram,
@@ -11,7 +10,10 @@ import {
 } from "react-icons/fa6";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { IoDiamond } from "react-icons/io5";
+import {
+  HiOutlineArrowDownTray,
+  HiOutlinePaperAirplane,
+} from "react-icons/hi2";
 import {
   SiNextdotjs,
   SiReact,
@@ -309,7 +311,7 @@ const Hero = () => {
               download="Waqas_Gul_Resume.pdf"
               className="hero-btn-primary group inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-semibold text-white outline-none transition-all duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#38BDF8]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              <FaDownload className="mr-2 transition-transform duration-300 group-hover:translate-y-0.5" />
+              <HiOutlineArrowDownTray className="mr-2 text-[18px] transition-transform duration-300 group-hover:translate-y-0.5" />
               Resume
             </a>
 
@@ -320,7 +322,7 @@ const Hero = () => {
               className="hero-btn-ghost group inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-semibold outline-none transition-all duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C3AED]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent dark:focus-visible:ring-[#A78BFA]/60"
             >
               Hire Me
-              <IoDiamond className="ml-2 transition-transform duration-300 group-hover:translate-x-0.5" />
+              <HiOutlinePaperAirplane className="ml-2 text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           </div>
 

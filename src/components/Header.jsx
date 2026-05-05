@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
+import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Navigation Menu Items (unchanged)
@@ -179,7 +180,7 @@ const Header = () => {
                 transition={{ duration: 0.25 }}
                 className="grid place-items-center"
               >
-                {darkMode ? <FiSun /> : <FiMoon />}
+                {darkMode ? <HiOutlineSun /> : <HiOutlineMoon />}
               </motion.span>
             </AnimatePresence>
           </button>

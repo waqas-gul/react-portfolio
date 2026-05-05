@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
-import { FaGraduationCap } from "react-icons/fa";
-import { BsFillCalendarFill } from "react-icons/bs";
-import { MdLocationOn, MdOutlineGrade, MdCastForEducation } from "react-icons/md";
+import {
+  HiOutlineAcademicCap,
+  HiOutlineCalendarDays,
+  HiOutlineBuildingLibrary,
+  HiOutlineMapPin,
+  HiOutlineTrophy,
+} from "react-icons/hi2";
 
 // Education entries — content unchanged, just structured as data
 const educationData = [
@@ -58,7 +62,7 @@ export default function Education() {
           className="mx-auto max-w-2xl text-center"
         >
           <span className="education-eyebrow">
-            <MdCastForEducation className="text-[14px]" aria-hidden="true" />
+            <HiOutlineAcademicCap className="text-[15px]" aria-hidden="true" />
             Education
           </span>
           <h2 className="education-title mt-4 flex items-center justify-center gap-3">
@@ -89,11 +93,11 @@ export default function Education() {
               {/* Top row: date pill + level pill */}
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="edu-date">
-                  <BsFillCalendarFill className="text-[12px]" aria-hidden="true" />
+                  <HiOutlineCalendarDays className="text-[13px]" aria-hidden="true" />
                   {entry.period}
                 </span>
                 <span className="edu-level">
-                  <FaGraduationCap className="text-[12px]" aria-hidden="true" />
+                  <HiOutlineAcademicCap className="text-[13px]" aria-hidden="true" />
                   {entry.level}
                 </span>
               </div>
@@ -105,19 +109,19 @@ export default function Education() {
               <ul className="edu-details">
                 <li className="edu-detail">
                   <span className="edu-detail-icon">
-                    <FaGraduationCap aria-hidden="true" />
+                    <HiOutlineBuildingLibrary aria-hidden="true" />
                   </span>
                   <span>{entry.institution}</span>
                 </li>
                 <li className="edu-detail">
                   <span className="edu-detail-icon">
-                    <MdLocationOn aria-hidden="true" />
+                    <HiOutlineMapPin aria-hidden="true" />
                   </span>
                   <span>{entry.location}</span>
                 </li>
                 <li className="edu-detail">
                   <span className="edu-detail-icon">
-                    <MdOutlineGrade aria-hidden="true" />
+                    <HiOutlineTrophy aria-hidden="true" />
                   </span>
                   <span>{entry.grade}</span>
                 </li>
