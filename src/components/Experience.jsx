@@ -61,16 +61,20 @@ const experiences = [
 ];
 
 // Stagger variants
+const panelVariants = {
+  hidden: { opacity: 0, y: 35 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
 const containerVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
 };
 const rowVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, x: 24 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+    x: 0,
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
   },
 };
 const dotVariants = {
@@ -112,13 +116,13 @@ export default function Experience() {
           </p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* Timeline — no outer panel, cards sit directly on the section */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          className="exp-timeline mt-14"
+          className="exp-timeline mt-12"
         >
           {/* Vertical gradient line */}
           <div aria-hidden="true" className="exp-timeline-line" />
@@ -138,7 +142,7 @@ export default function Experience() {
                 />
               </div>
 
-              {/* Card */}
+              {/* Glass card */}
               <div className="exp-card">
                 {/* Top row: company pill + date pill */}
                 <div className="flex flex-wrap items-center justify-between gap-3">

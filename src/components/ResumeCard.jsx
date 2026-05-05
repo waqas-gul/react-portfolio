@@ -122,7 +122,7 @@ export default function ResumeCard() {
 
             <h3 className="resume-name mt-5">Waqas GUL</h3>
             <p className="resume-role mt-1">
-              MERN Stack Developer / Modern Web Application Developer
+              Full-Stack Engineer · Web, Mobile & Desktop Applications
             </p>
 
             <motion.ul
