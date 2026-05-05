@@ -1,31 +1,27 @@
-import { useState, useEffect, useRef } from "react";
-import { Link as ScrollLink } from "react-scroll";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Navigation Menu Items
+// Navigation Menu Items (unchanged)
 const menu = [
   { name: "Home", path: "hero", type: "scroll" },
   { name: "About", path: "about", type: "scroll" },
   { name: "Education", path: "education", type: "scroll" },
   { name: "Experience", path: "experience", type: "scroll" },
   { name: "Projects", path: "projects", type: "scroll" },
-  { name: "Portfolio", path: "/portfolio", type: "route" }, // External route
+  { name: "Portfolio", path: "/portfolio", type: "route" },
   { name: "Contact", path: "contact", type: "scroll" },
 ];
 
 const getInitialDarkMode = () => {
   if (typeof window !== "undefined") {
     const savedDarkMode = localStorage.getItem("darkMode");
-    return savedDarkMode
-      ? savedDarkMode === "true"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return savedDarkMode ? savedDarkMode === "true" : true;
   }
-  return false;
+  return true;
 };
 
-// Apply dark mode before rendering
 if (getInitialDarkMode()) {
   document.documentElement.classList.add("dark");
 } else {
@@ -36,9 +32,9 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(getInitialDarkMode());
   const [active, setActive] = useState("hero");
-  const [underlineStyle, setUnderlineStyle] = useState({});
-  const navRefs = useRef({});
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isHomePage = location.pathname === "/";
   const isPortfolioPage = location.pathname === "/portfolio";
@@ -53,217 +49,205 @@ const Header = () => {
     }
   }, [darkMode]);
 
+  // Track scroll for navbar shrink/glass intensity
   useEffect(() => {
-    // Update active state based on the current route
-    if (!isHomePage) {
-      const currentRoute = menu.find((item) => item.path === location.pathname);
-      if (currentRoute) {
-        setActive(currentRoute.path);
-      }
-    }
-  }, [location.pathname, isHomePage]);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
+  // Update active section on scroll (home page only)
   useEffect(() => {
-    // Update underline style when active state changes
-    if (navRefs.current[active]) {
-      const { offsetLeft, offsetWidth } = navRefs.current[active];
-      setUnderlineStyle({
-        left: `${offsetLeft}px`,
-        width: `${offsetWidth}px`,
+    if (!isHomePage) return;
+    const onScroll = () => {
+      const y = window.scrollY + 120;
+      const hit = menu.find((item) => {
+        if (item.type !== "scroll") return false;
+        const el = document.getElementById(item.path);
+        if (!el) return false;
+        const { offsetTop, offsetHeight } = el;
+        return y >= offsetTop && y < offsetTop + offsetHeight;
       });
-    }
-  }, [active]);
-
-  // Track active section on scroll (home page only)
-  useEffect(() => {
-    if (isHomePage) {
-      const handleScroll = () => {
-        const scrollPosition = window.scrollY + 100; // Adjust offset as needed
-        const activeSection = menu.find((item) => {
-          const section = document.getElementById(item.path);
-          if (section) {
-            const { offsetTop, offsetHeight } = section;
-            return (
-              scrollPosition >= offsetTop &&
-              scrollPosition < offsetTop + offsetHeight
-            );
-          }
-          return false;
-        });
-        if (activeSection) {
-          setActive(activeSection.path);
-        }
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+      if (hit) setActive(hit.path);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [isHomePage]);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const toggleDarkMode = () => setDarkMode(!darkMode);
+  // Smooth scroll via Lenis (falls back to native if not present)
+  const smoothScrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const lenis = window.__lenis;
+    if (lenis) {
+      lenis.scrollTo(el, { offset: -80, duration: 1.4 });
+    } else {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleNav = (item) => {
+    setIsOpen(false);
+    if (item.type === "route") {
+      setActive(item.path);
+      navigate(item.path);
+      return;
+    }
+    setActive(item.path);
+    if (!isHomePage) {
+      navigate("/", { replace: false });
+      setTimeout(() => smoothScrollTo(item.path), 60);
+    } else {
+      smoothScrollTo(item.path);
+    }
+  };
+
+  const isItemActive = (item) => {
+    if (item.type === "route") return location.pathname === item.path;
+    return isHomePage && active === item.path;
+  };
 
   return (
-    <header className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white p-4 shadow-md fixed w-full top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <img src="/logo.png" alt="Logo" class="w-16 h-auto max-w-full" />
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed left-0 right-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-5 sm:pt-4"
+    >
+      <div
+        className={`nav-shell relative flex w-full max-w-6xl items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-500 sm:px-5 sm:py-3 ${
+          scrolled ? "nav-shell-scrolled" : ""
+        }`}
+      >
+        {/* Logo (unchanged source) */}
+        <NavLink
+          to="/"
+          aria-label="Home"
+          className="group flex items-center rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        >
+          <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-xl liquid-glass">
+            <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-400/30 via-sky-500/20 to-violet-500/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              className="relative z-10 h-7 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
+            />
+          </span>
+        </NavLink>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center relative">
-          <nav className="relative">
-            <ul className="flex space-x-6 relative">
-              {menu.map((item, index) => (
-                <motion.li
-                  key={item.name}
-                  ref={(el) => (navRefs.current[item.path] = el)}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                >
-                  {item.type === "route" ? (
-                    <NavLink
-                      to={item.path}
-                      className={({ isActive }) =>
-                        `cursor-pointer transition duration-300 text-lg ${
-                          isActive || active === item.path
-                            ? "text-yellow-500 font-bold"
-                            : "text-gray-600 dark:text-gray-300"
-                        } hover:text-yellow-500`
-                      }
-                      onClick={() => setActive(item.path)}
-                    >
-                      {item.name}
-                    </NavLink>
-                  ) : isPortfolioPage ? (
-                    // Use NavLink to go back to the home page
-                    <NavLink
-                      to="/"
-                      className="cursor-pointer transition duration-300 text-lg text-gray-600 dark:text-gray-300 hover:text-yellow-500"
-                      onClick={() => setActive(item.path)}
-                    >
-                      {item.name}
-                    </NavLink>
-                  ) : (
-                    // Use react-scroll on the home page
-                    <ScrollLink
-                      to={item.path}
-                      smooth={true}
-                      duration={500}
-                      offset={-50}
-                      onClick={() => setActive(item.path)}
-                      className={`cursor-pointer transition duration-300 text-lg ${
-                        active === item.path
-                          ? "text-yellow-500 font-bold"
-                          : "text-gray-600 dark:text-gray-300"
-                      } hover:text-yellow-500`}
-                    >
-                      {item.name}
-                    </ScrollLink>
-                  )}
-                </motion.li>
-              ))}
-              {/* Underline Animation */}
+        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+          {menu.map((item) => {
+            const activeNow = isItemActive(item);
+            return (
+              <button
+                key={item.name}
+                onClick={() => handleNav(item)}
+                aria-current={activeNow ? "page" : undefined}
+                className={`nav-link relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 dark:focus-visible:ring-cyan-300/60 ${
+                  activeNow ? "nav-link-active" : "nav-link-idle"
+                }`}
+              >
+                {activeNow && (
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="nav-pill absolute inset-0 rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.name}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Right cluster: dark toggle + mobile menu */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={darkMode}
+            className="nav-icon-btn grid h-10 w-10 place-items-center rounded-full liquid-glass text-xl transition-all duration-300 hover:scale-105 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 dark:focus-visible:ring-cyan-300/60"
+          >
+            <AnimatePresence mode="wait" initial={false}>
               <motion.span
-                className="absolute bottom-0 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded fire-underline"
-                style={{
-                  ...underlineStyle,
-                  position: "absolute",
-                  height: "3px",
-                  borderRadius: "4px",
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-            </ul>
-          </nav>
-
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleDarkMode}
-            className="ml-6 text-2xl dark:text-yellow-400 hover:text-yellow-400 transition cursor-pointer"
-          >
-            {darkMode ? <FiSun /> : <FiMoon />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className="md:hidden flex items-center space-x-4">
-          <button
-            onClick={toggleDarkMode}
-            className="text-2xl hover:text-yellow-500 transition"
-          >
-            {darkMode ? <FiSun className="text-yellow-400" /> : <FiMoon />}
+                key={darkMode ? "sun" : "moon"}
+                initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+                transition={{ duration: 0.25 }}
+                className="grid place-items-center"
+              >
+                {darkMode ? <FiSun /> : <FiMoon />}
+              </motion.span>
+            </AnimatePresence>
           </button>
 
+          {/* Mobile hamburger */}
           <button
-            onClick={toggleMenu}
-            className="text-2xl hover:text-yellow-500 transition"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            className="nav-icon-btn grid h-10 w-10 place-items-center rounded-full liquid-glass text-xl transition-all duration-300 hover:scale-105 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 dark:focus-visible:ring-cyan-300/60 md:hidden"
           >
-            {isOpen ? <FiX /> : <FiMenu />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={isOpen ? "x" : "menu"}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="grid place-items-center"
+              >
+                {isOpen ? <FiX /> : <FiMenu />}
+              </motion.span>
+            </AnimatePresence>
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900"
-        >
-          <ul className="flex flex-col text-center">
-            {menu.map((item) => (
-              <motion.li
-                key={item.name}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 * menu.indexOf(item) }}
-              >
-                {item.type === "route" ? (
-                  <NavLink
-                    to={item.path}
-                    className="block py-3 px-6 text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 transition"
-                    onClick={() => {
-                      setActive(item.path);
-                      setIsOpen(false);
-                    }}
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.nav
+            id="mobile-nav"
+            aria-label="Mobile"
+            initial={{ opacity: 0, y: -12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute left-3 right-3 top-full mt-2 rounded-2xl liquid-glass p-3 md:hidden sm:left-5 sm:right-5"
+          >
+            <ul className="flex flex-col gap-1">
+              {menu.map((item, idx) => {
+                const activeNow = isItemActive(item);
+                return (
+                  <motion.li
+                    key={item.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.04 }}
                   >
-                    {item.name}
-                  </NavLink>
-                ) : isPortfolioPage ? (
-                  <NavLink
-                    to="/"
-                    className="block py-3 px-6 text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 transition"
-                    onClick={() => {
-                      setActive(item.path);
-                      setIsOpen(false);
-                    }}
-                  >
-                    {item.name}
-                  </NavLink>
-                ) : (
-                  <ScrollLink
-                    to={item.path}
-                    smooth={true}
-                    duration={500}
-                    offset={-50}
-                    onClick={() => {
-                      setActive(item.path);
-                      setIsOpen(false);
-                    }}
-                    className="block py-3 px-6 text-lg text-gray-700 dark:text-gray-300 hover:text-yellow-500 transition"
-                  >
-                    {item.name}
-                  </ScrollLink>
-                )}
-              </motion.li>
-            ))}
-          </ul>
-        </motion.nav>
-      )}
-    </header>
+                    <button
+                      onClick={() => handleNav(item)}
+                      aria-current={activeNow ? "page" : undefined}
+                      className={`block w-full rounded-xl px-4 py-3 text-left text-base font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/60 dark:focus-visible:ring-cyan-300/60 ${
+                        activeNow ? "nav-mobile-active" : "nav-mobile-idle"
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 

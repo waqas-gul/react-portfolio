@@ -4,6 +4,24 @@
 @import '@fontsource/fira-code';
 @custom-variant dark (&:where(.dark, .dark *));
 
+html, body {
+    background-color: #ffffff;
+    min-height: 100%;
+}
+
+html.dark, html.dark body {
+    background-color: #111827; /* tailwind gray-900 — matches Hero dark bg */
+}
+
+html, body {
+    background-color: #ffffff;
+    min-height: 100%;
+}
+
+html.dark, html.dark body {
+    background-color: #111827; /* gray-900 — matches Hero dark bg */
+}
+
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -33,4 +51,498 @@ body {
             #ff9a00);
     background-size: 200% 200%;
     animation: fire 2s linear infinite;
+}
+
+/* ============================================================
+   Smooth scroll (Lenis) + Liquid Glass background layer
+   Additive only — does not modify existing component styles.
+   ============================================================ */
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff9a00, #ff5e00);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb547, #ff7a1f);
+}
+
+/* ---- Liquid glass background layer (fixed, behind everything) ---- */
+
+.liquid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.liquid-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(110px);
+    opacity: 0.55;
+    will-change: transform;
+}
+
+.liquid-blob-1 {
+    width: 38rem;
+    height: 38rem;
+    left: -10rem;
+    top: -6rem;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 154, 0, 0.55), rgba(255, 94, 0, 0.25) 60%, transparent 75%);
+    animation: liquid-float-1 22s ease-in-out infinite;
+}
+
+.liquid-blob-2 {
+    width: 34rem;
+    height: 34rem;
+    right: -8rem;
+    top: 10rem;
+    background: radial-gradient(circle at 60% 40%, rgba(176, 38, 255, 0.45), rgba(120, 30, 200, 0.2) 60%, transparent 75%);
+    animation: liquid-float-2 26s ease-in-out infinite;
+}
+
+.liquid-blob-3 {
+    width: 30rem;
+    height: 30rem;
+    left: 30%;
+    bottom: -8rem;
+    background: radial-gradient(circle at 50% 50%, rgba(43, 217, 255, 0.4), rgba(20, 120, 200, 0.18) 60%, transparent 75%);
+    animation: liquid-float-3 30s ease-in-out infinite;
+}
+
+.liquid-blob-4 {
+    width: 26rem;
+    height: 26rem;
+    right: 10%;
+    bottom: 4rem;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 215, 64, 0.35), rgba(255, 154, 0, 0.15) 60%, transparent 75%);
+    animation: liquid-float-1 34s ease-in-out infinite reverse;
+}
+
+/* lighter intensity in light mode, richer in dark */
+:root .liquid-blob {
+    opacity: 0.35;
+}
+
+.dark .liquid-blob {
+    opacity: 0.55;
+}
+
+.liquid-cursor-glow {
+    position: absolute;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(255, 181, 71, 0.18), rgba(255, 94, 31, 0.06) 50%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
+    will-change: transform, left, top;
+    mix-blend-mode: screen;
+}
+
+.liquid-noise {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+@keyframes liquid-float-1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -60px) scale(1.08); }
+    66% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+@keyframes liquid-float-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-50px, 30px) scale(1.1); }
+}
+
+@keyframes liquid-float-3 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-40px, -30px) scale(1.05); }
+    66% { transform: translate(30px, 30px) scale(0.92); }
+}
+
+/* ---- Liquid glass utility (apply manually anywhere with class="liquid-glass") ---- */
+
+.liquid-glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 40px -12px rgba(0, 0, 0, 0.35);
+}
+
+.liquid-glass-light {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.liquid-glow {
+    box-shadow:
+        0 0 0 1px rgba(255, 154, 0, 0.25),
+        0 14px 50px -12px rgba(255, 94, 0, 0.45),
+        0 0 80px -24px rgba(255, 181, 71, 0.45);
+}
+
+/* ---- Smooth-animation helpers (opt-in via class) ---- */
+
+.smooth-fade-in {
+    animation: smooth-fade-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes smooth-fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Make global transitions feel buttery */
+* {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Sections sit above the fixed liquid background.
+   NOTE: do NOT include `header` here — the navbar uses position:fixed,
+   and the unlayered element selector would override Tailwind's .fixed. */
+main, footer {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   Seamless dark-mode section blending
+   Each section keeps its own design but its outer background is
+   smoothly tinted so adjacent sections never show a hard seam.
+   Light mode is left alone.
+   ============================================================ */
+
+/* Hero stays at #111827 (gray-900).
+   Even sections use a lifted indigo-navy tone (#161b2e),
+   odd sections use a deeper midnight tone (#0d1220).
+   Both pair with the hero — visibly different, harmonious. */
+
+html.dark #about > div,
+html.dark #experience > div,
+html.dark #Skills > div,
+html.dark #TeamSlider > div {
+    background: linear-gradient(180deg, #161b2e 0%, #1a2038 50%, #161b2e 100%) !important;
+}
+
+html.dark #education > div,
+html.dark #ResumeCard > div,
+html.dark #ResumeCard > div > div,
+html.dark #contact > div {
+    background: linear-gradient(180deg, #0d1220 0%, #11172a 50%, #0d1220 100%) !important;
+}
+
+html.dark #projects > div {
+    background: linear-gradient(180deg, #161b2e 0%, #0d1220 100%) !important;
+}
+
+/* Soften the inner card surfaces a touch so they read as elevated
+   on top of the unified section bg, instead of clashing tones. */
+html.dark #about [class*="bg-gray-900"],
+html.dark #experience [class*="bg-gray-900"],
+html.dark #Skills [class*="bg-gray-900"],
+html.dark #ResumeCard [class*="bg-gray-800"],
+html.dark #contact [class*="bg-gray-700"] {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .liquid-blob, .liquid-cursor-glow {
+        animation: none !important;
+    }
+}
+
+/* ============================================================
+   Navbar liquid-glass shell — cyan / purple adaptive system
+   Tokens:
+     --nav-surface      glass background
+     --nav-border       hairline border
+     --nav-ink          primary text
+     --nav-ink-muted    inactive link text
+     --nav-accent       primary accent (cyan / blue)
+     --nav-accent-2     secondary accent (purple)
+   ============================================================ */
+
+:root {
+    --nav-surface: rgba(255, 255, 255, 0.72);
+    --nav-surface-scrolled: rgba(255, 255, 255, 0.82);
+    --nav-border: rgba(15, 23, 42, 0.10);
+    --nav-ink: #0F172A;
+    --nav-ink-muted: #64748B;
+    --nav-accent: #2563EB;     /* primary */
+    --nav-accent-2: #7C3AED;   /* secondary */
+}
+
+.dark {
+    --nav-surface: rgba(17, 24, 39, 0.58);
+    --nav-surface-scrolled: rgba(17, 24, 39, 0.72);
+    --nav-border: rgba(148, 163, 184, 0.18);
+    --nav-ink: #F8FAFC;
+    --nav-ink-muted: #94A3B8;
+    --nav-accent: #38BDF8;     /* cyan */
+    --nav-accent-2: #A78BFA;   /* purple */
+}
+
+.nav-shell {
+    background: var(--nav-surface);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--nav-border);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 6px 24px -10px rgba(15, 23, 42, 0.12);
+    transition:
+        background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .nav-shell {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 8px 32px -12px rgba(2, 6, 23, 0.65);
+}
+
+/* When user scrolls, intensify the glass + warmer accent shadow */
+.nav-shell-scrolled {
+    background: var(--nav-surface-scrolled);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 10px 40px -16px rgba(37, 99, 235, 0.18),
+        0 4px 14px -6px rgba(15, 23, 42, 0.10);
+}
+
+.dark .nav-shell-scrolled {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 12px 48px -16px rgba(56, 189, 248, 0.22),
+        0 4px 18px -6px rgba(2, 6, 23, 0.6);
+}
+
+/* Top hairline — gradient mask, animated shimmer */
+.nav-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        120deg,
+        transparent 20%,
+        var(--nav-accent) 45%,
+        var(--nav-accent-2) 60%,
+        transparent 85%
+    );
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    animation: nav-shimmer 6s linear infinite;
+}
+
+.nav-shell-scrolled::before { opacity: 0.9; }
+
+/* Soft bottom glow line — sits just under the shell */
+.nav-shell::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--nav-accent) 55%, transparent),
+        color-mix(in srgb, var(--nav-accent-2) 55%, transparent),
+        transparent
+    );
+    opacity: 0;
+    filter: blur(0.5px);
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.dark .nav-shell::after { opacity: 0.6; }
+.dark .nav-shell-scrolled::after { opacity: 0.9; }
+
+@keyframes nav-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ---- Nav links (desktop) ---- */
+
+.nav-link-idle {
+    color: var(--nav-ink-muted);
+}
+
+.nav-link-idle:hover {
+    color: var(--nav-accent);
+}
+
+.dark .nav-link-idle:hover {
+    color: #F8FAFC; /* lift to white on hover, accent shows via underline glow below */
+}
+
+.nav-link-active {
+    color: var(--nav-accent);
+}
+
+.dark .nav-link-active {
+    color: #38BDF8;
+    text-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+/* The shared layout pill behind the active link */
+.nav-pill {
+    background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--nav-accent) 14%, transparent),
+        color-mix(in srgb, var(--nav-accent-2) 14%, transparent)
+    );
+    border: 1px solid color-mix(in srgb, var(--nav-accent) 35%, transparent);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 6px 18px -10px color-mix(in srgb, var(--nav-accent) 70%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.dark .nav-pill {
+    background: linear-gradient(
+        90deg,
+        rgba(56, 189, 248, 0.16),
+        rgba(167, 139, 250, 0.16)
+    );
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 8px 24px -10px rgba(56, 189, 248, 0.45);
+}
+
+/* ---- Icon buttons (theme toggle / hamburger) ---- */
+
+.nav-icon-btn {
+    color: var(--nav-ink-muted);
+}
+
+.nav-icon-btn:hover {
+    color: var(--nav-accent);
+}
+
+.dark .nav-icon-btn {
+    color: #CBD5E1;
+}
+
+.dark .nav-icon-btn:hover {
+    color: #38BDF8;
+}
+
+/* ---- Mobile drawer items ---- */
+
+.nav-mobile-idle {
+    color: var(--nav-ink);
+}
+
+.nav-mobile-idle:hover {
+    background: color-mix(in srgb, var(--nav-accent) 8%, transparent);
+    color: var(--nav-accent);
+}
+
+.dark .nav-mobile-idle {
+    color: #E2E8F0;
+}
+
+.dark .nav-mobile-idle:hover {
+    background: rgba(56, 189, 248, 0.10);
+    color: #F8FAFC;
+}
+
+.nav-mobile-active {
+    color: var(--nav-accent);
+    background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--nav-accent) 14%, transparent),
+        color-mix(in srgb, var(--nav-accent-2) 14%, transparent)
+    );
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nav-accent) 35%, transparent);
+}
+
+.dark .nav-mobile-active {
+    color: #38BDF8;
+    background: linear-gradient(
+        90deg,
+        rgba(56, 189, 248, 0.18),
+        rgba(167, 139, 250, 0.18)
+    );
+    box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+/* Light-mode liquid-glass tweak so chips/buttons read on white */
+:root .liquid-glass {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 6px 18px -8px rgba(0, 0, 0, 0.15);
+}
+
+.dark .liquid-glass {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 10px 40px -12px rgba(0, 0, 0, 0.35);
 }

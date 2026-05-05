@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SmoothScroll from "./providers/SmoothScroll";
+import LiquidBackground from "./components/LiquidBackground";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import AboutMe from "./components/AboutMe";
@@ -18,53 +20,56 @@ import Portfolio from "./components/Portfolio";
 function App() {
   return (
     <Router>
-      <Header />
-      <main>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <section id="hero">
-                  <Hero />
-                </section>
+      <SmoothScroll>
+        <LiquidBackground />
+        <Header />
+        <main>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <section id="hero">
+                    <Hero />
+                  </section>
 
-                <section id="about">
-                  <AboutMe />
-                </section>
-                <section id="education">
-                  <Education />
-                </section>
-                <section id="experience">
-                  <Experience />
-                </section>
-                <section id="ResumeCard">
-                  <ResumeCard />
-                </section>
-                {/* <section id="Certificates">
-                  <Certificates /> 
-                </section> */}
-                <section id="Skills">
-                  <Skills />
-                </section>
-                <section id="projects">
-                  <Projects />
-                </section>
-                <section id="TeamSlider">
-                  <TeamSlider />
-                </section>
+                  <section id="about">
+                    <AboutMe />
+                  </section>
+                  <section id="education">
+                    <Education />
+                  </section>
+                  <section id="experience">
+                    <Experience />
+                  </section>
+                  <section id="ResumeCard">
+                    <ResumeCard />
+                  </section>
+                  {/* <section id="Certificates">
+                    <Certificates />
+                  </section> */}
+                  <section id="Skills">
+                    <Skills />
+                  </section>
+                  <section id="projects">
+                    <Projects />
+                  </section>
+                  <section id="TeamSlider">
+                    <TeamSlider />
+                  </section>
 
-                <section id="contact">
-                  <ContactSection />
-                </section>
-              </>
-            }
-          />
-          <Route path="/certificate/:id" element={<CertificateDetails />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-        </Routes>
-      </main>
-      <Footer />
+                  <section id="contact">
+                    <ContactSection />
+                  </section>
+                </>
+              }
+            />
+            <Route path="/certificate/:id" element={<CertificateDetails />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+          </Routes>
+        </main>
+        <Footer />
+      </SmoothScroll>
     </Router>
   );
 }
