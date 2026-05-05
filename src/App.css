@@ -422,6 +422,50 @@ html.dark #contact [class*="bg-gray-700"] {
     100% { background-position: -200% 0; }
 }
 
+/* ---- Logo ---- */
+/* Standalone brand mark — no border, no background, no plate.
+   The /logo.png asset is a square (500×500) with significant transparent
+   whitespace baked in around the wordmark. Sizing the <img> directly leaves
+   the readable mark tiny. We use an invisible clipping window: the image
+   renders large enough for the wordmark to read, and the empty top/bottom
+   whitespace is clipped by the frame. No visible container chrome. */
+
+.nav-logo-frame {
+    display: block;
+    width: 110px;
+    height: 44px;
+    overflow: hidden;
+    line-height: 0;
+    background: transparent;
+    border: 0;
+}
+
+.nav-logo-img {
+    display: block;
+    width: 110px;
+    height: 110px;          /* square — lets the wordmark render at full size */
+    object-fit: contain;
+    margin: -33px 0;        /* vertically centers the wordmark, clips whitespace */
+    transform-origin: center;
+    filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.08));
+}
+
+.dark .nav-logo-img {
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.20));
+}
+
+@media (max-width: 640px) {
+    .nav-logo-frame {
+        width: 88px;
+        height: 36px;
+    }
+    .nav-logo-img {
+        width: 88px;
+        height: 88px;
+        margin: -26px 0;
+    }
+}
+
 /* ---- Nav links (desktop) ---- */
 
 .nav-link-idle {

@@ -121,18 +121,17 @@ const Header = () => {
           scrolled ? "nav-shell-scrolled" : ""
         }`}
       >
-        {/* Logo (unchanged source) */}
+        {/* Logo */}
         <NavLink
           to="/"
-          aria-label="Home"
-          className="group flex items-center rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+          aria-label="Waqas Gul — Home"
+          className="group flex items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
         >
-          <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-xl liquid-glass">
-            <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-400/30 via-sky-500/20 to-violet-500/30 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <span className="nav-logo-frame">
             <img
               src="/logo.png"
-              alt="Logo"
-              className="relative z-10 h-7 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
+              alt="Waqas Gul"
+              className="nav-logo-img transition-transform duration-500 group-hover:scale-105"
             />
           </span>
         </NavLink>
