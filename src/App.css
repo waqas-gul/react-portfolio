@@ -626,6 +626,21 @@ html.dark #contact [class*="bg-gray-700"] {
     50%, 100% { opacity: 0; }
 }
 
+/* Social icons row — muted by default, accent gradient on hover */
+.hero-social {
+    color: var(--hero-ink-muted);
+}
+
+.hero-social:hover {
+    color: var(--hero-accent);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--hero-accent) 35%, transparent);
+}
+
+.dark .hero-social:hover {
+    color: #38BDF8;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.40);
+}
+
 /* Experience pill — subtle glass chip */
 .hero-pill {
     background: var(--hero-surface);
@@ -708,16 +723,29 @@ html.dark #contact [class*="bg-gray-700"] {
         0 14px 34px -12px rgba(56, 189, 248, 0.5);
 }
 
-/* Portrait — gradient ring (uses padding + masked gradient bg trick) */
+/* ============================================================
+   Hero portrait — premium liquid-glass treatment
+   Layer order (bottom → top):
+     1. .hero-portrait-blob--a / --b   (decorative blurred color blobs)
+     2. .hero-portrait-glow            (soft radial halo)
+     3. .hero-portrait-backdrop        (glass depth disc)
+     4. .hero-portrait-ring            (gradient border)
+        └ .hero-portrait-frame         (clip mask)
+            ├ .hero-portrait-img       (the photo, polished)
+            └ .hero-portrait-specular  (top-left glass highlight)
+   ============================================================ */
+
+/* Outer gradient ring — premium dual-shadow (cyan + purple) */
 .hero-portrait-ring {
     background:
         linear-gradient(#FFFFFF, #FFFFFF) padding-box,
         linear-gradient(135deg, var(--hero-accent), var(--hero-accent-2)) border-box;
     border: 0;
     box-shadow:
-        0 18px 60px -22px color-mix(in srgb, var(--hero-accent) 60%, transparent),
-        0 0 0 1px color-mix(in srgb, var(--hero-accent) 25%, transparent);
-    transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        0 22px 50px -22px color-mix(in srgb, var(--hero-accent) 55%, transparent),
+        0 12px 28px -16px color-mix(in srgb, var(--hero-accent-2) 45%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--hero-accent) 22%, transparent);
+    transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark .hero-portrait-ring {
@@ -725,17 +753,56 @@ html.dark #contact [class*="bg-gray-700"] {
         linear-gradient(#0B1120, #0B1120) padding-box,
         linear-gradient(135deg, var(--hero-accent), var(--hero-accent-2)) border-box;
     box-shadow:
-        0 22px 70px -24px rgba(56, 189, 248, 0.45),
-        0 0 0 1px rgba(167, 139, 250, 0.20);
+        0 24px 60px -22px rgba(56, 189, 248, 0.40),
+        0 14px 32px -16px rgba(167, 139, 250, 0.32),
+        0 0 0 1px rgba(167, 139, 250, 0.18);
 }
 
-/* Soft radial glow behind the portrait — restrained, not gamer-glow */
+.hero-portrait-ring:hover {
+    box-shadow:
+        0 28px 60px -22px color-mix(in srgb, var(--hero-accent) 65%, transparent),
+        0 16px 36px -18px color-mix(in srgb, var(--hero-accent-2) 55%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--hero-accent) 30%, transparent);
+}
+
+.dark .hero-portrait-ring:hover {
+    box-shadow:
+        0 30px 70px -22px rgba(56, 189, 248, 0.50),
+        0 18px 40px -18px rgba(167, 139, 250, 0.42),
+        0 0 0 1px rgba(167, 139, 250, 0.28);
+}
+
+/* Inner image — light contrast/saturation polish, face stays natural */
+.hero-portrait-img {
+    background: linear-gradient(160deg, #E2E8F0 0%, #FFFFFF 100%);
+    filter: contrast(1.03) saturate(1.04);
+}
+
+.dark .hero-portrait-img {
+    background: linear-gradient(160deg, #111827 0%, #0B1120 100%);
+    filter: contrast(1.05) saturate(1.04) brightness(1.02);
+}
+
+/* Top-left specular highlight — glassy edge on the portrait disc */
+.hero-portrait-specular {
+    background: radial-gradient(60% 50% at 25% 18%, rgba(255, 255, 255, 0.22), transparent 60%);
+    mix-blend-mode: screen;
+    opacity: 0.65;
+}
+
+.dark .hero-portrait-specular {
+    background: radial-gradient(60% 50% at 25% 18%, rgba(255, 255, 255, 0.10), transparent 60%);
+    opacity: 0.5;
+}
+
+/* Soft radial halo behind the portrait — restrained, not gamer-glow */
 .hero-portrait-glow {
     width: 22rem;
     height: 22rem;
     border-radius: 9999px;
     filter: blur(70px);
-    opacity: 0.35;
+    opacity: 0.32;
+    z-index: 0;
     background: radial-gradient(
         circle at 35% 35%,
         var(--hero-accent) 0%,
@@ -745,7 +812,98 @@ html.dark #contact [class*="bg-gray-700"] {
 }
 
 .dark .hero-portrait-glow {
-    opacity: 0.45;
+    opacity: 0.42;
+}
+
+/* Inner glass depth disc — gives the portrait a polished surface to sit on */
+.hero-portrait-backdrop {
+    width: 18rem;
+    height: 18rem;
+    border-radius: 9999px;
+    background:
+        radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.65), transparent 65%),
+        radial-gradient(circle, rgba(248, 250, 252, 0.55), rgba(248, 250, 252, 0) 72%);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 8px 28px -14px rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    z-index: 1;
+}
+
+.dark .hero-portrait-backdrop {
+    background:
+        radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.05), transparent 65%),
+        radial-gradient(circle, rgba(17, 24, 39, 0.55), rgba(11, 17, 32, 0) 72%);
+    border: 1px solid rgba(148, 163, 184, 0.10);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 10px 32px -14px rgba(2, 6, 23, 0.55);
+}
+
+/* Decorative blurred gradient blobs — sit deepest, feel like atmosphere */
+.hero-portrait-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(50px);
+    opacity: 0.40;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-portrait-blob--a {
+    width: 12rem;
+    height: 12rem;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-95%);
+    background: radial-gradient(circle, var(--hero-accent), transparent 70%);
+}
+
+.hero-portrait-blob--b {
+    width: 11rem;
+    height: 11rem;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-5%);
+    background: radial-gradient(circle, var(--hero-accent-2), transparent 70%);
+}
+
+.dark .hero-portrait-blob {
+    opacity: 0.35;
+}
+
+/* Tablet / mobile — tone everything down so the visual stays clean */
+@media (max-width: 640px) {
+    .hero-portrait-glow {
+        width: 16rem;
+        height: 16rem;
+        opacity: 0.25;
+        filter: blur(55px);
+    }
+    .dark .hero-portrait-glow { opacity: 0.32; }
+
+    .hero-portrait-backdrop {
+        width: 13rem;
+        height: 13rem;
+    }
+
+    .hero-portrait-blob--a,
+    .hero-portrait-blob--b {
+        width: 8rem;
+        height: 8rem;
+        filter: blur(38px);
+        opacity: 0.28;
+    }
+    .dark .hero-portrait-blob { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-portrait-ring,
+    .hero-portrait-img {
+        transition: none;
+    }
 }
 
 /* Floating skill badge — liquid glass pill */
