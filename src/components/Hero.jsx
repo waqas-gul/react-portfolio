@@ -5,6 +5,9 @@ import {
   FaLinkedin,
   FaInstagram,
   FaXTwitter,
+  FaBriefcase,
+  FaCode,
+  FaUsers,
 } from "react-icons/fa6";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -34,15 +37,26 @@ const socials = [
   { name: "Instagram", Icon: FaInstagram, href: "https://www.instagram.com/w_a_q_a_s_i/" },
 ];
 
+// Badges orbit the portrait. `angle` is in degrees, 0° = top, clockwise.
+// We skip the bottom 90° arc (135°→225°) so badges never collide with the
+// stats card sitting under the portrait.
 const skills = [
-  { name: "MongoDB",      Icon: SiMongodb,    iconClass: "text-emerald-400",      pos: "top-0 lg:left-10 -left-3 sm:left-0",         delay: 0 },
-  { name: "Express.js",   Icon: SiExpress,    iconClass: "text-slate-300",        pos: "top-16 lg:left-0 -left-10 sm:left-0",        delay: 0.2 },
-  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",         pos: "bottom-16 lg:left-0 -left-5 sm:left-0",      delay: 0.4 },
-  { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500",      pos: "bottom-0 lg:left-10 -left-2 sm:left-0",      delay: 0.6 },
-  { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",        pos: "top-0 lg:right-10 -right-5 sm:right-0",      delay: 0 },
-  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",       pos: "top-16 lg:right-0 -right-6 sm:right-0",      delay: 0.2 },
-  { name: "Tailwind CSS", Icon: SiTailwindcss,iconClass: "text-sky-400",          pos: "bottom-16 lg:right-0 -right-8 sm:right-0",   delay: 0.4 },
-  { name: "JavaScript",   Icon: SiJavascript, iconClass: "text-amber-300",        pos: "bottom-0 lg:right-10 -right-5 sm:right-0",   delay: 0.6 },
+  // LEFT half (going from top to bottom)
+  { name: "MongoDB",      Icon: SiMongodb,    iconClass: "text-emerald-400", angle: 320, delay: 0.00 },
+  { name: "Express.js",   Icon: SiExpress,    iconClass: "text-slate-300",   angle: 290, delay: 0.10, mobileHide: true },
+  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 250, delay: 0.20, mobileHide: true },
+  { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500", angle: 220, delay: 0.30 },
+  // RIGHT half (mirror, going from top to bottom)
+  { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",   angle: 40,  delay: 0.05 },
+  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 70,  delay: 0.15, mobileHide: true },
+  { name: "Tailwind CSS", Icon: SiTailwindcss,iconClass: "text-sky-400",     angle: 110, delay: 0.25, mobileHide: true },
+  { name: "JavaScript",   Icon: SiJavascript, iconClass: "text-amber-300",   angle: 140, delay: 0.35 },
+];
+
+const stats = [
+  { value: "3+",  label: "Years Experience",   Icon: FaBriefcase },
+  { value: "20+", label: "Projects Completed", Icon: FaCode },
+  { value: "10+", label: "Happy Clients",      Icon: FaUsers },
 ];
 
 const Hero = () => {
@@ -328,57 +342,78 @@ const Hero = () => {
           </ul>
         </motion.div>
 
-        {/* Right Section — Profile + floating skill badges */}
+        {/* Right Section — Cutout portrait + soft halo + compact stats card + floating badges */}
         <motion.div
           ref={refRight}
           initial={{ x: 0, opacity: 1 }}
           animate={controlsRight}
-          className="relative mt-4 flex h-full w-full flex-col items-center font-mono md:mt-0 md:w-1/2 lg:mt-10"
+          className="relative mt-6 flex w-full flex-col items-center md:mt-0 md:w-1/2"
         >
-          {/* Decorative blurred gradient blobs (sit deepest behind everything) */}
-          <span aria-hidden="true" className="hero-portrait-blob hero-portrait-blob--a" />
-          <span aria-hidden="true" className="hero-portrait-blob hero-portrait-blob--b" />
+          <div className="hero-stage relative flex w-full max-w-[560px] flex-col items-center">
+            {/* Portrait area — visible circle bg + halo + cutout + orbiting badges */}
+            <div className="hero-portrait-area relative flex w-full justify-center">
+              {/* Soft outer halo */}
+              <div
+                aria-hidden="true"
+                className="hero-portrait-halo pointer-events-none absolute"
+              />
 
-          {/* Soft cyan/purple radial glow behind the portrait */}
-          <div
-            aria-hidden="true"
-            className="hero-portrait-glow pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          />
+              {/* Visible circular background behind the head/torso */}
+              <div
+                aria-hidden="true"
+                className="hero-portrait-circle pointer-events-none absolute"
+              />
 
-          {/* Inner glass depth disc — gives the portrait a polished surface to sit on */}
-          <div
-            aria-hidden="true"
-            className="hero-portrait-backdrop pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          />
-
-          {/* Gradient ring + portrait */}
-          <div className="hero-portrait-ring relative z-10 mt-4 grid h-44 w-44 place-items-center rounded-full p-[2.5px] sm:mt-0 sm:h-64 sm:w-64">
-            <div className="hero-portrait-frame relative h-full w-full overflow-hidden rounded-full">
+              {/* Cutout portrait */}
               <img
                 src="/waqas.png"
-                alt="Portrait of Engr Waqas Gul, Full Stack Developer"
-                className="hero-portrait-img h-full w-full rounded-full object-cover transition-transform duration-500 hover:scale-[1.04]"
+                alt="Portrait of Waqas Gul, Full Stack Developer"
+                className="hero-portrait-cutout relative z-10 h-[280px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
               />
-              {/* Top-left specular highlight — gives the disc a glassy edge */}
-              <span
-                aria-hidden="true"
-                className="hero-portrait-specular pointer-events-none absolute inset-0 rounded-full"
-              />
+
+              {/* Orbiting Skill Badges — outer wrapper handles position, inner motion handles float */}
+              {skills.map(({ name, Icon, iconClass, angle, delay, mobileHide }) => (
+                <div
+                  key={name}
+                  className={`hero-orbit absolute z-20 ${mobileHide ? "hidden sm:block" : ""}`}
+                  style={{
+                    top: "50%",
+                    left: "50%",
+                    transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * var(--orbit-r))) rotate(${-angle}deg)`,
+                  }}
+                >
+                  <motion.div
+                    className="hero-badge inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium sm:gap-2 sm:px-3 sm:py-1.5 sm:text-xs"
+                    animate={floatAnim}
+                    transition={{ repeat: Infinity, duration: 2.8, delay, ease: "easeInOut" }}
+                  >
+                    <Icon className={`text-sm sm:text-base ${iconClass}`} aria-hidden="true" />
+                    <span>{name}</span>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+
+            {/* Compact stats glass card with icons — sits below the orbiting badges */}
+            <div
+              className="hero-stats relative z-30 mt-3 sm:mt-4 lg:mt-5"
+              role="list"
+              aria-label="Quick stats"
+            >
+              {stats.map(({ value, label, Icon }, i) => (
+                <React.Fragment key={label}>
+                  <div className="hero-stat" role="listitem">
+                    <Icon className="hero-stat-icon" aria-hidden="true" />
+                    <span className="hero-stat-value">{value}</span>
+                    <span className="hero-stat-label">{label}</span>
+                  </div>
+                  {i < stats.length - 1 && (
+                    <span aria-hidden="true" className="hero-stat-divider" />
+                  )}
+                </React.Fragment>
+              ))}
             </div>
           </div>
-
-          {/* Floating Skill Badges */}
-          {skills.map(({ name, Icon, iconClass, pos, delay }) => (
-            <motion.div
-              key={name}
-              className={`hero-badge absolute z-10 flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium ${pos}`}
-              animate={floatAnim}
-              transition={{ repeat: Infinity, duration: 2.4, delay, ease: "easeInOut" }}
-            >
-              <Icon className={`text-xl ${iconClass}`} aria-hidden="true" />
-              <span>{name}</span>
-            </motion.div>
-          ))}
         </motion.div>
       </div>
     </section>

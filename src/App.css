@@ -901,9 +901,244 @@ html.dark #contact [class*="bg-gray-700"] {
 
 @media (prefers-reduced-motion: reduce) {
     .hero-portrait-ring,
-    .hero-portrait-img {
+    .hero-portrait-img,
+    .hero-portrait-cutout {
         transition: none;
     }
+}
+
+/* ============================================================
+   Hero portrait — cutout style (matches reference)
+     - .hero-portrait-halo  → soft cyan/purple radial behind head/shoulders
+     - .hero-portrait-cutout → PNG with drop shadow, no circle mask
+     - .hero-stats           → compact liquid-glass card with icon stats
+   ============================================================ */
+
+/* Define the orbit radius (used by .hero-orbit transforms).
+   `isolation: isolate` forces a fresh stacking context so the circle/halo
+   stay strictly behind the portrait — they can never bleed in front of it. */
+.hero-portrait-area {
+    isolation: isolate;
+    --orbit-r: 150px;
+}
+@media (min-width: 640px) { .hero-portrait-area { --orbit-r: 185px; } }
+@media (min-width: 1024px) { .hero-portrait-area { --orbit-r: 215px; } }
+
+.hero-portrait-halo {
+    width: 22rem;
+    height: 22rem;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 9999px;
+    filter: blur(60px);
+    z-index: 0;
+    opacity: 0.55;
+    background: radial-gradient(
+        circle at center,
+        rgba(37, 99, 235, 0.22) 0%,
+        rgba(124, 58, 237, 0.18) 45%,
+        transparent 68%
+    );
+}
+
+.dark .hero-portrait-halo {
+    opacity: 0.65;
+    background: radial-gradient(
+        circle at center,
+        rgba(56, 189, 248, 0.22) 0%,
+        rgba(167, 139, 250, 0.18) 45%,
+        transparent 68%
+    );
+}
+
+/* Visible soft circular background behind the head/torso (matches reference).
+   Sized to roughly fit head + shoulders, anchored slightly down so the head
+   crowns above the circle just like the reference image. */
+.hero-portrait-circle {
+    width: 14rem;
+    height: 14rem;
+    top: 20%;
+    left: 53%;                   /* re-centered with the portrait */
+    transform: translateX(-50%);
+    border-radius: 9999px;
+    z-index: 0;                  /* always behind the portrait (image is z-10) */
+    /* Bright cyan/purple light at center → fades to deeper navy at the edges,
+       like a softly lit 3D orb. */
+    background:
+        radial-gradient(
+            circle at 45% 38%,
+            rgba(37, 99, 235, 0.45) 0%,
+            rgba(124, 58, 237, 0.30) 35%,
+            rgba(30, 41, 59, 0.18) 78%,
+            rgba(15, 23, 42, 0.05) 100%
+        );
+    border: 0;
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.10);
+}
+
+.dark .hero-portrait-circle {
+    background:
+        radial-gradient(
+            circle at 45% 38%,
+            rgba(56, 189, 248, 0.55) 0%,
+            rgba(124, 58, 237, 0.40) 30%,
+            rgba(30, 58, 138, 0.40) 65%,
+            rgba(11, 17, 32, 0.60) 100%
+        );
+    border: 0;
+    box-shadow: 0 0 36px rgba(56, 189, 248, 0.14);
+}
+
+@media (min-width: 640px) {
+    .hero-portrait-circle { width: 16rem; height: 16rem; }
+}
+@media (min-width: 1024px) {
+    .hero-portrait-circle { width: 18rem; height: 18rem; }
+}
+
+/* Cutout portrait — drop-shadow on the silhouette + soft bottom fade so the
+   torso melts into the stats card. Explicit z-index keeps it strictly above
+   the halo / circle layers regardless of Tailwind utility load order. */
+.hero-portrait-cutout {
+    position: relative;
+    z-index: 10;
+    filter:
+        drop-shadow(0 30px 40px rgba(15, 23, 42, 0.20))
+        contrast(1.04) saturate(1.02);
+    -webkit-mask-image: linear-gradient(180deg, black 96%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 96%, transparent 100%);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .hero-portrait-cutout {
+    filter:
+        drop-shadow(0 30px 50px rgba(0, 0, 0, 0.55))
+        contrast(1.05) saturate(1.04) brightness(1.02);
+}
+
+/* Compact stats glass card */
+.hero-stats {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    max-width: 280px;
+    padding: 6px 10px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 12px 32px rgba(15, 23, 42, 0.12);
+    color: #0F172A;
+}
+
+.dark .hero-stats {
+    background: rgba(17, 24, 39, 0.58);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 18px 50px rgba(0, 0, 0, 0.30);
+    color: #F8FAFC;
+}
+
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1px 4px;
+}
+
+/* Small accent icon above the value (matches reference card) */
+.hero-stat-icon {
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: var(--hero-accent);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--hero-accent) 40%, transparent));
+}
+
+.dark .hero-stat-icon {
+    color: #38BDF8;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
+}
+
+/* Middle stat uses the secondary accent so the row reads as cyan/purple/cyan */
+.hero-stat:nth-child(3) .hero-stat-icon {
+    color: var(--hero-accent-2);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--hero-accent-2) 40%, transparent));
+}
+
+.dark .hero-stat:nth-child(3) .hero-stat-icon {
+    color: #A78BFA;
+    filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.45));
+}
+
+.hero-stat-value {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--hero-accent), var(--hero-accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-stat-label {
+    margin-top: 1px;
+    font-size: 8.5px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--hero-ink-muted);
+    white-space: nowrap;
+}
+
+.hero-stat-divider {
+    display: block;
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.18), transparent);
+}
+
+.dark .hero-stat-divider {
+    background: linear-gradient(180deg, transparent, rgba(148, 163, 184, 0.30), transparent);
+}
+
+/* Tablet — tighter halo and slightly smaller stats */
+@media (max-width: 1024px) {
+    .hero-portrait-halo {
+        width: 19rem;
+        height: 19rem;
+        opacity: 0.50;
+    }
+    .dark .hero-portrait-halo { opacity: 0.58; }
+    .hero-stats { max-width: 420px; padding: 11px 14px; }
+}
+
+/* Mobile — compact stats card and restrained halo */
+@media (max-width: 640px) {
+    .hero-portrait-halo {
+        width: 16rem;
+        height: 16rem;
+        top: -1rem;
+        filter: blur(50px);
+        opacity: 0.45;
+    }
+    .dark .hero-portrait-halo { opacity: 0.55; }
+
+    .hero-stats {
+        max-width: 320px;
+        padding: 10px 12px;
+        border-radius: 14px;
+    }
+    .hero-stat-icon { font-size: 14px; margin-bottom: 3px; }
+    .hero-stat-value { font-size: 17px; }
+    .hero-stat-label { font-size: 10px; }
+    .hero-stat-divider { height: 22px; }
 }
 
 /* Floating skill badge — liquid glass pill */
