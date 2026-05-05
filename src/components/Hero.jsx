@@ -15,12 +15,10 @@ import {
 } from "react-icons/si";
 
 const titles = [
-  "I am Full Stack software Engineer",
-  "I am Full Stack Developer",
-  "I am full stack mobile app developer",
-  "I am Frontend Specialist",
-  "I am WordPress Developer",
-  "I am Web Designer",
+  "Full-Stack Developer",
+  "Frontend Engineer",
+  "React / Next.js Developer",
+  "UI-Focused Web Developer",
 ];
 
 const skills = [
