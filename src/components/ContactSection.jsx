@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { Send } from "lucide-react";
-import { MdConnectWithoutContact } from "react-icons/md";
-import { IoLogoWhatsapp } from "react-icons/io";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
 import {
   FaLinkedin,
   FaInstagram,
@@ -9,57 +9,52 @@ import {
   FaTelegram,
   FaTwitter,
   FaSkype,
-  FaEnvelope,
 } from "react-icons/fa";
-import emailjs from "@emailjs/browser";
-import Swal from "sweetalert2";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { IoLogoWhatsapp } from "react-icons/io";
+import {
+  HiOutlineEnvelope,
+  HiOutlinePaperAirplane,
+} from "react-icons/hi2";
 
-const data = [
-  {
-    name: "LinkedIn",
-    color: "text-blue-600",
-    icon: <FaLinkedin />,
-    link: "https://www.linkedin.com/in/waqas-gul-b7580826b/",
-  },
-  {
-    name: "WhatsApp",
-    color: "text-green-500",
-    icon: <IoLogoWhatsapp />,
-    link: `https://wa.me/+923488446186`, // Replace with your WhatsApp number
-  },
-  {
-    name: "Facebook",
-    color: "text-blue-700",
-    icon: <FaFacebook />,
-    link: "https://www.facebook.com/WAQASI.369/",
-  },
-  {
-    name: "Instagram",
-    color: "text-pink-500",
-    icon: <FaInstagram />,
-    link: "https://www.instagram.com/w_a_q_a_s_i/",
-  },
-  {
-    name: "Telegram",
-    color: "text-blue-400",
-    icon: <FaTelegram />,
-    link: "#",
-  },
-  {
-    name: "Twitter",
-    color: "text-black",
-    icon: <FaTwitter />,
-    link: "#",
-  },
-  {
-    name: "Skype",
-    color: "text-blue-500",
-    icon: <FaSkype />,
-    link: "#",
-  },
+// Email — featured prominently in its own compact card
+const emailContact = {
+  name: "Email",
+  address: "waqasgul369@gmail.com",
+  link: "https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you.",
+};
+
+// Compact social pills — links preserved exactly
+const socials = [
+  { name: "LinkedIn",  tone: "text-sky-400",     icon: <FaLinkedin />,    link: "https://www.linkedin.com/in/waqas-gul-b7580826b/" },
+  { name: "WhatsApp",  tone: "text-emerald-400", icon: <IoLogoWhatsapp />,link: "https://wa.me/+923488446186" },
+  { name: "Facebook",  tone: "text-sky-400",     icon: <FaFacebook />,    link: "https://www.facebook.com/WAQASI.369/" },
+  { name: "Instagram", tone: "text-pink-400",    icon: <FaInstagram />,   link: "https://www.instagram.com/w_a_q_a_s_i/" },
+  { name: "Telegram",  tone: "text-sky-400",     icon: <FaTelegram />,    link: "#" },
+  { name: "Twitter",   tone: "text-slate-100",   icon: <FaTwitter />,     link: "#" },
+  { name: "Skype",     tone: "text-sky-400",     icon: <FaSkype />,       link: "#" },
 ];
+
+// Animation variants
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
+const formStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
+};
+const fieldFade = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+};
+const socialsStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
+};
+const socialItem = {
+  hidden: { opacity: 0, scale: 0.85 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -70,36 +65,6 @@ export default function ContactSection() {
     message: "",
   });
 
-  // Animation controls
-  const controlsTitle = useAnimation();
-  const controlsSocial = useAnimation();
-  const controlsForm = useAnimation();
-
-  // Detect when elements are in view
-  const [refTitle, inViewTitle] = useInView({ triggerOnce: true });
-  const [refSocial, inViewSocial] = useInView({ triggerOnce: true });
-  const [refForm, inViewForm] = useInView({ triggerOnce: true });
-
-  // Trigger animations when elements are in view
-  useEffect(() => {
-    if (inViewTitle) {
-      controlsTitle.start({ opacity: 1, y: 0 });
-    }
-    if (inViewSocial) {
-      controlsSocial.start({ opacity: 1, x: 0 });
-    }
-    if (inViewForm) {
-      controlsForm.start({ opacity: 1, x: 0 });
-    }
-  }, [
-    controlsTitle,
-    controlsSocial,
-    controlsForm,
-    inViewTitle,
-    inViewSocial,
-    inViewForm,
-  ]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -107,186 +72,250 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // EmailJS credentials
     const serviceID = "service_88osjpn";
     const templateID = "template_zmddcab";
     const userID = "oGENuhiJqtOm9HIDW";
 
-    // Send the form data using EmailJS
     emailjs
       .send(serviceID, templateID, formData, userID)
-      .then((response) => {
-        console.log("Email sent successfully!", response.status, response.text);
-
-        // Show SweetAlert2 success message
+      .then(() => {
         Swal.fire({
-          title: "Success!",
-          text: "Your message has been sent successfully. I will get back to you shortly.",
+          title: "Message sent!",
+          text: "Thanks for reaching out — I'll get back to you shortly.",
           icon: "success",
           confirmButtonText: "OK",
-          confirmButtonColor: "#FCA61F",
-          background: "#1F2937",
-          color: "#FFFFFF",
+          confirmButtonColor: "#38BDF8",
+          background: "#0F172A",
+          color: "#F8FAFC",
         });
-
-        // Reset the form
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: "",
-        });
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
       })
       .catch((error) => {
         console.error("Failed to send email:", error);
-
-        // Show SweetAlert2 error message
         Swal.fire({
-          title: "Error!",
+          title: "Error",
           text: "Failed to send message. Please try again.",
           icon: "error",
           confirmButtonText: "OK",
-          confirmButtonColor: "#FCA61F",
-          background: "#1F2937",
-          color: "#FFFFFF",
+          confirmButtonColor: "#38BDF8",
+          background: "#0F172A",
+          color: "#F8FAFC",
         });
       });
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-200 py-16 dark:bg-gray-800 px-6 overflow-x-hidden">
-      {/* Title */}
-      <motion.h2
-        ref={refTitle}
-        initial={{ opacity: 0, y: -60 }}
-        animate={controlsTitle}
-        transition={{ duration: 0.8 }}
-        className="text-4xl flex items-center justify-center gap-3 font-extrabold font-sans mb-8 text-center bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent"
-      >
-        <MdConnectWithoutContact className="text-orange-500 font-extrabold text-4xl font-mono animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Contact Us
-      </motion.h2>
+    <div className="cf-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+      {/* Ambient gradient wash */}
+      <div aria-hidden="true" className="cf-ambient pointer-events-none absolute inset-0" />
 
-      {/* Content */}
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 overflow-hidden">
-        {/* Social Media Section */}
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
+        {/* Status pill with pulsing dot */}
         <motion.div
-          ref={refSocial}
-          initial={{ opacity: 0, x: -100 }}
-          animate={controlsSocial}
-          transition={{ duration: 0.8 }}
-          className="w-full md:w-1/3 flex flex-col items-start space-y-4 px-10"
+          initial={{ opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex justify-center"
         >
-          <h2 className="text-2xl font-bold bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-            Connect With Me
+          <span className="cf-status">
+            <span className="cf-status-dot" aria-hidden="true">
+              <span className="cf-status-pulse" />
+            </span>
+            Available for new projects
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          className="mt-6 text-center"
+        >
+          <h2 className="cf-title">
+            Let&apos;s{" "}
+            <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#818CF8] bg-clip-text text-transparent">
+              talk.
+            </span>
           </h2>
-          {data.map((item, index) => (
-            <motion.a
-              key={index}
-              href={item.link}
+          <p className="cf-subtitle mx-auto mt-4 max-w-md">
+            Have a project, collaboration, or opportunity in mind? Let&apos;s
+            start the conversation.
+          </p>
+        </motion.div>
+
+        {/* Side-by-side: contact hub (left) + form (right) */}
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-start">
+          {/* LEFT — compact contact hub */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
+            className="lg:col-span-5"
+          >
+            <h3 className="cf-hub-title">
+              Let&apos;s build something{" "}
+              <span className="bg-gradient-to-r from-[#38BDF8] to-[#A78BFA] bg-clip-text text-transparent">
+                meaningful.
+              </span>
+            </h3>
+            <p className="cf-hub-desc mt-3">
+              Reach out any time — whether it&apos;s a quick question or a
+              long-term collaboration, my inbox is open.
+            </p>
+
+            {/* Email card — prominent but compact */}
+            <a
+              href={emailContact.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 text-lg font-medium transition transform hover:scale-110 hover:rotate-12"
-              whileHover={{ scale: 1.1 }}
+              className="cf-email-compact mt-5"
+              aria-label="Email Waqas Gul"
             >
-              <span className={`${item.color} text-2xl`}>{item.icon}</span>
-              <span
-                style={{ textShadow: "3px 3px 6px rgba(250, 250, 250, 0.5)" }}
-                className={`${item.color}`}
-              >
-                {item.name}
+              <span className="cf-email-compact-icon">
+                <HiOutlineEnvelope aria-hidden="true" />
               </span>
-            </motion.a>
-          ))}
-          <motion.a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
-            className="flex items-center gap-4 text-lg font-medium hover:opacity-80 transition hover:rotate-12"
-            whileHover={{ scale: 1.1 }}
-          >
-            <FaEnvelope className="text-red-500 text-2xl" />
-            <span
-              className="text-gray-900 dark:text-red-500"
-              style={{ textShadow: "2px 2px 20px rgba(250, 250, 250, 0.5)" }}
-            >
-              waqasgul369@gmail.com
-            </span>
-          </motion.a>
-        </motion.div>
+              <span className="cf-email-compact-info">
+                <span className="cf-email-compact-label">Email</span>
+                <span className="cf-email-compact-value">{emailContact.address}</span>
+              </span>
+            </a>
 
-        {/* Contact Form Section */}
-        <motion.div
-          ref={refForm}
-          initial={{ opacity: 0, x: 100 }}
-          animate={controlsForm}
-          transition={{ duration: 0.8 }}
-          className="w-full md:w-2/3 bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg shadow-gray-500"
+            {/* Connect with me — compact social pill grid */}
+            <div className="mt-6">
+              <span className="cf-socials-heading">Connect with me</span>
+              <motion.ul
+                variants={socialsStagger}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                className="cf-socials-grid mt-3"
+                aria-label="Social channels"
+              >
+                {socials.map((s) => (
+                  <motion.li key={s.name} variants={socialItem}>
+                    <a
+                      href={s.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={s.name}
+                      className="cf-social-pill"
+                    >
+                      <span className={`cf-social-pill-icon ${s.tone}`}>
+                        {s.icon}
+                      </span>
+                      <span className="cf-social-pill-label">{s.name}</span>
+                    </a>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </div>
+          </motion.div>
+
+          {/* RIGHT — form card with animated gradient border */}
+          <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ delay: 0.1 }}
+          className="cf-form-wrap lg:col-span-7"
         >
-          <h2 className="text-2xl font-bold font-sans text-center mb-6 bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-            Contact Me
-          </h2>
-          <form
+          <motion.form
+            variants={formStagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
             onSubmit={handleSubmit}
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            className="cf-form"
           >
-            <input
-              className="p-3 border rounded-lg font-mono dark:bg-gray-600 shadow-lg shadow-gray-500 bg-gray-200 border-yellow-500 dark:text-white"
-              type="text"
-              name="name"
-              placeholder="Full Name*"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              className="p-3 border rounded-lg font-mono dark:bg-gray-600 shadow-lg shadow-gray-600 bg-gray-200 border-yellow-500 dark:text-white"
-              type="email"
-              name="email"
-              placeholder="Email*"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              className="p-3 border rounded-lg font-mono dark:bg-gray-600 shadow-lg shadow-gray-500 bg-gray-200 border-yellow-500 dark:text-white"
-              type="tel"
-              name="phone"
-              placeholder="Mobile No."
-              value={formData.phone}
-              onChange={handleChange}
-            />
-            <input
-              className="p-3 border rounded-lg font-mono dark:bg-gray-600 shadow-lg shadow-gray-500 bg-gray-200 border-yellow-500 dark:text-white"
-              type="text"
-              name="subject"
-              placeholder="Subject*"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              className="col-span-1 md:col-span-2 font-mono p-3 border shadow-lg shadow-gray-500 rounded-lg dark:bg-gray-600 bg-gray-200 border-yellow-500 dark:text-white"
-              rows="4"
-              name="message"
-              placeholder="Message*"
-              value={formData.message}
-              onChange={handleChange}
-              required
-            ></textarea>
-            <motion.button
-              type="submit"
-              className="flex items-center justify-center px-6 py-3 cursor-pointer hover:shadow-yellow-500 gap-4 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 active:scale-95 font-mono bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold shadow-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-3"
-              whileHover={{ scale: 1.05 }}
+            <div className="cf-grid">
+              <motion.label variants={fieldFade} className="cf-field">
+                <input
+                  className="cf-input"
+                  type="text"
+                  name="name"
+                  placeholder=" "
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="cf-label">Full Name</span>
+              </motion.label>
+
+              <motion.label variants={fieldFade} className="cf-field">
+                <input
+                  className="cf-input"
+                  type="email"
+                  name="email"
+                  placeholder=" "
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="cf-label">Email Address</span>
+              </motion.label>
+
+              <motion.label variants={fieldFade} className="cf-field">
+                <input
+                  className="cf-input"
+                  type="tel"
+                  name="phone"
+                  placeholder=" "
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+                <span className="cf-label">Mobile No.</span>
+              </motion.label>
+
+              <motion.label variants={fieldFade} className="cf-field">
+                <input
+                  className="cf-input"
+                  type="text"
+                  name="subject"
+                  placeholder=" "
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="cf-label">Subject</span>
+              </motion.label>
+
+              <motion.label variants={fieldFade} className="cf-field cf-field--full">
+                <textarea
+                  className="cf-input cf-textarea"
+                  name="message"
+                  rows="5"
+                  placeholder=" "
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                />
+                <span className="cf-label">Your Message</span>
+              </motion.label>
+            </div>
+
+            <motion.div
+              variants={fieldFade}
+              className="mt-4 flex flex-wrap items-center justify-between gap-3"
             >
-              Send{" "}
-              <Send
-                size={16}
-                className="font-sans text-gray-700 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1"
-              />
-            </motion.button>
-          </form>
-        </motion.div>
+              <span className="cf-form-hint">
+                I&apos;ll never share your details. Promise.
+              </span>
+              <button type="submit" className="cf-submit group">
+                <span>Send Message</span>
+                <HiOutlinePaperAirplane
+                  className="text-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </button>
+            </motion.div>
+          </motion.form>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
