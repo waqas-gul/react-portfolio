@@ -22,6 +22,8 @@ import {
   SiPostgresql,
   SiFastapi,
   SiRedux,
+  SiNestjs,
+  SiElectron,
 } from "react-icons/si";
 
 const titles = [
@@ -41,17 +43,21 @@ const socials = [
 // Badges orbit the portrait. `angle` is in degrees, 0° = top, clockwise.
 // We skip the bottom 90° arc (135°→225°) so badges never collide with the
 // stats card sitting under the portrait.
+// 10 badges spread across the upper 270° arc (skipping the bottom 90°
+// where the stats card sits). Step = 30° between badges.
 const skills = [
-  // LEFT half (going from top to bottom)
-  { name: "AWS",          Icon: FaAws,        iconClass: "text-amber-400",   angle: 320, delay: 0.00 },
-  { name: "React Native", Icon: SiReact,      iconClass: "text-cyan-400",    angle: 290, delay: 0.10, mobileHide: true },
-  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 250, delay: 0.20, mobileHide: true },
-  { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500", angle: 220, delay: 0.30 },
-  // RIGHT half (mirror, going from top to bottom)
-  { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",   angle: 40,  delay: 0.05 },
-  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 70,  delay: 0.15, mobileHide: true },
-  { name: "PostgreSQL",   Icon: SiPostgresql, iconClass: "text-sky-400",     angle: 110, delay: 0.25, mobileHide: true },
-  { name: "FastAPI",      Icon: SiFastapi,    iconClass: "text-emerald-400", angle: 140, delay: 0.35 },
+  // LEFT half (top → bottom)
+  { name: "AWS",          Icon: FaAws,        iconClass: "text-amber-400",   angle: 345, delay: 0.00 },
+  { name: "React Native", Icon: SiReact,      iconClass: "text-cyan-400",    angle: 315, delay: 0.08, mobileHide: true },
+  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 285, delay: 0.16, mobileHide: true },
+  { name: "Nest.js",      Icon: SiNestjs,     iconClass: "text-rose-400",    angle: 255, delay: 0.24, mobileHide: true },
+  { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500", angle: 225, delay: 0.32 },
+  // RIGHT half (top → bottom)
+  { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",   angle: 15,  delay: 0.04 },
+  { name: "Electron",     Icon: SiElectron,   iconClass: "text-sky-400",     angle: 45,  delay: 0.12, mobileHide: true },
+  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 75,  delay: 0.20, mobileHide: true },
+  { name: "PostgreSQL",   Icon: SiPostgresql, iconClass: "text-sky-400",     angle: 105, delay: 0.28, mobileHide: true },
+  { name: "FastAPI",      Icon: SiFastapi,    iconClass: "text-emerald-400", angle: 135, delay: 0.36 },
 ];
 
 const stats = [
@@ -378,7 +384,7 @@ const Hero = () => {
                   key={name}
                   className={`hero-orbit absolute z-20 ${mobileHide ? "hidden sm:block" : ""}`}
                   style={{
-                    top: "50%",
+                    top: "58%",
                     left: "50%",
                     transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * var(--orbit-r))) rotate(${-angle}deg)`,
                   }}
@@ -397,7 +403,7 @@ const Hero = () => {
 
             {/* Compact stats glass card with icons — sits below the orbiting badges */}
             <div
-              className="hero-stats relative z-30 mt-3 sm:mt-4 lg:mt-5"
+              className="hero-stats relative z-30 mt-8 sm:mt-10 lg:mt-12"
               role="list"
               aria-label="Quick stats"
             >
