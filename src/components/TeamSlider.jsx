@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { RiTeamFill } from "react-icons/ri";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
 import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaWhatsapp,
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+  HiOutlineUserGroup,
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+} from "react-icons/hi2";
 
 const teamMembers = [
   {
@@ -24,7 +22,6 @@ const teamMembers = [
       whatsapp: "https://wa.me/923488446186",
     },
   },
-
   {
     name: "Dawood khan",
     role: "UI/UX designer",
@@ -105,177 +102,217 @@ const teamMembers = [
   },
 ];
 
+// Animation variants
+const slideLeft = {
+  hidden: { opacity: 0, x: -28 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
+const thumbsContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } },
+};
+const thumbVariants = {
+  hidden: { opacity: 0, scale: 0.92, x: 20 },
+  show: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+};
+const spotlightSwap = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.25, ease: [0.4, 0, 1, 1] } },
+};
+
 export default function TeamSlider() {
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const nextMember = () => {
-    setIndex((prevIndex) => (prevIndex + 1) % teamMembers.length);
-  };
+  const nextMember = () => setIndex((p) => (p + 1) % teamMembers.length);
+  const prevMember = () =>
+    setIndex((p) => (p - 1 + teamMembers.length) % teamMembers.length);
 
-  const prevMember = () => {
-    setIndex(
-      (prevIndex) => (prevIndex - 1 + teamMembers.length) % teamMembers.length,
-    );
-  };
-
-  // Auto-scrolling effect with pause on hover
+  // Auto-advance every 2s, paused while user hovers the spotlight card
   useEffect(() => {
-    let interval;
-    if (!isHovered) {
-      interval = setInterval(() => {
-        nextMember();
-      }, 6000); // Change slide every 6 seconds
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isHovered, index]); // Reset timer on hover state or index change
+    if (isHovered) return;
+    const id = setInterval(nextMember, 3000);
+    return () => clearInterval(id);
+  }, [isHovered, index]);
+
+  const active = teamMembers[index];
 
   return (
-    <div className="flex flex-col items-center justify-center lg:h-screen py-16 dark:bg-gray-800 bg-white text-white relative overflow-hidden">
-      <h2 className="text-2xl flex items-center justify-center gap-3 mx-8 font-extrabold font-sans mb-8 text-center bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-        <RiTeamFill className="text-orange-500 font-extrabold text-4xl font-mono animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Me and the Talented People Around Me
-      </h2>
+    <div className="team-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+      {/* Subtle ambient gradient wash */}
+      <div aria-hidden="true" className="team-ambient pointer-events-none absolute inset-0" />
 
-      {/* Slider Container with Hover Detection */}
-      <div
-        className="relative w-[800px] h-96 flex items-center justify-center"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {teamMembers.map((member, i) => {
-          const position =
-            (i - index + teamMembers.length) % teamMembers.length;
-          let xOffset = 0;
-          let scale = 0.8;
-          let opacity = 0.5;
-          let blur = "blur-sm";
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <span className="team-eyebrow">
+            <HiOutlineUserGroup className="text-[15px]" aria-hidden="true" />
+            Network
+          </span>
+          <h2 className="team-title mt-4">
+            <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#818CF8] bg-clip-text text-transparent">
+              People Around Me
+            </span>
+          </h2>
+          <p className="team-subtitle mx-auto mt-4 max-w-xl">
+            Talented people I&apos;ve worked with, learned from, and built
+            alongside.
+          </p>
+        </motion.div>
 
-          // Middle card (focused)
-          if (position === 0) {
-            xOffset = 0;
-            scale = 1;
-            opacity = 1;
-            blur = "";
-          }
-          // Two cards to the left
-          else if (position === 1) {
-            xOffset = -200;
-          } else if (position === 2) {
-            xOffset = -400;
-          }
-          // Two cards to the right
-          else if (position === teamMembers.length - 1) {
-            xOffset = 200;
-          } else if (position === teamMembers.length - 2) {
-            xOffset = 400;
-          }
-
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.8, x: xOffset }}
-              animate={{ opacity, scale, x: xOffset }}
-              transition={{ duration: 0.7 }}
-              style={{
-                zIndex:
-                  position === 0
-                    ? 10
-                    : position === 1 || position === teamMembers.length - 1
-                      ? 5
-                      : 1,
-              }}
-              className={`absolute w-72 h-96 dark:bg-gray-900 bg-gray-400 rounded-xl shadow-lg shadow-gray-500 overflow-hidden cursor-pointer transition-all duration-200 ${blur} hover:shadow-yellow-500`}
+        {/* Thumbs (left) + Spotlight + Nav (right) */}
+        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-12">
+          {/* Spotlight + nav (right on lg, first on mobile) */}
+          <motion.div
+            variants={slideLeft}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="order-1 flex flex-col gap-5 lg:order-2 lg:col-span-7"
+          >
+            <div
+              className="team-spotlight"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <div
-                className={`relative w-full h-full ${
-                  position === 0 ? "group" : ""
-                }`}
-              >
-                {/* Image */}
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-full h-3/4 object-cover"
-                />
-
-                {/* Name and Description (always visible at the bottom) */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gray-200 dark:bg-gray-600 bg-opacity-90 p-4 flex flex-col items-center justify-center text-center">
-                  <h3 className="text-lg font-bold bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent font-sans">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-black dark:text-gray-100 font-mono">
-                    {member.role}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-300 mt-1 font-mono">
-                    {member.description}
-                  </p>
-                </div>
-
-                {/* Icons (appear on hover for the middle card) */}
-                {position === 0 && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex space-x-3">
-                      {/* Facebook Icon */}
-                      <a
-                        href={member.links.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaFacebookF className="cursor-pointer text-4xl text-blue-700 transition-all duration-300 hover:text-blue-600 hover:scale-110 hover:rotate-12" />
-                      </a>
-
-                      {/* Twitter Icon */}
-                      <a
-                        href={member.links.insta}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaSquareInstagram className="cursor-pointer text-4xl transition-all duration-300 text-pink-900 hover:scale-110 hover:rotate-12 hover:text-pink-800" />
-                      </a>
-
-                      {/* LinkedIn Icon */}
-                      <a
-                        href={member.links.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaLinkedinIn className="cursor-pointer text-4xl transition-all duration-300 text-blue-800 hover:text-blue-700 hover:scale-110 hover:rotate-12" />
-                      </a>
-
-                      {/* WhatsApp Icon */}
-                      <a
-                        href={member.links.whatsapp}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FaWhatsapp className="cursor-pointer text-4xl transition-all duration-300 text-green-700 hover:text-green-600 hover:scale-110 hover:rotate-12" />
-                      </a>
-                    </div>
-                  </div>
-                )}
+              <div className="team-spotlight-image-wrap">
+                <div aria-hidden="true" className="team-spotlight-glow" />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={`img-${index}`}
+                    src={active.img}
+                    alt={active.name}
+                    variants={spotlightSwap}
+                    initial="hidden"
+                    animate="show"
+                    exit="exit"
+                    className="team-spotlight-image"
+                  />
+                </AnimatePresence>
               </div>
-            </motion.div>
-          );
-        })}
-      </div>
 
-      {/* Navigation Buttons */}
-      <div className="mt-8  flex space-x-4">
-        <button
-          onClick={prevMember}
-          className="p-3 bg-orange-500 hover:text-orange-500 rounded-full border border-orange-500 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-center transition-all duration-300 ease-in-out"
-        >
-          <FaArrowLeft size={20} />
-        </button>
-        <button
-          onClick={nextMember}
-          className="p-3 bg-orange-500 hover:text-orange-500 rounded-full border border-orange-500 hover:bg-gray-200 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-center transition-all duration-300 ease-in-out"
-        >
-          <FaArrowRight size={20} />
-        </button>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`info-${index}`}
+                  variants={spotlightSwap}
+                  initial="hidden"
+                  animate="show"
+                  exit="exit"
+                  className="team-spotlight-info"
+                >
+                  <span className="team-spotlight-role">{active.role}</span>
+                  <h3 className="team-spotlight-name">{active.name}</h3>
+                  <p className="team-spotlight-desc">{active.description}</p>
+
+                  <div className="team-spotlight-socials">
+                    <a
+                      href={active.links.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${active.name} on Facebook`}
+                      className="team-social-btn"
+                    >
+                      <FaFacebookF aria-hidden="true" />
+                    </a>
+                    <a
+                      href={active.links.insta}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${active.name} on Instagram`}
+                      className="team-social-btn"
+                    >
+                      <FaSquareInstagram aria-hidden="true" />
+                    </a>
+                    <a
+                      href={active.links.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${active.name} on LinkedIn`}
+                      className="team-social-btn"
+                    >
+                      <FaLinkedinIn aria-hidden="true" />
+                    </a>
+                    <a
+                      href={active.links.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${active.name} on WhatsApp`}
+                      className="team-social-btn"
+                    >
+                      <FaWhatsapp aria-hidden="true" />
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Navigation — sits directly below the spotlight card */}
+            <div className="flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={prevMember}
+                aria-label="Previous person"
+                className="team-nav-btn"
+              >
+                <HiOutlineChevronLeft className="text-[18px]" aria-hidden="true" />
+              </button>
+              <span className="team-counter">
+                {String(index + 1).padStart(2, "0")} /{" "}
+                {String(teamMembers.length).padStart(2, "0")}
+              </span>
+              <button
+                type="button"
+                onClick={nextMember}
+                aria-label="Next person"
+                className="team-nav-btn"
+              >
+                <HiOutlineChevronRight className="text-[18px]" aria-hidden="true" />
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Thumbnail strip (left on lg, second on mobile) */}
+          <motion.div
+            variants={thumbsContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
+            className="order-2 lg:order-1 lg:col-span-5"
+          >
+            <div className="team-thumbs">
+              {teamMembers.map((m, i) => (
+                <motion.button
+                  key={m.name}
+                  type="button"
+                  variants={thumbVariants}
+                  onClick={() => setIndex(i)}
+                  className={`team-thumb ${i === index ? "team-thumb--active" : ""}`}
+                  aria-label={`Show ${m.name}`}
+                  aria-pressed={i === index}
+                >
+                  <span className="team-thumb-avatar">
+                    <img src={m.img} alt="" />
+                  </span>
+                  <span className="team-thumb-info">
+                    <span className="team-thumb-name">{m.name}</span>
+                    <span className="team-thumb-role">{m.role}</span>
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
