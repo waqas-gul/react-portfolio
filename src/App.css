@@ -4695,6 +4695,268 @@ html.dark #contact [class*="bg-gray-700"] {
     .cf-social-icon-side { transition: none; }
 }
 
+/* ============================================================
+   Footer (ft-) — premium liquid-glass closing panel
+   Cyan/blue/purple identity, matches the rest of the site
+   ============================================================ */
+
+.ft-section {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.dark .ft-section {
+    background: #0B1120;
+    color: #F8FAFC;
+}
+
+.ft-ambient {
+    background:
+        radial-gradient(45% 35% at 12% 20%, color-mix(in srgb, var(--hero-accent, #2563EB) 12%, transparent), transparent 65%),
+        radial-gradient(45% 35% at 88% 80%, color-mix(in srgb, var(--hero-accent-2, #7C3AED) 10%, transparent), transparent 65%);
+    opacity: 0.55;
+}
+
+.dark .ft-ambient { opacity: 0.85; }
+
+/* Main footer panel — liquid glass */
+.ft-panel {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    border-radius: 24px;
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.07), transparent 55%),
+        radial-gradient(120% 80% at 100% 100%, rgba(167, 139, 250, 0.07), transparent 55%),
+        rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        0 20px 70px rgba(15, 23, 42, 0.10);
+}
+
+.dark .ft-panel {
+    background:
+        radial-gradient(120% 80% at 0% 0%, rgba(125, 211, 252, 0.10), transparent 55%),
+        radial-gradient(120% 80% at 100% 100%, rgba(167, 139, 250, 0.10), transparent 55%),
+        rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(125, 211, 252, 0.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 20px 70px rgba(0, 0, 0, 0.25);
+}
+
+/* Top inner highlight rail */
+.ft-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 32px;
+    right: 32px;
+    height: 1px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), rgba(167, 139, 250, 0.6), transparent);
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+@media (min-width: 768px) {
+    .ft-panel { padding: 36px; }
+}
+
+/* 4-column grid on md+ */
+.ft-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+}
+
+@media (min-width: 768px) {
+    .ft-grid {
+        grid-template-columns: 1.4fr 0.8fr 0.8fr 1fr;
+        gap: 32px;
+    }
+}
+
+/* Brand */
+.ft-brand {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+    .ft-brand { font-size: 24px; }
+}
+
+.ft-desc {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #64748B;
+    max-width: 320px;
+}
+
+.dark .ft-desc { color: #94A3B8; }
+
+/* Column heading */
+.ft-col-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: #0F172A;
+    margin-bottom: 14px;
+}
+
+.dark .ft-col-title { color: #F8FAFC; }
+
+/* Link list */
+.ft-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ft-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #64748B;
+    cursor: pointer;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.dark .ft-link { color: #94A3B8; }
+
+.ft-link:hover {
+    color: var(--hero-accent, #2563EB);
+    transform: translateX(2px);
+}
+
+.dark .ft-link:hover { color: #38BDF8; }
+
+.ft-link-icon {
+    font-size: 15px;
+    color: inherit;
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+}
+
+.ft-link:hover .ft-link-icon { opacity: 1; }
+
+/* Connect column */
+.ft-connect-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #64748B;
+    max-width: 220px;
+}
+
+.dark .ft-connect-desc { color: #94A3B8; }
+
+/* Social icon row — compact circular pills */
+.ft-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ft-social-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    font-size: 15px;
+    color: var(--hero-accent, #2563EB);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.dark .ft-social-btn {
+    color: #CBD5E1;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(56, 189, 248, 0.30);
+}
+
+.ft-social-btn:hover {
+    transform: translateY(-2px);
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #2563EB, #7C3AED);
+    border-color: transparent;
+    box-shadow: 0 10px 22px -10px rgba(37, 99, 235, 0.55);
+}
+
+.dark .ft-social-btn:hover {
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #38BDF8, #A78BFA);
+    border-color: transparent;
+    box-shadow: 0 10px 22px -10px rgba(56, 189, 248, 0.55);
+}
+
+/* Bottom bar */
+.ft-bottom { position: relative; }
+
+.ft-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.30), rgba(167, 139, 250, 0.30), transparent);
+}
+
+.dark .ft-divider {
+    background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.35), rgba(167, 139, 250, 0.35), transparent);
+}
+
+.ft-bottom-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (min-width: 640px) {
+    .ft-bottom-row {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 16px;
+    }
+}
+
+.ft-copyright {
+    font-size: 13px;
+    color: #64748B;
+    text-align: center;
+}
+
+.dark .ft-copyright { color: #94A3B8; }
+
+.ft-built-with {
+    font-size: 12.5px;
+    color: #64748B;
+    letter-spacing: 0.02em;
+}
+
+.dark .ft-built-with { color: #94A3B8; }
+
+@media (prefers-reduced-motion: reduce) {
+    .ft-link,
+    .ft-link-icon,
+    .ft-social-btn { transition: none; }
+}
+
 /* Floating skill badge — liquid glass pill */
 .hero-badge {
     color: var(--hero-ink);

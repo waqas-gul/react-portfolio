@@ -9,6 +9,7 @@ import {
   FaFigma,
   FaGithub,
   FaGitlab,
+  FaAws,
 } from "react-icons/fa";
 import { BsFiletypeScss } from "react-icons/bs";
 import { BiLogoVisualStudio } from "react-icons/bi";
@@ -31,6 +32,20 @@ import {
   SiReactquery,
   SiPostman,
   SiNotion,
+  SiRender,
+  SiSupabase,
+  SiNestjs,
+  SiPostgresql,
+  SiElectron,
+  SiTerraform,
+  SiFastapi,
+  SiFlask,
+  SiVuedotjs,
+  SiPrisma,
+  SiTypescript,
+  SiPython,
+  SiKotlin,
+  SiCplusplus,
 } from "react-icons/si";
 import {
   HiOutlinePaintBrush,
@@ -38,6 +53,9 @@ import {
   HiOutlineWrenchScrewdriver,
   HiOutlineSparkles,
   HiOutlineArrowDownTray,
+  HiOutlineCubeTransparent,
+  HiOutlineSwatch,
+  HiOutlineSquare3Stack3D,
 } from "react-icons/hi2";
 
 // Skill categories — content preserved
@@ -56,28 +74,56 @@ const skillGroups = [
     title: "Technologies I Use",
     Icon: HiOutlineCpuChip,
     items: [
-      { name: "HTML5",             icon: <FaHtml5 />,            tone: "text-orange-500" },
-      { name: "CSS3",              icon: <FaCss3 />,             tone: "text-blue-500"   },
-      { name: "JavaScript",        icon: <FaJs />,               tone: "text-amber-300"  },
-      { name: "JQuery",            icon: <SiJquery />,           tone: "text-blue-500"   },
-      { name: "SCSS",              icon: <BsFiletypeScss />,     tone: "text-pink-500"   },
-      { name: "Bootstrap",         icon: <FaBootstrap />,        tone: "text-violet-500" },
-      { name: "ReactJS",           icon: <FaReact />,            tone: "text-cyan-400"   },
-      { name: "Redux",             icon: <SiRedux />,            tone: "text-violet-400" },
-      { name: "Firebase",          icon: <SiFirebase />,         tone: "text-amber-400"  },
-      { name: "Next.js",           icon: <SiNextdotjs />,        tone: "text-slate-100"  },
-      { name: "AMP",               icon: <SiAmp />,              tone: "text-blue-500"   },
-      { name: "Tailwind CSS",      icon: <SiTailwindcss />,      tone: "text-sky-400"    },
-      { name: "Material UI",       icon: <SiMaterialdesign />,   tone: "text-blue-500"   },
-      { name: "Chakra UI",         icon: <SiChakraui />,         tone: "text-teal-400"   },
-      { name: "Semantic UI",       icon: <SiSemanticui />,       tone: "text-blue-500"   },
-      { name: "Ant Design",        icon: <SiAntdesign />,        tone: "text-rose-400"   },
-      { name: "GraphQL",           icon: <SiGraphql />,          tone: "text-pink-500"   },
-      { name: "Apollo GraphQL",    icon: <SiApollographql />,    tone: "text-violet-400" },
-      { name: "Framer Motion",     icon: <SiFramer />,           tone: "text-sky-400"    },
-      { name: "Styled Components", icon: <SiStyledcomponents />, tone: "text-pink-500"   },
-      { name: "React Query",       icon: <SiReactquery />,       tone: "text-rose-400"   },
-      { name: "Git",               icon: <FaGit />,              tone: "text-orange-500" },
+      // ── Modern stack first ──
+      { name: "ReactJS",             icon: <FaReact />,                  tone: "text-cyan-400"    },
+      { name: "Next.js",             icon: <SiNextdotjs />,              tone: "text-slate-100"   },
+      { name: "Node.js (Nest.js)",   icon: <SiNestjs />,                 tone: "text-rose-400"    },
+      { name: "PostgreSQL",          icon: <SiPostgresql />,             tone: "text-sky-400"     },
+      { name: "AWS",                 icon: <FaAws />,                    tone: "text-amber-400"   },
+      { name: "TypeScript",          icon: <SiTypescript />,             tone: "text-sky-400"     },
+      { name: "React Native",        icon: <FaReact />,                  tone: "text-cyan-400"    },
+      { name: "Vue.js",              icon: <SiVuedotjs />,               tone: "text-emerald-400" },
+      { name: "Python",              icon: <SiPython />,                 tone: "text-amber-300"   },
+      { name: "FastAPI",             icon: <SiFastapi />,                tone: "text-emerald-400" },
+      { name: "Flask",               icon: <SiFlask />,                  tone: "text-slate-100"   },
+      { name: "Supabase",            icon: <SiSupabase />,               tone: "text-emerald-400" },
+      { name: "Firebase",            icon: <SiFirebase />,               tone: "text-amber-400"   },
+      { name: "Prisma / Migrations", icon: <SiPrisma />,                 tone: "text-slate-100"   },
+      { name: "Electron",            icon: <SiElectron />,               tone: "text-sky-400"     },
+      { name: "Render",              icon: <SiRender />,                 tone: "text-slate-100"   },
+      { name: "Terraform",           icon: <SiTerraform />,              tone: "text-violet-400"  },
+      { name: "Kotlin",              icon: <SiKotlin />,                 tone: "text-violet-400"  },
+      { name: "C++",                 icon: <SiCplusplus />,              tone: "text-sky-400"     },
+
+      // ── Styling & UI libraries ──
+      { name: "Tailwind CSS",        icon: <SiTailwindcss />,            tone: "text-sky-400"     },
+      { name: "shadcn/ui",           icon: <HiOutlineSwatch />,          tone: "text-slate-100"   },
+      { name: "Tabler",              icon: <HiOutlineSquare3Stack3D />,  tone: "text-sky-400"     },
+      { name: "Material UI",         icon: <SiMaterialdesign />,         tone: "text-blue-500"    },
+      { name: "Chakra UI",           icon: <SiChakraui />,               tone: "text-teal-400"    },
+      { name: "Ant Design",          icon: <SiAntdesign />,              tone: "text-rose-400"    },
+      { name: "Semantic UI",         icon: <SiSemanticui />,             tone: "text-blue-500"    },
+
+      // ── State / Data ──
+      { name: "Redux",               icon: <SiRedux />,                  tone: "text-violet-400"  },
+      { name: "Zustand",             icon: <HiOutlineCubeTransparent />, tone: "text-amber-300"   },
+      { name: "React Query",         icon: <SiReactquery />,             tone: "text-rose-400"    },
+      { name: "GraphQL",             icon: <SiGraphql />,                tone: "text-pink-500"    },
+      { name: "Apollo GraphQL",      icon: <SiApollographql />,          tone: "text-violet-400"  },
+
+      // ── UX & misc ──
+      { name: "Framer Motion",       icon: <SiFramer />,                 tone: "text-sky-400"     },
+      { name: "Styled Components",   icon: <SiStyledcomponents />,       tone: "text-pink-500"    },
+      { name: "Git",                 icon: <FaGit />,                    tone: "text-orange-500"  },
+
+      // ── Foundations (older / fundamental) ──
+      { name: "JavaScript",          icon: <FaJs />,                     tone: "text-amber-300"   },
+      { name: "HTML5",               icon: <FaHtml5 />,                  tone: "text-orange-500"  },
+      { name: "CSS3",                icon: <FaCss3 />,                   tone: "text-blue-500"    },
+      { name: "SCSS",                icon: <BsFiletypeScss />,           tone: "text-pink-500"    },
+      { name: "Bootstrap",           icon: <FaBootstrap />,              tone: "text-violet-500"  },
+      { name: "JQuery",              icon: <SiJquery />,                 tone: "text-blue-500"    },
+      { name: "AMP",                 icon: <SiAmp />,                    tone: "text-blue-500"    },
     ],
   },
   {
