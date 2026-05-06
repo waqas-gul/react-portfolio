@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import {
   FaHtml5,
   FaCss3,
@@ -9,15 +10,11 @@ import {
   FaGithub,
   FaGitlab,
 } from "react-icons/fa";
-import { SiAdobexd } from "react-icons/si";
-import { SiMaterialdesign } from "react-icons/si";
 import { BsFiletypeScss } from "react-icons/bs";
 import { BiLogoVisualStudio } from "react-icons/bi";
-import { PiReadCvLogoFill } from "react-icons/pi";
-import { GiSkills } from "react-icons/gi";
-import { MdDesignServices, MdDeveloperMode } from "react-icons/md";
-import { IoIosConstruct } from "react-icons/io";
 import {
+  SiAdobexd,
+  SiMaterialdesign,
   SiJquery,
   SiRedux,
   SiFirebase,
@@ -35,150 +32,192 @@ import {
   SiPostman,
   SiNotion,
 } from "react-icons/si";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import {
+  HiOutlinePaintBrush,
+  HiOutlineCpuChip,
+  HiOutlineWrenchScrewdriver,
+  HiOutlineSparkles,
+  HiOutlineArrowDownTray,
+} from "react-icons/hi2";
 
-const skills = {
-  "Design Tools I Use": [
-    { name: "Adobe XD", icon: <SiAdobexd className="text-pink-600" /> },
-    { name: "Figma", icon: <FaFigma className="text-purple-600" /> },
-  ],
-  "Technologies I Use": [
-    { name: "HTML5", icon: <FaHtml5 className="text-orange-500" /> },
-    { name: "CSS3", icon: <FaCss3 className="text-blue-500" /> },
-    { name: "JavaScript", icon: <FaJs className="text-yellow-400" /> },
-    { name: "JQuery", icon: <SiJquery className="text-blue-500" /> },
-    { name: "SCSS", icon: <BsFiletypeScss className="text-pink-500" /> },
-    { name: "Bootstrap", icon: <FaBootstrap className="text-purple-500" /> },
-    { name: "ReactJS", icon: <FaReact className="text-blue-400" /> },
-    { name: "Redux", icon: <SiRedux className="text-purple-600" /> },
-    { name: "Firebase", icon: <SiFirebase className="text-yellow-500" /> },
-    { name: "Next.js", icon: <SiNextdotjs className="text-black" /> },
-    { name: "AMP", icon: <SiAmp className="text-blue-600" /> },
-    { name: "Tailwind CSS", icon: <SiTailwindcss className="text-blue-400" /> },
-    {
-      name: "Material UI",
-      icon: <SiMaterialdesign className="text-blue-600" />,
-    },
-    { name: "Chakra UI", icon: <SiChakraui className="text-teal-500" /> },
-    { name: "Semantic UI", icon: <SiSemanticui className="text-blue-500" /> },
-    { name: "Ant Design", icon: <SiAntdesign className="text-red-500" /> },
-    { name: "GraphQL", icon: <SiGraphql className="text-pink-600" /> },
-    {
-      name: "Apollo GraphQL",
-      icon: <SiApollographql className="text-purple-600" />,
-    },
-    { name: "Framer Motion", icon: <SiFramer className="text-blue-500" /> },
-    {
-      name: "Styled Components",
-      icon: <SiStyledcomponents className="text-pink-500" />,
-    },
-    { name: "React Query", icon: <SiReactquery className="text-red-500" /> },
-    { name: "Git", icon: <FaGit className="text-orange-600" /> },
-  ],
-  "Development & Productivity Tools I Use": [
-    { name: "VS Code", icon: <BiLogoVisualStudio className="text-blue-500" /> },
-    { name: "GitLab", icon: <FaGitlab className="text-orange-500" /> },
-    { name: "GitHub", icon: <FaGithub className="text-black" /> },
-    { name: "Notion", icon: <SiNotion className="text-black" /> },
-    { name: "Postman", icon: <SiPostman className="text-orange-500" /> },
-  ],
+// Skill categories — content preserved
+const skillGroups = [
+  {
+    key: "design",
+    title: "Design Tools I Use",
+    Icon: HiOutlinePaintBrush,
+    items: [
+      { name: "Adobe XD", icon: <SiAdobexd />, tone: "text-pink-500"   },
+      { name: "Figma",    icon: <FaFigma />,    tone: "text-violet-400" },
+    ],
+  },
+  {
+    key: "tech",
+    title: "Technologies I Use",
+    Icon: HiOutlineCpuChip,
+    items: [
+      { name: "HTML5",             icon: <FaHtml5 />,            tone: "text-orange-500" },
+      { name: "CSS3",              icon: <FaCss3 />,             tone: "text-blue-500"   },
+      { name: "JavaScript",        icon: <FaJs />,               tone: "text-amber-300"  },
+      { name: "JQuery",            icon: <SiJquery />,           tone: "text-blue-500"   },
+      { name: "SCSS",              icon: <BsFiletypeScss />,     tone: "text-pink-500"   },
+      { name: "Bootstrap",         icon: <FaBootstrap />,        tone: "text-violet-500" },
+      { name: "ReactJS",           icon: <FaReact />,            tone: "text-cyan-400"   },
+      { name: "Redux",             icon: <SiRedux />,            tone: "text-violet-400" },
+      { name: "Firebase",          icon: <SiFirebase />,         tone: "text-amber-400"  },
+      { name: "Next.js",           icon: <SiNextdotjs />,        tone: "text-slate-100"  },
+      { name: "AMP",               icon: <SiAmp />,              tone: "text-blue-500"   },
+      { name: "Tailwind CSS",      icon: <SiTailwindcss />,      tone: "text-sky-400"    },
+      { name: "Material UI",       icon: <SiMaterialdesign />,   tone: "text-blue-500"   },
+      { name: "Chakra UI",         icon: <SiChakraui />,         tone: "text-teal-400"   },
+      { name: "Semantic UI",       icon: <SiSemanticui />,       tone: "text-blue-500"   },
+      { name: "Ant Design",        icon: <SiAntdesign />,        tone: "text-rose-400"   },
+      { name: "GraphQL",           icon: <SiGraphql />,          tone: "text-pink-500"   },
+      { name: "Apollo GraphQL",    icon: <SiApollographql />,    tone: "text-violet-400" },
+      { name: "Framer Motion",     icon: <SiFramer />,           tone: "text-sky-400"    },
+      { name: "Styled Components", icon: <SiStyledcomponents />, tone: "text-pink-500"   },
+      { name: "React Query",       icon: <SiReactquery />,       tone: "text-rose-400"   },
+      { name: "Git",               icon: <FaGit />,              tone: "text-orange-500" },
+    ],
+  },
+  {
+    key: "tools",
+    title: "Development & Productivity Tools I Use",
+    Icon: HiOutlineWrenchScrewdriver,
+    items: [
+      { name: "VS Code", icon: <BiLogoVisualStudio />, tone: "text-sky-400"    },
+      { name: "GitLab",  icon: <FaGitlab />,           tone: "text-orange-500" },
+      { name: "GitHub",  icon: <FaGithub />,           tone: "text-slate-100"  },
+      { name: "Notion",  icon: <SiNotion />,           tone: "text-slate-100"  },
+      { name: "Postman", icon: <SiPostman />,          tone: "text-orange-400" },
+    ],
+  },
+];
+
+// Stagger variants
+const groupContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.18, delayChildren: 0.05 } },
+};
+const groupVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+};
+const badgesContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04, delayChildren: 0.15 } },
+};
+const badgeVariants = {
+  hidden: { opacity: 0, scale: 0.92, y: 8 },
+  show: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
 };
 
 export default function Skills() {
-  const controlsTitle = useAnimation();
-  const controlsCategories = useAnimation();
-
-  const [refTitle, inViewTitle] = useInView({ triggerOnce: true });
-  const [refCategories, inViewCategories] = useInView({ triggerOnce: true });
-
-  useEffect(() => {
-    if (inViewTitle) {
-      controlsTitle.start({ opacity: 1, y: 0 });
-    }
-    if (inViewCategories) {
-      controlsCategories.start({ opacity: 1, y: 0 });
-    }
-  }, [controlsTitle, controlsCategories, inViewTitle, inViewCategories]);
-
   return (
-    <div className="min-h-screen flex flex-col items-center py-14 dark:bg-gray-800 px-4">
-      {/* Title */}
-      <motion.h2
-        ref={refTitle}
-        initial={{ opacity: 0, y: -50 }}
-        animate={controlsTitle}
-        transition={{ duration: 0.8 }}
-        className="text-4xl flex gap-3 font-extrabold font-sans mb-8 text-center bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent"
-      >
-        <GiSkills className="text-orange-500 font-extrabold text-5xl font-mono animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Skills
-      </motion.h2>
+    <div className="skills-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+      {/* Subtle ambient gradient wash */}
+      <div aria-hidden="true" className="skills-ambient pointer-events-none absolute inset-0" />
 
-      {/* Skills Categories */}
-      <motion.div
-        ref={refCategories}
-        initial={{ opacity: 0, y: 50 }}
-        animate={controlsCategories}
-        transition={{ duration: 0.8 }}
-        className="w-full max-w-4xl"
-      >
-        {Object.entries(skills).map(([category, items], index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-            viewport={{ once: true }}
-            className="mb-10"
+      <div className="relative z-10 mx-auto w-full max-w-4xl">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <span className="skills-eyebrow">
+            <HiOutlineSparkles className="text-[15px]" aria-hidden="true" />
+            Skills
+          </span>
+          <h2 className="skills-title mt-4">
+            <span className="bg-gradient-to-r from-white via-[#38BDF8] to-[#818CF8] bg-clip-text text-transparent">
+              Skills
+            </span>
+          </h2>
+          <p className="skills-subtitle mx-auto mt-4 max-w-xl">
+            Tools and technologies I use to design, build, and ship reliable
+            digital products.
+          </p>
+        </motion.div>
+
+        {/* Skill groups — no boxes, just headings + floating pills */}
+        <motion.div
+          variants={groupContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          className="mt-12 flex flex-col gap-10 sm:gap-11"
+        >
+          {skillGroups.map((group) => (
+            <motion.section
+              key={group.key}
+              variants={groupVariants}
+              className="skill-group"
+            >
+              {/* Soft radial glow behind the group */}
+              <div aria-hidden="true" className="skill-group-glow" />
+
+              {/* Heading row */}
+              <div className="skill-group-head">
+                <span className="skill-group-icon">
+                  <group.Icon aria-hidden="true" />
+                </span>
+                <h3 className="skill-group-title">{group.title}</h3>
+              </div>
+              <span aria-hidden="true" className="skill-group-underline" />
+
+              {/* Floating pill cloud */}
+              <motion.ul
+                variants={badgesContainer}
+                className="skill-badges"
+              >
+                {group.items.map((item) => (
+                  <motion.li
+                    key={item.name}
+                    variants={badgeVariants}
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 320, damping: 22 }}
+                    className="skill-badge"
+                  >
+                    <span className={`skill-badge-icon ${item.tone}`} aria-hidden="true">
+                      {item.icon}
+                    </span>
+                    <span>{item.name}</span>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.section>
+          ))}
+        </motion.div>
+
+        {/* Resume CTA (preserved, cyan/blue) */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ delay: 0.1 }}
+          className="mt-12 flex justify-center"
+        >
+          <a
+            href="/CV_waqasi.pdf"
+            download="Waqas_Gul_Resume.pdf"
+            className="skills-cta group"
           >
-            <h3 className="text-2xl flex font-sans items-center justify-center gap-2 font-bold text-yellow-400 text-center mb-5">
-              {category === "Design Tools I Use" && (
-                <MdDesignServices className="text-3xl text-purple-500 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-              )}
-              {category === "Technologies I Use" && (
-                <MdDeveloperMode className="text-3xl text-blue-500 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-              )}
-              {category === "Development & Productivity Tools I Use" && (
-                <IoIosConstruct className="text-3xl text-orange-500 animate-bounce transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-              )}
-              {category}
-            </h3>
-            <div className="flex flex-wrap justify-center gap-4 font-mono">
-              {items.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-center space-x-2 bg-gray-200 shadow-gray-600 dark:bg-gray-900 dark:text-gray-300 px-4 py-2 rounded-full shadow-lg hover:shadow-yellow-500 hover:bg-gray-300 dark:hover:bg-gray-700 hover:scale-105 transition-transform duration-300 ease-in-out"
-                >
-                  <span className="text-lg hover:text-2xl transition-all duration-300 ease-in-out">
-                    {item.icon}
-                  </span>
-                  <span className="text-sm font-semibold">{item.name}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Resume Button */}
-      <motion.a
-        href="/CV_waqasi.pdf"
-        download="Waqas_Gul_Resume.pdf"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="flex cursor-pointer items-center gap-2 px-6 py-2 bg-yellow-400 rounded-lg relative overflow-hidden ease-in-out hover:bg-yellow-500 font-sans shadow-lg hover:shadow-amber-500 shadow-yellow-500 active:scale-95 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold hover:from-yellow-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group hover:rotate-12"
-      >
-        <PiReadCvLogoFill className="animate-bounce font-mono transition-all duration-300 ease-in-out group-hover:translate-y-1" />
-        Resume
-      </motion.a>
+            <HiOutlineArrowDownTray
+              className="text-[18px] transition-transform duration-300 group-hover:translate-y-0.5"
+              aria-hidden="true"
+            />
+            <span>Download Resume</span>
+          </a>
+        </motion.div>
+      </div>
     </div>
   );
 }

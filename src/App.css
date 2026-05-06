@@ -2469,6 +2469,258 @@ html.dark #contact [class*="bg-gray-700"] {
     .resume-btn-ghost { transition: none; }
 }
 
+/* ============================================================
+   Skills — premium liquid-glass matrix
+   Cyan/blue/purple identity, matches hero/about/education/exp/resume
+   ============================================================ */
+
+.skills-section {
+    background: #F8FAFC;
+    color: #0F172A;
+}
+
+.skills-ambient {
+    background:
+        radial-gradient(45% 35% at 12% 20%, color-mix(in srgb, var(--hero-accent, #2563EB) 14%, transparent), transparent 65%),
+        radial-gradient(45% 35% at 88% 80%, color-mix(in srgb, var(--hero-accent-2, #7C3AED) 12%, transparent), transparent 65%);
+    opacity: 0.6;
+}
+
+.dark .skills-ambient { opacity: 0.85; }
+
+.skills-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 28%, transparent);
+}
+
+.dark .skills-eyebrow {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.skills-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+}
+
+.dark .skills-title { color: #F8FAFC; }
+
+.skills-subtitle {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #64748B;
+}
+
+.dark .skills-subtitle { color: #94A3B8; }
+
+@media (min-width: 640px) {
+    .skills-subtitle { font-size: 16px; }
+}
+
+/* Skill group — NO box. Just heading, gradient underline, soft halo, and pills. */
+.skill-group {
+    position: relative;
+    text-align: center;
+    padding: 6px 0 4px;
+}
+
+.skill-group-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 75%;
+    max-width: 540px;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.38;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(56, 189, 248, 0.18) 0%,
+        rgba(167, 139, 250, 0.12) 55%,
+        transparent 78%
+    );
+}
+
+.dark .skill-group-glow { opacity: 0.50; }
+
+.skill-group > * { position: relative; z-index: 1; }
+
+.skill-group-head {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.skill-group-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    font-size: 17px;
+    color: var(--hero-accent, #2563EB);
+    background: color-mix(in srgb, var(--hero-accent, #2563EB) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--hero-accent, #2563EB) 25%, transparent);
+}
+
+.dark .skill-group-icon {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.10);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.skill-group-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    color: #0F172A;
+}
+
+.dark .skill-group-title { color: #F8FAFC; }
+
+@media (min-width: 640px) {
+    .skill-group-title { font-size: 18px; }
+}
+
+/* Subtle gradient underline beneath each category heading */
+.skill-group-underline {
+    display: block;
+    width: 56px;
+    height: 2px;
+    margin: 10px auto 14px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #38BDF8, #818CF8, transparent);
+    opacity: 0.7;
+}
+
+/* Skill pill cloud — wraps naturally, centered */
+.skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+@media (min-width: 640px) {
+    .skill-badges { gap: 10px; }
+}
+
+.skill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1E293B;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:
+        border-color 0.3s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.dark .skill-badge {
+    color: #E2E8F0;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.skill-badge:hover {
+    border-color: rgba(56, 189, 248, 0.40);
+    box-shadow: 0 6px 14px -8px rgba(56, 189, 248, 0.35);
+}
+
+.dark .skill-badge:hover {
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(56, 189, 248, 0.40);
+    box-shadow: 0 6px 14px -8px rgba(56, 189, 248, 0.35);
+}
+
+.skill-badge-icon {
+    display: inline-flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+/* Resume CTA — cyan/blue gradient (matches hero primary) */
+.skills-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    border: 1px solid transparent;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 14px 32px -10px rgba(37, 99, 235, 0.55);
+    transition:
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+}
+
+.skills-cta:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 22px 50px -12px rgba(37, 99, 235, 0.7);
+}
+
+.dark .skills-cta {
+    background: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 14px 32px -10px rgba(56, 189, 248, 0.45);
+}
+
+.dark .skills-cta:hover {
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 22px 50px -12px rgba(56, 189, 248, 0.65);
+}
+
+.skills-cta:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--hero-accent, #2563EB),
+        0 0 0 4px color-mix(in srgb, var(--hero-accent, #2563EB) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skill-card,
+    .skill-badge,
+    .skills-cta { transition: none; }
+}
+
 /* Floating skill badge — liquid glass pill */
 .hero-badge {
     color: var(--hero-ink);
