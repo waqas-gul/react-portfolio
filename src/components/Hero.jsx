@@ -14,14 +14,13 @@ import {
   HiOutlineArrowDownTray,
   HiOutlinePaperAirplane,
 } from "react-icons/hi2";
+import { FaAws } from "react-icons/fa";
 import {
   SiNextdotjs,
   SiReact,
   SiNodedotjs,
-  SiMongodb,
-  SiExpress,
-  SiTailwindcss,
-  SiJavascript,
+  SiPostgresql,
+  SiFastapi,
   SiRedux,
 } from "react-icons/si";
 
@@ -44,15 +43,15 @@ const socials = [
 // stats card sitting under the portrait.
 const skills = [
   // LEFT half (going from top to bottom)
-  { name: "MongoDB",      Icon: SiMongodb,    iconClass: "text-emerald-400", angle: 320, delay: 0.00 },
-  { name: "Express.js",   Icon: SiExpress,    iconClass: "text-slate-300",   angle: 290, delay: 0.10, mobileHide: true },
+  { name: "AWS",          Icon: FaAws,        iconClass: "text-amber-400",   angle: 320, delay: 0.00 },
+  { name: "React Native", Icon: SiReact,      iconClass: "text-cyan-400",    angle: 290, delay: 0.10, mobileHide: true },
   { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 250, delay: 0.20, mobileHide: true },
   { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500", angle: 220, delay: 0.30 },
   // RIGHT half (mirror, going from top to bottom)
   { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",   angle: 40,  delay: 0.05 },
   { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 70,  delay: 0.15, mobileHide: true },
-  { name: "Tailwind CSS", Icon: SiTailwindcss,iconClass: "text-sky-400",     angle: 110, delay: 0.25, mobileHide: true },
-  { name: "JavaScript",   Icon: SiJavascript, iconClass: "text-amber-300",   angle: 140, delay: 0.35 },
+  { name: "PostgreSQL",   Icon: SiPostgresql, iconClass: "text-sky-400",     angle: 110, delay: 0.25, mobileHide: true },
+  { name: "FastAPI",      Icon: SiFastapi,    iconClass: "text-emerald-400", angle: 140, delay: 0.35 },
 ];
 
 const stats = [
