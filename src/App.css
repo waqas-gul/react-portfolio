@@ -925,12 +925,13 @@ html.dark #contact [class*="bg-gray-700"] {
    stay strictly behind the portrait — they can never bleed in front of it. */
 .hero-portrait-area {
     isolation: isolate;
-    --orbit-r: 130px;
+    --orbit-r: 150px;
+    --orbit-cy: 64%;          /* lower center on mobile so badges clear the head */
 }
-@media (min-width: 480px) { .hero-portrait-area { --orbit-r: 155px; } }
-@media (min-width: 640px) { .hero-portrait-area { --orbit-r: 175px; } }
-@media (min-width: 768px) { .hero-portrait-area { --orbit-r: 165px; } }
-@media (min-width: 1024px) { .hero-portrait-area { --orbit-r: 215px; } }
+@media (min-width: 480px) { .hero-portrait-area { --orbit-r: 165px; --orbit-cy: 60%; } }
+@media (min-width: 640px) { .hero-portrait-area { --orbit-r: 180px; --orbit-cy: 58%; } }
+@media (min-width: 768px) { .hero-portrait-area { --orbit-r: 165px; --orbit-cy: 58%; } }
+@media (min-width: 1024px) { .hero-portrait-area { --orbit-r: 215px; --orbit-cy: 58%; } }
 
 .hero-portrait-halo {
     width: 22rem;

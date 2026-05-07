@@ -376,7 +376,7 @@ const Hero = () => {
               <img
                 src="/waqas.png"
                 alt="Portrait of Waqas Gul, Full Stack Developer"
-                className="hero-portrait-cutout relative z-10 h-[280px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
+                className="hero-portrait-cutout relative z-10 h-[240px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
               />
 
               {/* Orbiting Skill Badges — outer wrapper handles position, inner motion handles float */}
@@ -385,7 +385,7 @@ const Hero = () => {
                   key={name}
                   className="hero-orbit absolute z-20"
                   style={{
-                    top: "58%",
+                    top: "var(--orbit-cy, 58%)",
                     left: "50%",
                     transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * var(--orbit-r))) rotate(${-angle}deg)`,
                   }}
