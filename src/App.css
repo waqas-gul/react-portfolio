@@ -925,10 +925,10 @@ html.dark #contact [class*="bg-gray-700"] {
    stay strictly behind the portrait — they can never bleed in front of it. */
 .hero-portrait-area {
     isolation: isolate;
-    --orbit-r: 150px;
+    --orbit-r: 132px;
     --orbit-cy: 64%;          /* lower center on mobile so badges clear the head */
 }
-@media (min-width: 480px) { .hero-portrait-area { --orbit-r: 165px; --orbit-cy: 60%; } }
+@media (min-width: 480px) { .hero-portrait-area { --orbit-r: 158px; --orbit-cy: 60%; } }
 @media (min-width: 640px) { .hero-portrait-area { --orbit-r: 180px; --orbit-cy: 58%; } }
 @media (min-width: 768px) { .hero-portrait-area { --orbit-r: 165px; --orbit-cy: 58%; } }
 @media (min-width: 1024px) { .hero-portrait-area { --orbit-r: 215px; --orbit-cy: 58%; } }
@@ -965,13 +965,16 @@ html.dark #contact [class*="bg-gray-700"] {
    Sized to roughly fit head + shoulders, anchored slightly down so the head
    crowns above the circle just like the reference image. */
 .hero-portrait-circle {
-    width: 14rem;
-    height: 14rem;
+    width: 11rem;
+    height: 11rem;
     top: 20%;
-    left: 53%;                   /* re-centered with the portrait */
+    left: 50%;
     transform: translateX(-50%);
     border-radius: 9999px;
     z-index: 0;                  /* always behind the portrait (image is z-10) */
+    /* Fade the bottom of the circle so it never shows below the body */
+    -webkit-mask-image: linear-gradient(180deg, black 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, black 70%, transparent 100%);
     /* Bright cyan/purple light at center → fades to deeper navy at the edges,
        like a softly lit 3D orb. */
     background:
@@ -1000,10 +1003,10 @@ html.dark #contact [class*="bg-gray-700"] {
 }
 
 @media (min-width: 640px) {
-    .hero-portrait-circle { width: 16rem; height: 16rem; }
+    .hero-portrait-circle { width: 17rem; height: 17rem; }
 }
 @media (min-width: 1024px) {
-    .hero-portrait-circle { width: 18rem; height: 18rem; }
+    .hero-portrait-circle { width: 19rem; height: 19rem; }
 }
 
 /* Cutout portrait — drop-shadow on the silhouette + soft bottom fade so the

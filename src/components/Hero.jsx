@@ -376,7 +376,7 @@ const Hero = () => {
               <img
                 src="/waqas.png"
                 alt="Portrait of Waqas Gul, Full Stack Developer"
-                className="hero-portrait-cutout relative z-10 h-[240px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
+                className="hero-portrait-cutout relative z-10 h-[220px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
               />
 
               {/* Orbiting Skill Badges — outer wrapper handles position, inner motion handles float */}
