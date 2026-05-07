@@ -44,19 +44,20 @@ const socials = [
 // We skip the bottom 90° arc (135°→225°) so badges never collide with the
 // stats card sitting under the portrait.
 // 10 badges spread across the upper 270° arc (skipping the bottom 90°
-// where the stats card sits). Step = 30° between badges.
+// where the stats card sits). Step = 30° between badges. All visible
+// at every breakpoint — orbit + pill sizes adapt via CSS.
 const skills = [
   // LEFT half (top → bottom)
   { name: "AWS",          Icon: FaAws,        iconClass: "text-amber-400",   angle: 345, delay: 0.00 },
-  { name: "React Native", Icon: SiReact,      iconClass: "text-cyan-400",    angle: 315, delay: 0.08, mobileHide: true },
-  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 285, delay: 0.16, mobileHide: true },
-  { name: "Nest.js",      Icon: SiNestjs,     iconClass: "text-rose-400",    angle: 255, delay: 0.24, mobileHide: true },
+  { name: "React Native", Icon: SiReact,      iconClass: "text-cyan-400",    angle: 315, delay: 0.08 },
+  { name: "ReactJS",      Icon: SiReact,      iconClass: "text-cyan-400",    angle: 285, delay: 0.16 },
+  { name: "Nest.js",      Icon: SiNestjs,     iconClass: "text-rose-400",    angle: 255, delay: 0.24 },
   { name: "Node.js",      Icon: SiNodedotjs,  iconClass: "text-emerald-500", angle: 225, delay: 0.32 },
   // RIGHT half (top → bottom)
   { name: "Next.js",      Icon: SiNextdotjs,  iconClass: "text-slate-100",   angle: 15,  delay: 0.04 },
-  { name: "Electron",     Icon: SiElectron,   iconClass: "text-sky-400",     angle: 45,  delay: 0.12, mobileHide: true },
-  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 75,  delay: 0.20, mobileHide: true },
-  { name: "PostgreSQL",   Icon: SiPostgresql, iconClass: "text-sky-400",     angle: 105, delay: 0.28, mobileHide: true },
+  { name: "Electron",     Icon: SiElectron,   iconClass: "text-sky-400",     angle: 45,  delay: 0.12 },
+  { name: "Redux",        Icon: SiRedux,      iconClass: "text-violet-400",  angle: 75,  delay: 0.20 },
+  { name: "PostgreSQL",   Icon: SiPostgresql, iconClass: "text-sky-400",     angle: 105, delay: 0.28 },
   { name: "FastAPI",      Icon: SiFastapi,    iconClass: "text-emerald-400", angle: 135, delay: 0.36 },
 ];
 
@@ -238,7 +239,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] px-10 pt-28 pb-16 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:flex-row lg:px-20"
+      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] px-5 pt-24 pb-12 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:px-8 sm:pt-28 sm:pb-14 lg:px-12 lg:pb-16 xl:px-20"
     >
       {/* Network / particle background */}
       <canvas
@@ -258,13 +259,13 @@ const Hero = () => {
         }}
       />
 
-      <div className="relative z-10 flex w-full min-h-[570px] flex-col items-center justify-between sm:flex-row lg:min-h-[300px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         {/* Left Section */}
         <motion.div
           ref={refLeft}
-          initial={{ x: -100, opacity: 0 }}
+          initial={{ x: -60, opacity: 0 }}
           animate={controlsLeft}
-          className="my-8 mb-6 w-full max-w-[560px] text-left md:mb-0 md:w-1/2"
+          className="mx-auto w-full max-w-[560px] text-left lg:mx-0 lg:w-1/2 lg:max-w-[560px]"
         >
           {/* Intro line */}
           <p className="text-[20px] font-semibold text-[#64748B] dark:text-[#94A3B8] sm:text-[22px]">
@@ -354,7 +355,7 @@ const Hero = () => {
           ref={refRight}
           initial={{ x: 0, opacity: 1 }}
           animate={controlsRight}
-          className="relative mt-6 flex w-full flex-col items-center md:mt-0 md:w-1/2"
+          className="relative flex w-full flex-col items-center lg:w-1/2"
         >
           <div className="hero-stage relative flex w-full max-w-[560px] flex-col items-center">
             {/* Portrait area — visible circle bg + halo + cutout + orbiting badges */}
@@ -379,10 +380,10 @@ const Hero = () => {
               />
 
               {/* Orbiting Skill Badges — outer wrapper handles position, inner motion handles float */}
-              {skills.map(({ name, Icon, iconClass, angle, delay, mobileHide }) => (
+              {skills.map(({ name, Icon, iconClass, angle, delay }) => (
                 <div
                   key={name}
-                  className={`hero-orbit absolute z-20 ${mobileHide ? "hidden sm:block" : ""}`}
+                  className="hero-orbit absolute z-20"
                   style={{
                     top: "58%",
                     left: "50%",
@@ -390,7 +391,7 @@ const Hero = () => {
                   }}
                 >
                   <motion.div
-                    className="hero-badge inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium sm:gap-2 sm:px-3 sm:py-1.5 sm:text-xs"
+                    className="hero-badge inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium sm:gap-2 sm:px-3 sm:py-1.5 sm:text-xs"
                     animate={floatAnim}
                     transition={{ repeat: Infinity, duration: 2.8, delay, ease: "easeInOut" }}
                   >

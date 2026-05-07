@@ -47,7 +47,7 @@ const chipItem = {
 
 export default function ResumeCard() {
   return (
-    <div className="resume-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+    <div className="resume-section relative overflow-hidden px-4 py-16 sm:px-8 sm:py-20 lg:py-24">
       {/* Subtle ambient gradient wash */}
       <div aria-hidden="true" className="resume-ambient pointer-events-none absolute inset-0" />
 
