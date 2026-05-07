@@ -239,7 +239,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] px-5 pt-24 pb-12 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:px-8 sm:pt-28 sm:pb-14 lg:px-12 lg:pb-16 xl:px-20"
+      className="relative flex min-h-[100svh] w-full flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] px-5 pt-24 pb-12 text-slate-900 dark:bg-[#0B1120] dark:text-slate-100 sm:px-8 sm:pt-28 sm:pb-14 md:min-h-0 md:pt-36 md:pb-20 lg:min-h-[100svh] lg:px-12 lg:pb-16 lg:pt-28 xl:px-20"
     >
       {/* Network / particle background */}
       <canvas
@@ -259,13 +259,13 @@ const Hero = () => {
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-8 md:flex-row md:items-center md:justify-between md:gap-8 lg:gap-12">
         {/* Left Section */}
         <motion.div
           ref={refLeft}
           initial={{ x: -60, opacity: 0 }}
           animate={controlsLeft}
-          className="mx-auto w-full max-w-[560px] text-left lg:mx-0 lg:w-1/2 lg:max-w-[560px]"
+          className="mx-auto w-full max-w-[560px] text-left md:mx-0 md:w-1/2 md:max-w-[520px] lg:max-w-[560px]"
         >
           {/* Intro line */}
           <p className="text-[20px] font-semibold text-[#64748B] dark:text-[#94A3B8] sm:text-[22px]">
@@ -355,7 +355,7 @@ const Hero = () => {
           ref={refRight}
           initial={{ x: 0, opacity: 1 }}
           animate={controlsRight}
-          className="relative flex w-full flex-col items-center lg:w-1/2"
+          className="relative flex w-full flex-col items-center md:w-1/2"
         >
           <div className="hero-stage relative flex w-full max-w-[560px] flex-col items-center">
             {/* Portrait area — visible circle bg + halo + cutout + orbiting badges */}

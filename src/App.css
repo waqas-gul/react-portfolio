@@ -919,10 +919,11 @@ html.dark #contact [class*="bg-gray-700"] {
    stay strictly behind the portrait — they can never bleed in front of it. */
 .hero-portrait-area {
     isolation: isolate;
-    --orbit-r: 150px;
+    --orbit-r: 130px;
 }
 @media (min-width: 480px) { .hero-portrait-area { --orbit-r: 155px; } }
-@media (min-width: 640px) { .hero-portrait-area { --orbit-r: 185px; } }
+@media (min-width: 640px) { .hero-portrait-area { --orbit-r: 175px; } }
+@media (min-width: 768px) { .hero-portrait-area { --orbit-r: 165px; } }
 @media (min-width: 1024px) { .hero-portrait-area { --orbit-r: 215px; } }
 
 .hero-portrait-halo {

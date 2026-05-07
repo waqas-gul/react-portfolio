@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub } from "react-icons/fa6";
 import {
@@ -130,7 +130,24 @@ const fadeUp = {
 
 export default function Projects() {
   const [page, setPage] = useState(0);
-  const itemsPerPage = 3;
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  // Show 4 per page on tablet (768–1023), 3 on mobile and laptop+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 768px) and (max-width: 1023.98px)");
+    const update = () => setItemsPerPage(mq.matches ? 4 : 3);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Reset to first page if the page count drops below the current page
+  useEffect(() => {
+    const max = Math.ceil(projects.length / itemsPerPage) - 1;
+    if (page > max) setPage(0);
+  }, [itemsPerPage, page]);
+
   const startIndex = page * itemsPerPage;
   const displayedProjects = projects.slice(startIndex, startIndex + itemsPerPage);
   const totalPages = Math.ceil(projects.length / itemsPerPage);
