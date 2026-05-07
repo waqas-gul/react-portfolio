@@ -89,12 +89,18 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ff9a00, #ff5e00);
+    background: linear-gradient(180deg, #38BDF8, #818CF8);
     border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #ffb547, #ff7a1f);
+    background: linear-gradient(180deg, #0EA5E9, #6366F1);
+}
+
+/* Firefox */
+html {
+    scrollbar-color: #38BDF8 transparent;
+    scrollbar-width: thin;
 }
 
 /* ---- Liquid glass background layer (fixed, behind everything) ---- */
