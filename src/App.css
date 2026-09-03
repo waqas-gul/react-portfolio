@@ -317,6 +317,7 @@ html.dark #contact [class*="bg-gray-700"] {
     color-scheme: light;
     --nav-surface: rgba(255, 255, 255, 0.72);
     --nav-surface-scrolled: rgba(255, 255, 255, 0.82);
+    --nav-surface-opaque: rgba(255, 255, 255, 0.96);
     --nav-border: rgba(15, 23, 42, 0.10);
     --nav-ink: #0F172A;
     --nav-ink-muted: #64748B;
@@ -328,6 +329,7 @@ html.dark #contact [class*="bg-gray-700"] {
     color-scheme: dark;
     --nav-surface: rgba(17, 24, 39, 0.58);
     --nav-surface-scrolled: rgba(17, 24, 39, 0.72);
+    --nav-surface-opaque: rgba(11, 17, 32, 0.97);
     --nav-border: rgba(148, 163, 184, 0.18);
     --nav-ink: #F8FAFC;
     --nav-ink-muted: #94A3B8;
@@ -549,15 +551,25 @@ html.dark #contact [class*="bg-gray-700"] {
 }
 
 /* ---- Mobile dropdown ---- */
-/* Reuses the opaque nav-surface tokens (not the generic .liquid-glass,
-   which is intentionally too transparent — 6% white — to stay readable
-   if blur doesn't render) and is force-composited so real mobile
-   browsers reliably render backdrop-filter instead of skipping it. */
+/* Keeps the .liquid-glass look; force-composited so real mobile browsers
+   reliably render backdrop-filter instead of silently skipping it. */
 #mobile-nav {
-    background: var(--nav-surface-scrolled);
-    border: 1px solid var(--nav-border);
     transform: translateZ(0);
     will-change: backdrop-filter;
+}
+
+/* Fallback ONLY for browsers that can't render backdrop-filter at all.
+   The glass panels lean on blur to stay readable, so without it the page
+   behind shows straight through. Swap in an opaque surface there. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav-shell {
+        background: var(--nav-surface-opaque);
+    }
+
+    #mobile-nav {
+        background: var(--nav-surface-opaque);
+        border: 1px solid var(--nav-border);
+    }
 }
 
 /* ---- Mobile drawer items ---- */
