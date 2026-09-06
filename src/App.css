@@ -317,7 +317,7 @@ html.dark #contact [class*="bg-gray-700"] {
     color-scheme: light;
     --nav-surface: rgba(255, 255, 255, 0.72);
     --nav-surface-scrolled: rgba(255, 255, 255, 0.82);
-    --nav-surface-opaque: rgba(255, 255, 255, 0.96);
+    --nav-surface-opaque: #FFFFFF;
     --nav-border: rgba(15, 23, 42, 0.10);
     --nav-ink: #0F172A;
     --nav-ink-muted: #64748B;
@@ -329,7 +329,7 @@ html.dark #contact [class*="bg-gray-700"] {
     color-scheme: dark;
     --nav-surface: rgba(17, 24, 39, 0.58);
     --nav-surface-scrolled: rgba(17, 24, 39, 0.72);
-    --nav-surface-opaque: rgba(11, 17, 32, 0.97);
+    --nav-surface-opaque: #0B1120;
     --nav-border: rgba(148, 163, 184, 0.18);
     --nav-ink: #F8FAFC;
     --nav-ink-muted: #94A3B8;
@@ -579,17 +579,28 @@ html.dark #contact [class*="bg-gray-700"] {
     }
 }
 
-/* Fallback ONLY for browsers that can't render backdrop-filter at all.
-   The glass panels lean on blur to stay readable, so without it the page
-   behind shows straight through. Swap in an opaque surface there. */
+/* The drawer is opaque rather than translucent. Real phones frequently
+   decline to render backdrop-filter, and a 6%-white panel is unreadable
+   without it. This element is md:hidden, so desktop glass is untouched. */
+#mobile-nav {
+    background: var(--nav-surface-opaque);
+    border: 1px solid var(--nav-border);
+    box-shadow: 0 24px 60px -20px rgba(2, 6, 23, 0.75);
+}
+
+/* Same reasoning for the bar itself, but phones only — it has to stay
+   readable over whatever scrolls beneath it. */
+@media (max-width: 767px) {
+    .nav-shell,
+    .nav-shell-scrolled {
+        background: var(--nav-surface-opaque);
+    }
+}
+
+/* Desktop browsers without backdrop-filter still need a solid bar. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .nav-shell {
         background: var(--nav-surface-opaque);
-    }
-
-    #mobile-nav {
-        background: var(--nav-surface-opaque);
-        border: 1px solid var(--nav-border);
     }
 }
 
