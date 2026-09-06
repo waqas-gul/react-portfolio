@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
@@ -208,6 +209,28 @@ const Header = () => {
           </button>
         </div>
       </div>
+
+      {/* Scrim behind the mobile drawer. Portaled to <body> because the
+          header carries a Framer Motion transform, which would otherwise
+          make position:fixed resolve against the header instead of the
+          viewport. Keeps the menu readable even where backdrop-filter
+          doesn't render. */}
+      {createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="mobile-nav-scrim md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       {/* Mobile Navigation Drawer */}
       <AnimatePresence>
