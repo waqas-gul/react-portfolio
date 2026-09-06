@@ -203,7 +203,16 @@ const Hero = () => {
       }
     };
 
-    const animate = () => {
+    // The drift is slow enough that 30fps is indistinguishable from 60 —
+    // and it halves the work during the exact scroll the Hero is visible for.
+    const FRAME_MS = 1000 / 30;
+    let lastFrame = 0;
+
+    const animate = (now = 0) => {
+      animationFrameId = requestAnimationFrame(animate);
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
+
       const palette = isDarkRef.current ? PALETTES.dark : PALETTES.light;
       ctx.clearRect(0, 0, width, height);
 
@@ -222,7 +231,6 @@ const Hero = () => {
       }
 
       connectParticles(palette);
-      animationFrameId = requestAnimationFrame(animate);
     };
 
     const play = () => {
@@ -264,7 +272,6 @@ const Hero = () => {
     if (inViewRight) controlsRight.start({ x: 0, opacity: 1, transition: { duration: 0.8 } });
   }, [controlsLeft, controlsRight, inViewLeft, inViewRight]);
 
-  const floatAnim = prefersReducedMotion ? {} : { y: [0, -8, 0] };
 
   return (
     <section
@@ -421,14 +428,15 @@ const Hero = () => {
                     transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * var(--orbit-r))) rotate(${-angle}deg)`,
                   }}
                 >
-                  <motion.div
+                  {/* Float is a CSS keyframe, not a JS animation: ten Framer
+                      Motion loops ran on the main thread every frame. */}
+                  <div
                     className="hero-badge inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium sm:gap-2 sm:px-3 sm:py-1.5 sm:text-xs"
-                    animate={floatAnim}
-                    transition={{ repeat: Infinity, duration: 2.8, delay, ease: "easeInOut" }}
+                    style={{ animationDelay: `${delay}s` }}
                   >
                     <Icon className={`text-sm sm:text-base ${iconClass}`} aria-hidden="true" />
                     <span>{name}</span>
-                  </motion.div>
+                  </div>
                 </div>
               ))}
             </div>
