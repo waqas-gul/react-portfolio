@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { FaSquareInstagram } from "react-icons/fa6";
 import {
@@ -12,7 +12,7 @@ const teamMembers = [
   {
     name: "Waqas Gul",
     role: "Full Stack developer",
-    img: "/waqas.png",
+    img: "/waqas.webp",
     description:
       "Expert in full Stack software Development, specializing in React.js,Next.js,MongoDB,PostgresSql, Express.js, Node.js,Fastapi,Flask and electron  with a focus on building scalable and high-performance web, mobile and desktop applications.",
     links: {
@@ -25,7 +25,7 @@ const teamMembers = [
   {
     name: "Dawood khan",
     role: "UI/UX designer",
-    img: "/dawood.png",
+    img: "/dawood.webp",
     description:
       "Expert in UI/UX Design, specializing in user-centered design, wireframing, prototyping, and creating intuitive, visually appealing, and responsive interfaces using Figma, Adobe XD, and modern design principles.",
     links: {
@@ -38,7 +38,7 @@ const teamMembers = [
   {
     name: "Ali Khan",
     role: "Mern stack developer",
-    img: "/ali.png",
+    img: "/ali.webp",
     description:
       "Expert in MERN Stack Development, specializing in React.js, MongoDB, Express.js, and Node.js, with a focus on building scalable, secure, and high-performance web applications.",
     links: {
@@ -51,7 +51,7 @@ const teamMembers = [
   {
     name: "Fawad Khan",
     role: "AI Engineer",
-    img: "/fawad.png",
+    img: "/fawad.webp",
     description:
       "Expert in AI Engineering with expertise in Machine Learning, Deep Learning, Natural Language Processing (NLP), and AI model development.",
     links: {
@@ -64,7 +64,7 @@ const teamMembers = [
   {
     name: "Adnan Khan",
     role: "Front End developer",
-    img: "/adnan.png",
+    img: "/adnan.webp",
     description:
       "Expert in Front-End Development, specializing in React.js, JavaScript, HTML, CSS, and modern UI/UX design, with a focus on building responsive and high-performance web applications.",
     links: {
@@ -77,7 +77,7 @@ const teamMembers = [
   {
     name: "Zohaib khan",
     role: "Data analyst",
-    img: "/zohaib.png",
+    img: "/zohaib.webp",
     description:
       "Expert in Data Analysis, specializing in data visualization, statistical analysis, data cleaning, predictive modeling, and deriving actionable insights to support informed business decisions..",
     links: {
@@ -90,7 +90,7 @@ const teamMembers = [
   {
     name: "Ahmad Ali",
     role: "Cybersecurity Expert",
-    img: "/ahmad.png",
+    img: "/ahmad.webp",
     description:
       "Expert in Cybersecurity, specializing in network security, ethical hacking, penetration testing, threat analysis, and risk assessment to protect systems and data from cyber threats.",
     links: {
@@ -128,22 +128,37 @@ const spotlightSwap = {
 export default function TeamSlider() {
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const nextMember = () => setIndex((p) => (p + 1) % teamMembers.length);
   const prevMember = () =>
     setIndex((p) => (p - 1 + teamMembers.length) % teamMembers.length);
 
-  // Auto-advance every 2s, paused while user hovers the spotlight card
+  // Only observe visibility; the carousel should not advance off-screen.
   useEffect(() => {
-    if (isHovered) return;
-    const id = setInterval(nextMember, 3000);
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance, paused on hover, off-screen, or under reduced motion.
+  useEffect(() => {
+    if (isHovered || !inView || prefersReducedMotion) return;
+    const id = setInterval(nextMember, 4500);
     return () => clearInterval(id);
-  }, [isHovered, index]);
+  }, [isHovered, inView, prefersReducedMotion, index]);
 
   const active = teamMembers[index];
 
   return (
-    <div className="team-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
+    <div ref={sectionRef} className="team-section relative overflow-hidden px-6 py-20 sm:px-8 lg:py-24">
       {/* Subtle ambient gradient wash */}
       <div aria-hidden="true" className="team-ambient pointer-events-none absolute inset-0" />
 
@@ -302,7 +317,7 @@ export default function TeamSlider() {
                   aria-pressed={i === index}
                 >
                   <span className="team-thumb-avatar">
-                    <img src={m.img} alt="" />
+                    <img src={m.img} alt="" loading="lazy" decoding="async" />
                   </span>
                   <span className="team-thumb-info">
                     <span className="team-thumb-name">{m.name}</span>

@@ -19,7 +19,7 @@ import { BiLogoPostgresql } from "react-icons/bi";
 const projects = [
   {
     name: "ITSolera (Sofyware Company.)",
-    image: "/itsolera.png",
+    image: "/itsolera.webp",
     Glink: "https://github.com/waqas-gul/itsolera",
     Wlink: "https://itsolera.com/",
     technologies: [
@@ -36,7 +36,7 @@ const projects = [
   },
   {
     name: "foodlakay (Cleaning Company)",
-    image: "/lidialakay.png",
+    image: "/lidialakay.webp",
     Glink: "https://github.com/waqas-gul/foodlakay",
     Wlink: "https://lidialakay.fr/fr",
     technologies: [
@@ -50,7 +50,7 @@ const projects = [
   },
   {
     name: "Zaroori Zameen (real estate property listing and searching platform)",
-    image: "/real.png",
+    image: "/real.webp",
     Glink: "https://github.com/waqas-gul/foodlakay",
     Wlink: "https://lidialakay.fr/fr",
     technologies: [
@@ -67,7 +67,7 @@ const projects = [
   },
   {
     name: "FlowAdmin React - Free Tailwind Admin Dashboard",
-    image: "/dashboard.png",
+    image: "/dashboard.webp",
     Glink: "https://github.com/waqas-gul/react-tailwind-admin-dashboard-main",
     Wlink: "https://68b5af81d6dac40637705bfe--flowadmin1.netlify.app/",
     technologies: [
@@ -81,7 +81,7 @@ const projects = [
   },
   {
     name: "Shadesco",
-    image: "/shadesco.ae_.png",
+    image: "/shadesco.ae_.webp",
     Glink: "https://github.com/waqas-gul/cleaning-company-website",
     Wlink: "https://shadesco.ae/",
     technologies: [
@@ -93,7 +93,7 @@ const projects = [
   },
   {
     name: "SportsBuzz",
-    image: "/lms.png",
+    image: "/lms.webp",
     Wlink: "https://sportsbuzz.com",
     technologies: [
       { icon: <IoLogoFigma className="text-pink-500" />, name: "Figma" },
@@ -205,6 +205,7 @@ export default function Projects() {
                       src={project.image}
                       alt={project.name}
                       loading="lazy"
+                      decoding="async"
                       className="project-image"
                     />
                     <div aria-hidden="true" className="project-image-overlay" />

@@ -25,6 +25,7 @@ import {
   SiNestjs,
   SiElectron,
 } from "react-icons/si";
+import Typewriter from "./Typewriter";
 
 const titles = [
   "Full-Stack Developer",
@@ -68,10 +69,6 @@ const stats = [
 ];
 
 const Hero = () => {
-  const [index, setIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isDark, setIsDark] = useState(
     typeof document !== "undefined" &&
       document.documentElement.classList.contains("dark")
@@ -109,14 +106,22 @@ const Hero = () => {
     if (prefersReducedMotion) return;
 
     const ctx = canvas.getContext("2d");
-    let animationFrameId;
+    let animationFrameId = null;
+    let width = 0;
+    let height = 0;
+
+    // Cap DPR at 2 — beyond that the cost doubles for no visible gain.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const resizeCanvas = () => {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
+      width = canvas.clientWidth;
+      height = canvas.clientHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("resize", resizeCanvas, { passive: true });
 
     const PALETTES = {
       dark: {
@@ -137,13 +142,15 @@ const Hero = () => {
       },
     };
 
-    const particleCount = 60;
+    // Fewer particles on phones — the link pass is quadratic, so halving the
+    // count quarters the work.
+    const particleCount = width < 768 ? 28 : 60;
     const particles = [];
 
     class Particle {
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
         this.size = Math.random() * 2 + 0.6;
         this.speedX = Math.random() * 0.6 - 0.3;
         this.speedY = Math.random() * 0.6 - 0.3;
@@ -152,52 +159,102 @@ const Hero = () => {
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-      }
-      draw(palette) {
-        ctx.fillStyle = palette.dots[this.colorIndex];
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        if (this.x > width || this.x < 0) this.speedX = -this.speedX;
+        if (this.y > height || this.y < 0) this.speedY = -this.speedY;
       }
     }
 
     for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
+    const MAX_DIST = 110;
+    const MAX_DIST_SQ = MAX_DIST * MAX_DIST;
+    // Lines are bucketed by opacity so each bucket is one path and one
+    // stroke() call, instead of a stroke() per connected pair.
+    const BUCKETS = 4;
+
     const connectParticles = (palette) => {
-      const maxDistance = 110;
+      const paths = Array.from({ length: BUCKETS }, () => new Path2D());
+      let drew = false;
+
       for (let a = 0; a < particles.length; a++) {
+        const pa = particles[a];
         for (let b = a + 1; b < particles.length; b++) {
-          const dx = particles[a].x - particles[b].x;
-          const dy = particles[a].y - particles[b].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < maxDistance) {
-            ctx.strokeStyle = palette.line(1 - dist / maxDistance);
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(particles[a].x, particles[a].y);
-            ctx.lineTo(particles[b].x, particles[b].y);
-            ctx.stroke();
-          }
+          const pb = particles[b];
+          const dx = pa.x - pb.x;
+          const dy = pa.y - pb.y;
+          const distSq = dx * dx + dy * dy;
+          // Compare squared distances — no Math.sqrt in the hot loop.
+          if (distSq >= MAX_DIST_SQ) continue;
+
+          const strength = 1 - distSq / MAX_DIST_SQ;
+          const bucket = Math.min(BUCKETS - 1, (strength * BUCKETS) | 0);
+          const path = paths[bucket];
+          path.moveTo(pa.x, pa.y);
+          path.lineTo(pb.x, pb.y);
+          drew = true;
         }
+      }
+
+      if (!drew) return;
+      ctx.lineWidth = 0.7;
+      for (let i = 0; i < BUCKETS; i++) {
+        ctx.strokeStyle = palette.line((i + 0.5) / BUCKETS);
+        ctx.stroke(paths[i]);
       }
     };
 
     const animate = () => {
       const palette = isDarkRef.current ? PALETTES.dark : PALETTES.light;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (const p of particles) {
-        p.update();
-        p.draw(palette);
+      ctx.clearRect(0, 0, width, height);
+
+      for (const p of particles) p.update();
+
+      // Dots grouped by colour so fillStyle is set 3 times, not once per dot.
+      for (let c = 0; c < palette.dots.length; c++) {
+        ctx.fillStyle = palette.dots[c];
+        ctx.beginPath();
+        for (const p of particles) {
+          if (p.colorIndex !== c) continue;
+          ctx.moveTo(p.x + p.size, p.y);
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        }
+        ctx.fill();
       }
+
       connectParticles(palette);
       animationFrameId = requestAnimationFrame(animate);
     };
-    animate();
+
+    const play = () => {
+      if (animationFrameId === null) animationFrameId = requestAnimationFrame(animate);
+    };
+    const pause = () => {
+      if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    };
+
+    // Only run while the Hero is actually on screen and the tab is focused.
+    let onScreen = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        if (onScreen && !document.hidden) play();
+        else pause();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+
+    const onVisibility = () => {
+      if (document.hidden || !onScreen) pause();
+      else play();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      pause();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resizeCanvas);
     };
   }, [prefersReducedMotion]);
@@ -206,33 +263,6 @@ const Hero = () => {
     if (inViewLeft) controlsLeft.start({ x: 0, opacity: 1, transition: { duration: 0.8 } });
     if (inViewRight) controlsRight.start({ x: 0, opacity: 1, transition: { duration: 0.8 } });
   }, [controlsLeft, controlsRight, inViewLeft, inViewRight]);
-
-  useEffect(() => {
-    const currentTitle = titles[index];
-    if (isDeleting) {
-      if (charIndex > 0) {
-        const timeout = setTimeout(() => {
-          setText((prev) => prev.slice(0, -1));
-          setCharIndex((prev) => prev - 1);
-        }, 50);
-        return () => clearTimeout(timeout);
-      } else {
-        setIsDeleting(false);
-        setIndex((prev) => (prev + 1) % titles.length);
-      }
-    } else {
-      if (charIndex < currentTitle.length) {
-        const timeout = setTimeout(() => {
-          setText((prev) => prev + currentTitle[charIndex]);
-          setCharIndex((prev) => prev + 1);
-        }, 100);
-        return () => clearTimeout(timeout);
-      } else {
-        const timeout = setTimeout(() => setIsDeleting(true), 1500);
-        return () => clearTimeout(timeout);
-      }
-    }
-  }, [charIndex, index, isDeleting]);
 
   const floatAnim = prefersReducedMotion ? {} : { y: [0, -8, 0] };
 
@@ -286,13 +316,10 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {text}
-            <span
-              aria-hidden="true"
-              className="hero-cursor ml-0.5 text-[#2563EB] dark:text-[#38BDF8]"
-            >
-              |
-            </span>
+            <Typewriter
+              phrases={titles}
+              cursorClassName="hero-cursor ml-0.5 text-[#2563EB] dark:text-[#38BDF8]"
+            />
           </motion.h2>
 
           {/* Description */}
@@ -374,8 +401,12 @@ const Hero = () => {
 
               {/* Cutout portrait */}
               <img
-                src="/waqas.png"
+                src="/waqas.webp"
                 alt="Portrait of Waqas Gul, Full Stack Developer"
+                width="500"
+                height="500"
+                fetchPriority="high"
+                decoding="async"
                 className="hero-portrait-cutout relative z-10 h-[220px] w-auto object-contain transition-transform duration-500 hover:scale-[1.02] sm:h-[330px] lg:h-[370px]"
               />
 

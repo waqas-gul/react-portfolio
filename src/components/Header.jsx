@@ -4,6 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
+import { scrollToSection } from "../lib/smoothScroll";
 
 // Navigation Menu Items (unchanged)
 const menu = [
@@ -51,44 +52,86 @@ const Header = () => {
     }
   }, [darkMode]);
 
-  // Track scroll for navbar shrink/glass intensity
+  // Track scroll for navbar shrink/glass intensity. rAF-throttled, and the
+  // state only changes when the boolean actually flips.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 24);
+        ticking = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Update active section on scroll (home page only)
+  // Active section via IntersectionObserver — no offsetTop/offsetHeight reads,
+  // so scrolling never forces a synchronous layout.
   useEffect(() => {
     if (!isHomePage) return;
-    const onScroll = () => {
-      const y = window.scrollY + 120;
-      const hit = menu.find((item) => {
-        if (item.type !== "scroll") return false;
-        const el = document.getElementById(item.path);
-        if (!el) return false;
-        const { offsetTop, offsetHeight } = el;
-        return y >= offsetTop && y < offsetTop + offsetHeight;
-      });
-      if (hit) setActive(hit.path);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const sections = menu
+      .filter((item) => item.type === "scroll")
+      .map((item) => document.getElementById(item.path))
+      .filter(Boolean);
+    if (!sections.length) return;
+
+    const visible = new Map();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
+          else visible.delete(entry.target.id);
+        }
+        if (!visible.size) return;
+
+        let bestId = null;
+        let bestRatio = -1;
+        for (const [id, ratio] of visible) {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        }
+        // Skip the state write when nothing changed.
+        if (bestId) setActive((prev) => (prev === bestId ? prev : bestId));
+      },
+      {
+        // Bias the band toward the upper half so the active item matches what
+        // the reader is looking at, not what is merely on screen.
+        rootMargin: "-45% 0px -45% 0px",
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+      }
+    );
+
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, [isHomePage]);
 
-  // Smooth scroll via Lenis (falls back to native if not present)
-  const smoothScrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
+  // Close the drawer on Escape, and stop the page scrolling behind it.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+
     const lenis = window.__lenis;
-    if (lenis) {
-      lenis.scrollTo(el, { offset: -80, duration: 1.4 });
-    } else {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+    lenis?.stop();
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      lenis?.start();
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen]);
 
   const handleNav = (item) => {
     setIsOpen(false);
@@ -100,9 +143,9 @@ const Header = () => {
     setActive(item.path);
     if (!isHomePage) {
       navigate("/", { replace: false });
-      setTimeout(() => smoothScrollTo(item.path), 60);
+      setTimeout(() => scrollToSection(item.path), 60);
     } else {
-      smoothScrollTo(item.path);
+      scrollToSection(item.path);
     }
   };
 

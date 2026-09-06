@@ -1,32 +1,47 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll({ children }) {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.25,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.4,
-      lerp: 0.1,
-    });
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let lenis = null;
+    let rafId = null;
 
-    window.__lenis = lenis;
-    lenis.on("scroll", ScrollTrigger.update);
+    const start = () => {
+      if (lenis || mq.matches) return;
 
-    const tickerCb = (time) => lenis.raf(time * 1000);
-    gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
+      // lerp only. Passing duration/easing alongside it selects a different,
+      // conflicting mode in Lenis and silently discards one of them.
+      lenis = new Lenis({
+        lerp: 0.12,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.4,
+      });
+      window.__lenis = lenis;
+
+      const raf = (time) => {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
+    };
+
+    const stop = () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = null;
+      lenis?.destroy();
+      lenis = null;
+      window.__lenis = null;
+    };
+
+    start();
+    const onChange = () => (mq.matches ? stop() : start());
+    mq.addEventListener("change", onChange);
 
     return () => {
-      gsap.ticker.remove(tickerCb);
-      lenis.destroy();
-      window.__lenis = null;
+      mq.removeEventListener("change", onChange);
+      stop();
     };
   }, []);
 

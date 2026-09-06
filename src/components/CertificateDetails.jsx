@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { certificates } from "./Certificates"; // Import the certificates data
 import { motion } from "framer-motion"; // Import motion for animations
 import { FaBackward } from "react-icons/fa";
+import { scrollToSection } from "../lib/smoothScroll";
 
 const CertificateDetails = () => {
   const { id } = useParams(); // Get the certificate ID from the URL
@@ -17,13 +18,8 @@ const CertificateDetails = () => {
     // Navigate to the home page
     navigate("/");
 
-    // After navigation, scroll to the Certificates section
-    setTimeout(() => {
-      const certificatesSection = document.getElementById("Certificates");
-      if (certificatesSection) {
-        certificatesSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100); // Small delay to ensure the page has loaded
+    // Small delay so the home route has mounted before we look for the section
+    setTimeout(() => scrollToSection("Certificates"), 100);
   };
 
   return (

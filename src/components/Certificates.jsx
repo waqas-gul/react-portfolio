@@ -19,7 +19,7 @@ export const certificates = [
     icon1: <TbCertificate className="text-yellow-700 text-4xl font-bold" />,
     icon2: <SiUdemy className="text-purple-500 text-5xl p-2 font-bold" />,
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
   {
     platform: "Udemy",
@@ -27,7 +27,7 @@ export const certificates = [
     icon1: <TbCertificate className="text-yellow-700 text-4xl font-bold" />,
     icon2: <SiUdemy className="text-purple-500 text-5xl p-2 font-bold" />,
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
   {
     platform: "Coursera",
@@ -35,7 +35,7 @@ export const certificates = [
     icon1: <TbCertificate className="text-yellow-700 text-4xl font-bold" />,
     icon2: <SiCoursera className="text-blue-600 text-5xl p-2 font-bold" />,
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
   {
     platform: "FreeCodeCamp",
@@ -45,7 +45,7 @@ export const certificates = [
       <LiaFreeCodeCamp className="text-green-500 text-5xl p-2 font-bold" />
     ),
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
   {
     platform: "LinkedIn",
@@ -53,7 +53,7 @@ export const certificates = [
     icon1: <TbCertificate className="text-yellow-700 text-4xl font-bold" />,
     icon2: <FiLinkedin className="text-blue-700 text-4xl p-2 font-bold" />,
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
   {
     platform: "Educative",
@@ -61,7 +61,7 @@ export const certificates = [
     icon1: <TbCertificate className="text-yellow-700 text-4xl font-bold" />,
     icon2: <SiEducative className="text-red-500 text-4xl p-2 font-bold" />,
     link: "#",
-    image: "/project.png",
+    image: "/project.webp",
   },
 ];
 

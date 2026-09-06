@@ -1,5 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { MotionConfig } from "framer-motion";
 import SmoothScroll from "./providers/SmoothScroll";
+import { scrollToTop } from "./lib/smoothScroll";
 import LiquidBackground from "./components/LiquidBackground";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -17,13 +25,31 @@ import CertificateDetails from "./components/CertificateDetails";
 import "./App.css";
 import Portfolio from "./components/Portfolio";
 
+// Lenis keeps its own scroll position, so a route change needs to reset it
+// through Lenis rather than window.scrollTo.
+function ScrollToTopOnNavigate() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    scrollToTop();
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
-    <Router>
-      <SmoothScroll>
-        <LiquidBackground />
-        <Header />
-        <main>
+    // reducedMotion="user" makes every Framer Motion animation on the site
+    // honour the OS setting — transform/layout moves are dropped, opacity
+    // fades are kept — without touching each component.
+    <MotionConfig reducedMotion="user">
+      <Router>
+        <SmoothScroll>
+          <ScrollToTopOnNavigate />
+          <LiquidBackground />
+          <Header />
+          <a href="#hero" className="skip-link">
+            Skip to content
+          </a>
+          <main>
           <Routes>
             <Route
               path="/"
@@ -65,12 +91,13 @@ function App() {
               }
             />
             <Route path="/certificate/:id" element={<CertificateDetails />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-          </Routes>
-        </main>
-        <Footer />
-      </SmoothScroll>
-    </Router>
+              <Route path="/portfolio" element={<Portfolio />} />
+            </Routes>
+          </main>
+          <Footer />
+        </SmoothScroll>
+      </Router>
+    </MotionConfig>
   );
 }
 

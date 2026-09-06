@@ -113,7 +113,7 @@ export default function ResumeCard() {
               <div aria-hidden="true" className="resume-avatar-glow" />
               <div className="resume-avatar-ring">
                 <img
-                  src="/waqas.png"
+                  src="/waqas.webp"
                   alt="Portrait of Waqas Gul"
                   className="resume-avatar"
                 />

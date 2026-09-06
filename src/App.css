@@ -13,15 +13,6 @@ html.dark, html.dark body {
     background-color: #111827; /* tailwind gray-900 — matches Hero dark bg */
 }
 
-html, body {
-    background-color: #ffffff;
-    min-height: 100%;
-}
-
-html.dark, html.dark body {
-    background-color: #111827; /* gray-900 — matches Hero dark bg */
-}
-
 body {
     font-family: 'Inter', sans-serif;
 }
@@ -75,8 +66,30 @@ html.lenis body {
     overflow: hidden;
 }
 
-html {
-    scroll-behavior: smooth;
+/* No `scroll-behavior: smooth` here — Lenis owns scrolling, and a native
+   smooth scroll running alongside it produces fighting/rubber-banding. */
+
+/* Keyboard users can jump the navbar instead of tabbing through it. */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 100;
+    padding: 0.7rem 1.25rem;
+    border-radius: 0 0 12px 12px;
+    background: #0B1120;
+    color: #F8FAFC;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transform: translate(-50%, -110%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skip-link:focus-visible {
+    transform: translate(-50%, 0);
+    outline: 2px solid #38BDF8;
+    outline-offset: 2px;
 }
 
 ::-webkit-scrollbar {
@@ -116,9 +129,10 @@ html {
 .liquid-blob {
     position: absolute;
     border-radius: 9999px;
-    filter: blur(110px);
+    /* 110px was costing far more GPU than the extra softness was worth. */
+    filter: blur(72px);
     opacity: 0.55;
-    will-change: transform;
+    transform: translateZ(0);
 }
 
 .liquid-blob-1 {
@@ -168,14 +182,23 @@ html {
 
 .liquid-cursor-glow {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 32rem;
     height: 32rem;
     border-radius: 9999px;
     background: radial-gradient(circle, rgba(255, 181, 71, 0.18), rgba(255, 94, 31, 0.06) 50%, transparent 70%);
-    filter: blur(60px);
+    filter: blur(48px);
     pointer-events: none;
-    will-change: transform, left, top;
+    /* Positioned by transform only — animating left/top forces layout. */
+    will-change: transform;
     mix-blend-mode: screen;
+}
+
+/* The glow is a desktop pointer affordance; phones have no cursor to follow. */
+@media (max-width: 767px), (hover: none) {
+    .liquid-cursor-glow { display: none; }
+    .liquid-blob { filter: blur(56px); }
 }
 
 .liquid-noise {

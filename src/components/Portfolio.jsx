@@ -123,7 +123,7 @@ const Portfolio = () => {
           {/* Image on the left */}
           <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-1 border-yellow-500 shadow-lg shadow-yellow-500 overflow-hidden md:mr-8 bg-gray-300">
             <img
-              src="/waqas.png" // Replace with your image URL
+              src="/waqas.webp" // Replace with your image URL
               alt="Waqas Gul"
               className="w-full h-full object-cover"
             />

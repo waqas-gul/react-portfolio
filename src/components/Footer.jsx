@@ -1,5 +1,5 @@
-import { Link } from "react-scroll";
 import { motion } from "framer-motion";
+import { scrollToSection } from "../lib/smoothScroll";
 import {
   FaFacebook,
   FaInstagram,
@@ -18,7 +18,7 @@ import {
   HiOutlineShieldCheck,
 } from "react-icons/hi2";
 
-// Quick links — react-scroll targets preserved
+// Quick links — section ids, scrolled via the shared Lenis helper
 const quickLinks = [
   { name: "Home",       to: "hero",       Icon: HiOutlineHome },
   { name: "About",      to: "about",      Icon: HiOutlineUser },
@@ -110,15 +110,17 @@ const Footer = () => {
               <ul className="ft-links">
                 {quickLinks.map(({ name, to, Icon }) => (
                   <li key={name}>
-                    <Link
-                      to={to}
-                      smooth={true}
-                      duration={500}
+                    <a
+                      href={`#${to}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(to);
+                      }}
                       className="ft-link group"
                     >
                       <Icon className="ft-link-icon" aria-hidden="true" />
                       <span>{name}</span>
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
