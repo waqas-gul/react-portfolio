@@ -557,15 +557,26 @@ html.dark #contact [class*="bg-gray-700"] {
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgba(2, 6, 23, 0.94);
+    background: rgba(2, 6, 23, 0.55);
 }
 
 /* ---- Mobile dropdown ---- */
-/* Keeps the .liquid-glass look; force-composited so real mobile browsers
-   reliably render backdrop-filter instead of silently skipping it. */
-#mobile-nav {
-    transform: translateZ(0);
-    will-change: backdrop-filter;
+/* Rendered in <body>, so it is positioned against the viewport and sits
+   between the scrim (40) and the header (50). */
+.mobile-nav-panel {
+    position: fixed;
+    top: 74px;
+    left: 12px;
+    right: 12px;
+    z-index: 45;
+}
+
+@media (min-width: 640px) {
+    .mobile-nav-panel {
+        top: 86px;
+        left: 20px;
+        right: 20px;
+    }
 }
 
 /* Fallback ONLY for browsers that can't render backdrop-filter at all.
