@@ -22,6 +22,8 @@ import Skills from "./components/Skills";
 import TeamSlider from "./components/TeamSlider";
 import ResumeCard from "./components/ResumeCard";
 import CertificateDetails from "./components/CertificateDetails";
+import ProjectsPage from "./pages/ProjectsPage";
+import ProjectDetails from "./pages/ProjectDetails";
 import "./App.css";
 import Portfolio from "./components/Portfolio";
 
@@ -91,6 +93,8 @@ function App() {
               }
             />
             <Route path="/certificate/:id" element={<CertificateDetails />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:slug" element={<ProjectDetails />} />
               <Route path="/portfolio" element={<Portfolio />} />
             </Routes>
           </main>

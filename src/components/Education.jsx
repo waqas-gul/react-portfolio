@@ -12,7 +12,7 @@ const educationData = [
   {
     period: "2019 - 2021",
     level: "FSc",
-    degree: "Free Engineering",
+    degree: "Pre-Engineering",
     institution: "Govt Degree College GulAbad",
     location: "Gullabad, Dir Lower, KPK, Pakistan",
     grade: "Secured 908 out of 1100 marks.",

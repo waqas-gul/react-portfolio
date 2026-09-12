@@ -22,10 +22,6 @@ const containerVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.10, delayChildren: 0.05 } },
 };
-const itemVariants = {
-  hidden: { opacity: 0, y: 28 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-};
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show:   { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
@@ -38,6 +34,9 @@ const slideRight = {
   hidden: { opacity: 0, x: 32 },
   show:   { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
+
+const GRADIENT_TEXT =
+  "bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#38BDF8] dark:to-[#A78BFA]";
 
 export default function AboutMe() {
   const [refStats, inViewStats] = useInView({ triggerOnce: true, threshold: 0.3 });
@@ -62,10 +61,7 @@ export default function AboutMe() {
           </span>
           <h2 className="about-title mt-4">
             Crafting{" "}
-            <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#38BDF8] dark:to-[#A78BFA]">
-              digital experiences
-            </span>{" "}
-            with code
+            <span className={GRADIENT_TEXT}>digital experiences</span> with code
           </h2>
           <p className="about-subtitle mx-auto mt-4 max-w-xl">
             A senior full-stack engineer obsessed with shipping fast,
@@ -73,7 +69,7 @@ export default function AboutMe() {
           </p>
         </motion.div>
 
-        {/* Single row: Who I am (left) + Stats & I Love (right) */}
+        {/* Row: Who I am (left) + bento tiles (right) */}
         <motion.div
           ref={refStats}
           variants={containerVariants}
@@ -90,73 +86,75 @@ export default function AboutMe() {
             <h3 className="about-card-title">Who I am</h3>
             <div className="about-card-body space-y-4 text-[15px] leading-[1.8] sm:text-[16px]">
               <p>
-                I'm a <strong>full-stack software engineer</strong> who designs
-                and ships scalable mobile, web, and desktop applications. My
-                day-to-day stack is{" "}
-                <strong>
-                  React, React Native, TypeScript, Node.js, FastAPI
-                </strong>{" "}
-                and <strong>PostgreSQL</strong>, deployed on AWS — built for
-                performance from the first commit.
+                I'm a <strong>senior full-stack software engineer</strong> who
+                designs and ships scalable mobile, web and desktop
+                applications, from the interface down to the infrastructure.
+              </p>
+              <p>
+                I own products end to end: API design and data modelling,
+                database migrations, containerised deployments, and the CI/CD
+                pipelines that keep releases predictable. I work the same way on
+                hardware-facing products, turning raw device data into something
+                a user can act on.
               </p>
               <p>
                 I'm currently building an{" "}
                 <strong>EEG-based wellness platform</strong>: streaming raw
                 brain-signal data from BLE devices, processing it in real time,
-                and surfacing actionable focus and stress insights for users.
-                I own the API design, manage database migrations, and run the
-                infrastructure with <strong>Docker and Terraform</strong>.
+                and surfacing focus and stress insights people can act on.
               </p>
               <p>
-                I care about clean architecture, expressive interfaces built
-                with <strong>Tailwind CSS</strong>, and software that feels
-                effortless to use because it was deliberately engineered.
+                I care about clean architecture, expressive interfaces, and
+                software that feels effortless to use because it was
+                deliberately engineered.
               </p>
             </div>
           </motion.article>
 
-          {/* RIGHT — Years + Projects + I Love stacked, fills full row height */}
-          <motion.div
-            variants={slideRight}
-            className="flex h-full flex-col gap-5 lg:col-span-5"
-          >
-            {/* Years + Projects in 2 columns */}
-            <div className="grid grid-cols-2 gap-5">
-              <div className="about-card about-stat-card">
-                <h3 className="about-stat-value bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#38BDF8] dark:to-[#A78BFA]">
-                  {inViewStats ? (
-                    <CountUp start={0} end={3.9} duration={1.5} decimals={1} />
-                  ) : (
-                    "0.0"
-                  )}
-                  +
-                </h3>
-                <p className="about-stat-label">Years Experience</p>
-              </div>
-
-              <div className="about-card about-stat-card">
-                <h3 className="about-stat-value bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#38BDF8] dark:to-[#A78BFA]">
-                  {inViewStats ? (
-                    <CountUp start={0} end={20} duration={1.5} />
-                  ) : (
-                    "0"
-                  )}
-                  +
-                </h3>
-                <p className="about-stat-label">Projects Completed</p>
-              </div>
+          {/* RIGHT — bento tiles */}
+          <motion.div variants={slideRight} className="about-bento lg:col-span-5">
+            {/* Headline stat */}
+            <div className="about-card about-tile about-tile--wide">
+              <span aria-hidden="true" className="about-tile-orb" />
+              <p className={`about-tile-value about-tile-value--lg ${GRADIENT_TEXT}`}>
+                {inViewStats ? (
+                  <CountUp start={0} end={3.9} duration={1.5} decimals={1} />
+                ) : (
+                  "0.0"
+                )}
+                +
+              </p>
+              <p className="about-tile-label">Years of Experience</p>
+              <p className="about-tile-note">
+                Shipping production software across web, mobile, cloud and IoT.
+              </p>
             </div>
 
-            {/* I Love — flex-1 lets it stretch to match the left card's height */}
-            <div className="about-card flex flex-1 flex-col">
-              <h3 className="about-card-title text-center">I Love</h3>
-              <ul className="grid flex-1 grid-cols-1 content-center gap-2.5 sm:grid-cols-2">
+            {/* Two square stats */}
+            <div className="about-card about-tile">
+              <p className={`about-tile-value ${GRADIENT_TEXT}`}>
+                {inViewStats ? <CountUp start={0} end={20} duration={1.5} /> : "0"}+
+              </p>
+              <p className="about-tile-label">Projects Completed</p>
+            </div>
+
+            <div className="about-card about-tile">
+              <p className={`about-tile-value ${GRADIENT_TEXT}`}>
+                {inViewStats ? <CountUp start={0} end={10} duration={1.5} /> : "0"}+
+              </p>
+              <p className="about-tile-label">Happy Clients</p>
+            </div>
+
+            {/* Interests */}
+            <div className="about-card about-tile about-tile--wide">
+              <h3 className="about-card-title">I Love</h3>
+              <ul className="about-love-grid">
                 {interests.map((item) => (
                   <li key={item.label} className="about-love-item">
-                    <span className={`text-xl ${item.tone}`} aria-hidden="true">
+                    <span className={`about-love-icon ${item.tone}`} aria-hidden="true">
                       {item.icon}
                     </span>
-                    <span className="font-medium">{item.label}</span>
+                    <span className="about-love-label">{item.label}</span>
                   </li>
                 ))}
               </ul>

@@ -19,8 +19,8 @@ import {
 // Email — featured prominently in its own compact card
 const emailContact = {
   name: "Email",
-  address: "waqasgul369@gmail.com",
-  link: "https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you.",
+  address: "engrwaqasgul@gmail.com",
+  link: "https://mail.google.com/mail/?view=cm&fs=1&to=engrwaqasgul@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you.",
 };
 
 // Compact social pills — links preserved exactly
@@ -163,7 +163,7 @@ export default function ContactSection() {
               </span>
             </h3>
             <p className="cf-hub-desc mt-3">
-              Reach out any time — whether it&apos;s a quick question or a
+              Reach out any time, whether it&apos;s a quick question or a
               long-term collaboration, my inbox is open.
             </p>
 

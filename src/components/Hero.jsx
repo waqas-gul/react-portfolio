@@ -25,13 +25,14 @@ import {
   SiNestjs,
   SiElectron,
 } from "react-icons/si";
-import Typewriter from "./Typewriter";
+import RoleRotator from "./RoleRotator";
 
+// Kept short (≤ 24 chars) so each fits on one line on small phones.
 const titles = [
-  "Full-Stack Developer",
-  "Frontend Engineer",
-  "React / Next.js Developer",
-  "UI-Focused Web Developer",
+  "Full-Stack Engineer",
+  "IoT Solutions Engineer",
+  "Cloud & DevOps Engineer",
+  "Cross-Platform Developer",
 ];
 
 const socials = [
@@ -311,37 +312,42 @@ const Hero = () => {
 
           {/* Name */}
           <h1 className="mt-1 text-[44px] font-extrabold leading-[1.05] tracking-tight sm:text-[56px] lg:text-[64px]">
+            {/* Professional title — smaller and muted so the name stays the focus */}
+            <abbr
+              title="Engineer"
+              className="mr-2 align-baseline text-[0.5em] font-bold tracking-normal text-[#64748B] no-underline dark:text-[#94A3B8] sm:mr-3"
+            >
+              Engr.
+            </abbr>
             <span className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] bg-clip-text text-transparent dark:from-[#38BDF8] dark:to-[#A78BFA]">
               Waqas Gul
             </span>
           </h1>
 
-          {/* Role / typewriter */}
+          {/* Role rotator */}
           <motion.h2
-            className="mt-2 min-h-[2rem] text-[20px] font-bold text-[#7C3AED] dark:text-[#A78BFA] sm:text-[24px]"
+            className="mt-2 text-[20px] font-bold text-[#7C3AED] dark:text-[#A78BFA] sm:text-[24px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Typewriter
-              phrases={titles}
-              cursorClassName="hero-cursor ml-0.5 text-[#2563EB] dark:text-[#38BDF8]"
-            />
+            <RoleRotator roles={titles} />
           </motion.h2>
 
           {/* Description */}
           <p className="mt-[18px] max-w-[520px] text-[15px] leading-[1.7] text-[#64748B] dark:text-[#94A3B8] sm:text-[17px]">
-            I build clean, scalable, and user-friendly web applications that
-            solve real-world problems.
+            I build end-to-end products, from web, mobile and desktop apps to
+            scalable APIs, cloud infrastructure with automated CI/CD, and IoT
+            platforms that decode device telemetry and ship OTA firmware
+            updates.
           </p>
 
           {/* Experience */}
           <p className="mt-4 text-[15px] text-[#64748B] dark:text-[#94A3B8] sm:text-[16px]">
-            With{" "}
             <span className="hero-pill inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[13px] font-semibold text-[#2563EB] dark:text-[#38BDF8]">
               3+ Years
             </span>{" "}
-            of Experience
+            of production experience
           </p>
 
           {/* Buttons */}
@@ -356,7 +362,7 @@ const Hero = () => {
             </a>
 
             <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20project%20with%20you."
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=engrwaqasgul@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20project%20with%20you."
               target="_blank"
               rel="noopener noreferrer"
               className="hero-btn-ghost group inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-semibold outline-none transition-all duration-300 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-[#7C3AED]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent dark:focus-visible:ring-[#A78BFA]/60"
@@ -409,7 +415,7 @@ const Hero = () => {
               {/* Cutout portrait */}
               <img
                 src="/waqas.webp"
-                alt="Portrait of Waqas Gul, Full Stack Developer"
+                alt="Portrait of Engr. Waqas Gul, Full-Stack Engineer"
                 width="500"
                 height="500"
                 fetchPriority="high"

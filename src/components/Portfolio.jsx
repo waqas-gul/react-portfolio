@@ -132,10 +132,10 @@ const Portfolio = () => {
           {/* Right side: Name and Details */}
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl font-bold font-sans bg-gradient-to-t from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-              WAQAS GUL
+              ENGR. WAQAS GUL
             </h1>
             <p className="text-xl font-mono mt-2 text-gray-700 dark:text-gray-300">
-              MERN Stack Developer / WEB DESIGNER
+              Full-Stack Software Engineer | Web · Mobile · Cloud · IoT
             </p>
 
             {/* Links arranged in a 2x2 Grid */}
@@ -187,12 +187,21 @@ const Portfolio = () => {
                 PROFILE
               </h2>
               <p className="font-sans text-gray-700 dark:text-gray-300 mb-8">
-                I’m Waqas Gull, a MERN Stack Developer from Pakistan. I hold a
-                Bachelor's degree in Software Engineering from the University of
-                Malakand. With 3 years of experience, I specialize in designing,
-                building, and maintaining scalable web applications. Proficient
-                in React.js, Next.js, Node.js, Express.js, MongoDB, Redux,
-                Tailwind CSS, and Material UI.
+                I’m Waqas Gul, a senior full-stack software engineer from
+                Pakistan with a Bachelor's degree in Software Engineering from
+                the University of Malakand. I design and ship scalable web,
+                mobile and desktop applications with React, Next.js, Vue.js,
+                Angular, React Native and Electron, using Redux Toolkit, React
+                Query and Zustand for state. On the backend I work with
+                Node.js, NestJS, FastAPI and Flask on PostgreSQL, MongoDB,
+                Firebase and Supabase, deployed to AWS, VPS and Render with
+                Docker, Terraform and automated CI/CD pipelines, managing code
+                on GitHub and GitLab and planning delivery in ClickUp. I'm
+                currently
+                building an EEG-based wellness platform that streams
+                brain-signal data from BLE devices and turns it into real-time
+                focus and stress insights, alongside IoT work covering device
+                data packetization, decoding and OTA firmware updates.
               </p>
               <div className="mt-4 space-y-2">
                 <a
@@ -204,11 +213,11 @@ const Portfolio = () => {
                   <FaPhone className="ml-4 text-green-600" /> +91 7096490307
                 </a>
                 <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=waqasgul369@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=engrwaqasgul@gmail.com&su=Hire%20Waqas%20Gul&body=Hello%20Waqas,%0D%0A%0D%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
                   className="flex items-center gap-5 mb-3 rounded-md shadow-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition p-2 cursor-pointer"
                 >
                   <FaEnvelope className="ml-4 text-red-600" />{" "}
-                  waqasgul369@gmail.com
+                  engrwaqasgul@gmail.com
                 </a>
                 <p className="flex items-center gap-5 shadow-md bg-gray-100 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition rounded-md p-2 cursor-pointer">
                   <FaLocationDot className="ml-4 text-blue-600" /> Pakistan,
@@ -228,7 +237,7 @@ const Portfolio = () => {
                     2019 – 2021
                   </p>
                   <p className="font-semibold font-2xl">
-                    FSc (Free Engineering){" "}
+                    FSc (Pre-Engineering){" "}
                   </p>
                   <p className="text-gray-600 dark:text-gray-400">
                     Govt Degree College GulAbad, KPK, Pakistan{" "}
